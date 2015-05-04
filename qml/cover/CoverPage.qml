@@ -32,23 +32,20 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Label {
-        id: label
+
+    Image{
+        id:logo
+        source:"cover.png"
         anchors.centerIn: parent
-        text: qsTr("My Cover")
+    }
+    Label{
+        text:"一个"
+        anchors.top:logo.bottom
+        anchors.topMargin: Theme.paddingMedium
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    CoverActionList {
-        id: coverAction
 
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
-        }
-    }
 }
 
 

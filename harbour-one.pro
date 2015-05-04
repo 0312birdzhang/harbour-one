@@ -14,12 +14,11 @@ TARGET = harbour-one
 
 CONFIG += sailfishapp
 
-SOURCES += src/harbour-one.cpp
+SOURCES += src/harbour-one.cpp \
+    src/cache.cpp
 
 OTHER_FILES += qml/harbour-one.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/harbour-one.changes.in \
     rpm/harbour-one.spec \
     rpm/harbour-one.yaml \
@@ -27,23 +26,27 @@ OTHER_FILES += qml/harbour-one.qml \
     harbour-one.desktop \
     qml/pages/main.js \
     qml/pages/storage.js \
-    qml/pages/one_zh_CN.qm \
+    qml/pages/qmlprovate.js \
     qml/pages/AboutPage.qml \
     qml/pages/ContentPage.qml \
     qml/pages/HomePage.qml \
     qml/pages/ImagePage.qml \
-    qml/pages/MainPage.qml \
-    qml/pages/MorePage.qml \
-    qml/pages/OneTabButton.qml \
     qml/pages/QuestionPage.qml \
     qml/pages/SignalCenter.qml \
-    qml/pages/SingleContent.qml \
-    qml/pages/StowPage.qml \
-    qml/pages/ViewHeader.qml \
-    qml/pages/default_theme.css
+    qml/pages/Notification.qml \
+    qml/pages/CacheImage.qml \
+    qml/pages/getHpinfo.js \
+    qml/pages/getOneContentInfo.js \
+    qml/pages/getOneQuestionInfo.js \
+    qml/cover/cover.png \
+    qml/pages/getBeforeDate.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
-TRANSLATIONS += translations/harbour-one-de.ts
+TRANSLATIONS += translations/harbour-one-de.ts \
+                translations/harbour-one-zh_CN.ts
+
+HEADERS += \
+    src/cache.h
 

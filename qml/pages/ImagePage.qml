@@ -1,119 +1,153 @@
-import QtQuick 1.1
-import com.nokia.symbian 1.1
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
 Page {
     id: root
 
     property string imgUrl
-    property real picscale: slider.value/100
-
-    function calcscale(){
-        return pic.sourceSize.height/pic.sourceSize.width < root.height/root.width
-                ? root.width/pic.sourceSize.width
-                : root.height/pic.sourceSize.height
-    }
-
-    onStatusChanged: {
-        if (status == PageStatus.Active)
-            pic.source = imgUrl
-    }
-
-    ToolButton {
-        z: 10
-        anchors {
-            left: parent.left; bottom: parent.bottom;
-            margins: platformStyle.paddingSmall;
-        }
-        iconSource: "toolbar-back"; onClicked: pageStack.pop()
-        platformInverted: true;
-    }
-
-    Slider {
-        id: slider
-        z: 10
-        anchors {
-            horizontalCenter: parent.horizontalCenter;
-            bottom: parent.bottom;
-            bottomMargin: platformStyle.paddingSmall;
-        }
-        width: screen.width - 120
-        minimumValue: 1;
-        maximumValue: 200; stepSize: 2
-        valueIndicatorVisible: true
-        valueIndicatorText: slider.value  + "%"
-        visible: Image.Ready == pic.status
-        value: 100.0
-    }
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
 
     Flickable {
-        id: flic
+        id: imageFlickable
         anchors.fill: parent
+        contentWidth: imageContainer.width; contentHeight: imageContainer.height
+        clip: true
+        onHeightChanged: if (imagePreview.status === Image.Ready) imagePreview.fitToScreen()
 
-        property int oldContentWidth
-        property int oldContentHeight
+        Item {
+            id: imageContainer
+            width: Math.max(imagePreview.width * imagePreview.scale, imageFlickable.width)
+            height: Math.max(imagePreview.height * imagePreview.scale, imageFlickable.height)
 
-        contentWidth: Math.max(width, pic.width * pic.scale)+1
-        contentHeight: Math.max(height, pic.height * pic.scale)+1
+            Image {
+                id: imagePreview
 
-        onContentWidthChanged: {
-            if(( flic.oldContentWidth != 0) && ( flic.width != 0) ){
-                flic.contentX += (flic.contentWidth - flic.oldContentWidth)/2;
-            }
-            flic.oldContentWidth = flic.contentWidth;
-        }
-        onContentHeightChanged: {
-            if((flic.oldContentHeight != 0) && ( flic.height != 0)) {
-                flic.contentY += (flic.contentHeight - flic.oldContentHeight)/2;
-            }
-            flic.oldContentHeight = flic.contentHeight;
-        }
-        Image{
-            id: pic
-            anchors.centerIn: parent
-            scale: root.picscale
-            smooth: true
-            onStatusChanged: {
-                if(Image.Ready == pic.status){
-                    slider.value = Math.floor(root.calcscale() * 100);
-                    flic.contentX = 0; flic.contentY = 0;
+                property real prevScale
+
+                function fitToScreen() {
+                    scale = Math.min(imageFlickable.width / width, imageFlickable.height / height, 1)
+                    pinchArea.minScale = scale
+                    prevScale = scale
                 }
-            }
-            Column {
+
                 anchors.centerIn: parent
-                spacing: platformStyle.paddingLarge
-                visible: pic.status == Image.Loading
-                BusyIndicator {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    running: true
-                    width: platformStyle.graphicSizeLarge
-                    height: platformStyle.graphicSizeLarge
-                    platformInverted: true
+                fillMode: Image.PreserveAspectFit
+                cache: false
+                asynchronous: true
+                source: imgUrl
+                sourceSize.height: 1000;
+                smooth: !imageFlickable.moving
+
+                onStatusChanged: {
+                    if (status == Image.Ready) {
+                        fitToScreen()
+                        loadedAnimation.start()
+                    }
                 }
-                Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: Math.floor(pic.progress * 100) + "%"
-                    color: platformStyle.colorDisabledMidInverted
-                    font.pixelSize: platformStyle.fontSizeLarge
+
+                NumberAnimation {
+                    id: loadedAnimation
+                    target: imagePreview
+                    property: "opacity"
+                    duration: 250
+                    from: 0; to: 1
+                    easing.type: Easing.InOutQuad
+                }
+
+                onScaleChanged: {
+                    if ((width * scale) > imageFlickable.width) {
+                        var xoff = (imageFlickable.width / 2 + imageFlickable.contentX) * scale / prevScale;
+                        imageFlickable.contentX = xoff - imageFlickable.width / 2
+                    }
+                    if ((height * scale) > imageFlickable.height) {
+                        var yoff = (imageFlickable.height / 2 + imageFlickable.contentY) * scale / prevScale;
+                        imageFlickable.contentY = yoff - imageFlickable.height / 2
+                    }
+                    prevScale = scale
                 }
             }
         }
+
         PinchArea {
-            property real oldScale
+            id: pinchArea
+
+            property real minScale: 1.0
+            property real maxScale: 3.0
+
             anchors.fill: parent
-            onPinchStarted: oldScale = slider.value
-            onPinchUpdated: {
-                slider.value = oldScale * pinch.scale
-            }
-        }
-        MouseArea{
-            anchors.fill: parent
-            onDoubleClicked: {
-                if (slider.value < 90){
-                    slider.value = 100
-                } else {
-                    slider.value = Math.floor(root.calcscale() * 100);
+            enabled: imagePreview.status === Image.Ready
+            pinch.target: imagePreview
+            pinch.minimumScale: minScale * 0.5 // This is to create "bounce back effect"
+            pinch.maximumScale: maxScale * 1.5 // when over zoomed
+
+            onPinchFinished: {
+                imageFlickable.returnToBounds()
+                if (imagePreview.scale < pinchArea.minScale) {
+                    bounceBackAnimation.to = pinchArea.minScale
+                    bounceBackAnimation.start()
                 }
+                else if (imagePreview.scale > pinchArea.maxScale) {
+                    bounceBackAnimation.to = pinchArea.maxScale
+                    bounceBackAnimation.start()
+                }
+            }
+            NumberAnimation {
+                id: bounceBackAnimation
+                target: imagePreview
+                duration: 250
+                property: "scale"
+                from: imagePreview.scale
             }
         }
     }
+
+    Loader {
+        anchors.centerIn: parent
+        sourceComponent: {
+            switch (imagePreview.status) {
+            case Image.Loading:
+                return loadingIndicator
+            case Image.Error:
+                return failedLoading
+            default:
+                return undefined
+            }
+        }
+
+        Component {
+            id: loadingIndicator
+
+            Item {
+                height: childrenRect.height
+                width: root.width
+
+                BusyIndicator {
+                    id: imageLoadingIndicator
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    running: true
+                }
+
+                Text {
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        top: imageLoadingIndicator.bottom; topMargin: Theme.paddingLarge
+                    }
+                    font.pixelSize: Theme.fontSizeSmall;
+                    color: Theme.highlightColor;
+                    text: qsTr("Loading image...%1").arg(Math.round(imagePreview.progress*100) + "%")
+                }
+            }
+        }
+
+        Component {
+            id: failedLoading
+            Text {
+                font.pixelSize: constant.fontXSmall;
+                text: qsTr("Error loading image")
+                color: Theme.highlightColor
+            }
+        }
+    }
+
+    VerticalScrollDecorator { flickable: imageFlickable }
 }

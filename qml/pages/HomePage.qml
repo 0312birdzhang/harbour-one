@@ -1,188 +1,206 @@
-import QtQuick 1.1
-import com.nokia.symbian 1.1
-import "main.js" as Script
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import "getHpinfo.js" as Script
 
 Page {
     id: homePage;
-
-
-    property bool firstStart: true
-    onVisibleChanged: {
-        if (visible && firstStart){
-            firstStart = false;
-            Script.homeModel = homeModel;
-            preload(0);
-            view.currentIndexChanged.connect(preload)
-        }
-    }
-
-    //orientationLock: PageOrientation.LockPortrait
-
-    Connections {
-        target: signalCenter;
-        onHeaderClicked: {
-            if (visible){
-                view.positionViewAtBeginning();
+    //allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    onStatusChanged: {
+        if (status == PageStatus.Active) {
+            if (pageStack._currentContainer.attachedContainer == null) {
+                pageStack.pushAttached(Qt.resolvedUrl("ContentPage.qml"))
             }
         }
     }
-
-    ListModel {
-        id: homeModel;
-        property bool hasPrev: true;
+    Component.onCompleted: {
+        if(allindex === 0 && num === 0){
+            splash.visible = true;
+            timerDisplay.start();
+        }
     }
 
-    ListView {
-        id: view;
-        anchors.fill: parent;
-        orientation: ListView.Horizontal;
-        preferredHighlightBegin: 0;
-        preferredHighlightEnd: width;
-        highlightRangeMode: ListView.StrictlyEnforceRange;
-        snapMode: ListView.SnapOneItem;
-        model: homeModel;
-        delegate: homeDel;
+    SilicaListView{
+            id:listview
+            visible: false
+            anchors.fill: parent
+            header:PageHeader{
+                id:hearer
+                title:qsTr("Index")
+            }
 
-        Component {
-            id: homeDel;
-
-            Item {
-                id: root;
-                width: view.width;
-                height: view.height;
-
-                BusyIndicator {
-                    anchors.centerIn: parent;
-                    platformInverted: true;
-                    width: platformStyle.graphicSizeLarge;
-                    height: platformStyle.graphicSizeLarge;
-                    running: true;
-                    visible: root.ListView.isCurrentItem && model.hpEntity == undefined;
-                }
-
-                Flickable {
-                    id: flickable;
-                    visible: model.hpEntity ? true : false;
-                    anchors.fill: parent;
-                    clip: true;
-                    contentWidth: width;
-                    contentHeight: contentCol.height;
-
-                    Column {
-                        id: contentCol;
-                        anchors {
-                            left: parent.left; right: parent.right;
-                            margins: platformStyle.paddingLarge;
-                        }
-                        spacing: platformStyle.paddingLarge;
-                        Item { width: 1; height: 1 }
-
-                        Column {
-                            width: parent.width;
-                            spacing: platformStyle.paddingSmall;
-                            Rectangle {
-                                width: parent.width;
-                                height: 2;
-                                color: platformStyle.colorNormalMid
-                            }
-                            ListItemText {
-                                text: model.hpEntity ? model.hpEntity.strHpTitle : "";
-                                platformInverted: true;
-                            }
-                            Rectangle {
-                                width: parent.width;
-                                height: 2;
-                                color: platformStyle.colorNormalMid
-                            }
+            PushUpMenu{
+                id:upmenu
+                MenuItem{
+                    id: selectDate
+                    //onYChanged: console.log("Y:"+selectDate.y)
+                    width:  parent.width
+                    height: (Theme.itemSizeLarge > gobutton.height)?Theme.itemSizeLarge:gobutton.height
+                    Slider{
+                        id:datepicker
+                        value: 0
+                        minimumValue:-9
+                        maximumValue:0
+                        stepSize: 1
+                        width: parent.width - gobutton.width
+                        valueText: {
+                            var today = new Date();
+                            Script.getBeforeDate(today,Math.abs(value))
                         }
 
-                        Image {
-                            sourceSize.width: parent.width;
-                            source: model.hpEntity ? model.hpEntity.strThumbnailUrl : "";
-                            MouseArea {
-                                anchors.fill: parent;
-                                onClicked: {
-                                    pageStack.push(Qt.resolvedUrl("ImagePage.qml"), {imgUrl: model.hpEntity.strOriginalImgUrl})
-                                }
-                            }
+                    }
+                    Button{
+                        id:gobutton
+                        text:qsTr("GO")
+                        anchors.left: datepicker.right
+                        onClicked: {
+                            //console.log("Index:"+Math.abs(datepicker.value));
+                            allindex = Math.abs(datepicker.value);
+                            num+=1;
+                            //selectDate.open = !selectDate.open
+                            //Script.load(allindex)
+                            pageStack.replace(Qt.resolvedUrl("HomePage.qml"))
+
                         }
 
-                        Repeater {
-                            model: hpEntity ? hpEntity.strAuthor.split("&") : []
-                            ListItemText {
-                                anchors.right: parent ? parent.right : undefined;
-                                text: modelData;
-                                platformInverted: true;
-                            }
-                        }
-
-                        Item {
-                            width: parent.width;
-                            height: childrenRect.height;
-                            Column {
-                                id: dateShow;
-                                Label {
-                                    anchors.horizontalCenter: parent.horizontalCenter;
-                                    font {
-                                        pixelSize: platformStyle.graphicSizeMedium;
-                                        weight: Font.Black;
-                                    }
-                                    text: model.date.split("-").pop();
-                                    color: "#73DCFF"
-                                }
-                                ListItemText {
-                                    anchors.horizontalCenter: parent.horizontalCenter;
-                                    role: "SubTitle"
-                                    text: {
-                                        var dateAry = model.date.split("-");
-                                        var date = new Date();
-                                        date.setFullYear(dateAry[0]);
-                                        date.setMonth(dateAry[1]-1);
-                                        date.setDate(dateAry[2]);
-                                        return Qt.formatDate(date, "MMM,yyyy");
-                                    }
-                                    platformInverted: true;
-                                }
-                            }
-                            BorderImage {
-                                anchors {
-                                    left: dateShow.right; leftMargin: platformStyle.paddingSmall;
-                                    right: parent.right;
-                                }
-                                height: contentLabel.height + platformStyle.paddingLarge*2
-                                source: "pics/one_home_page_text.9.png"
-                                border {
-                                    left: 15; top: 25; right: 10; bottom: 10
-                                }
-                                Label {
-                                    id: contentLabel
-                                    anchors {
-                                        left: parent.left; right: parent.right; top: parent.top;
-                                        margins: platformStyle.paddingLarge;
-                                    }
-                                    text: model.hpEntity ? model.hpEntity.strContent : ""
-                                    wrapMode: Text.Wrap;
-                                }
-                            }
-                        }
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.verticalCenterOffset: Theme.paddingSmall
                     }
                 }
-                ScrollDecorator {
-                    platformInverted: true;
-                    flickableItem: flickable;
+
+            }
+            PullDownMenu {
+                id:menu
+                MenuItem{
+                    text:qsTr("About")
+                    onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
                 }
             }
-        }
-    }
 
-    function preload(index){
-        if (!homeModel.hasPrev)
-            return;
-        if (index == undefined){
-            index = view.currentIndex;
+
+            Component.onCompleted: {
+                Script.load(allindex)
+                listview.model = homeModel;
+            }
+
+            ListModel {
+                id: homeModel;
+            }
+
+            //model:homeModel
+            width: parent.width
+            clip:true
+            cacheBuffer:parent.height
+            spacing:Theme.paddingMedium
+            VerticalScrollDecorator {}
+            delegate: Item{
+                width: parent.width
+                CacheImage{
+                    id:thumbnail
+                    asynchronous: true
+                    sourceUncached: strThumbnailUrl
+                    fillMode: Image.PreserveAspectFit;
+                    width:  parent.width - Theme.paddingSmall
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    height: parent.width *3/4
+                    source: strThumbnailUrl
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
+                                                         {imgUrl: strThumbnailUrl} )
+                    }
+
+                }
+                Label{
+                    id:author
+                    text:strAuthor
+                    font.pixelSize:Theme.fontSizeMedium
+                    width: parent.width
+                    wrapMode: Text.WordWrap
+                    color: Theme.highlightColor
+                    horizontalAlignment: Text.AlignRight
+                    anchors{
+                        left:parent.left
+                        right:parent.right
+                        top:thumbnail.bottom
+                        margins: Theme.paddingMedium
+                    }
+                }
+                Label{
+                    id:vol
+                    text:strHpTitle
+                    //width: parent.width
+                    font.pixelSize: Theme.fontSizeLarge
+                    color: Theme.highlightColor
+                    font.bold: true
+                    horizontalAlignment: Text.AlignLeft
+                    truncationMode: TruncationMode.Elide
+                    anchors{
+                        left:parent.left
+                        right:parent.right
+                        top:author.bottom
+                        margins: Theme.paddingMedium
+                    }
+                }
+
+
+                    Item {
+                        id:input
+                        anchors{
+                            top:author.bottom
+                            margins: Theme.paddingMedium
+                        }
+                        width:parent.width
+                        height: datetime.height + content .height
+                        Label{
+                            id:datetime
+                            text:strMarketTime.substring(5,10)
+                            font.pixelSize:Theme.fontSizeLarge
+                            color: Theme.highlightColor
+                            anchors{
+                                top:parent.top
+                                right:parent.right
+                                rightMargin: Theme.paddingMedium
+                            }
+                        }
+
+                        Label{
+                            id:content
+                            text:strContent
+                            width:parent.width
+                            wrapMode: Text.WordWrap
+                            anchors{
+                                top:datetime.bottom
+                                left:parent.left
+                                right:parent.right
+                                margins: Theme.paddingMedium
+                            }
+
+
+                        }
+                    }
+
+            }
+
         }
-        Script.preloadHomeModel(index)
-        Script.preloadHomeModel(index+1)
-        Script.preloadHomeModel(index+2)
+
+
+    Image {
+        id: splash
+        visible: false
+        anchors.fill: parent;
+        source: "pics/splash.png"
+        fillMode: Image.PreserveAspectCrop
+        clip: true
+        NumberAnimation on opacity {duration: 500}
+    }
+    Timer {
+        id: timerDisplay
+        running: true; repeat: false; triggeredOnStart: false
+        interval: 2 * 1000
+
+        onTriggered: {
+            splash.visible = false
+            listview.visible = true
+        }
     }
 }

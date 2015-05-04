@@ -37,8 +37,16 @@ ApplicationWindow
 {
 
     id: app;
-
-    MainPage { id: mainPage; }
+    property int allindex: 0
+    property int num:0
+//    property int homeindex: 0
+//    property int contentindex: 0
+//    property int questionindex: 0
+    initialPage:Component {
+        HomePage {
+                id: homePage;
+               }
+    }
     SignalCenter { id: signalCenter; }
 
     Connections {
@@ -55,12 +63,39 @@ ApplicationWindow
         }
         onShowMessage: {
             if (message||false){
-                infoBanner.text = message;
-                infoBanner.open();
+//                infoBanner.text = message;
+//                infoBanner.open();
+                  addNotification(message,3);
             }
         }
     }
+    Item{
+        id:notiItem
+        width: parent.width
+        height:Screen.height/5
+        z: 20
+        Column {
+            id: notificationBar
+            anchors {
+                top:parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                margins:Theme.paddingMedium
+            }
+            spacing: Theme.paddingMedium
+            move: Transition { NumberAnimation { properties: "y" } }
+        }
+    }
 
+    function addNotification(inText, inTime) {
+        var text = inText == undefined ? "" : inText
+        var time = inTime == undefined ? 4 : inTime
+        var noti = Qt.createComponent("pages/Notification.qml")
+        if (noti.status == Component.Ready) {
+            var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
+        }
+    }
     Timer {
         id: processingTimer;
         interval: 30000;
@@ -69,8 +104,8 @@ ApplicationWindow
 
     Component.onCompleted: {
         Script.signalCenter = signalCenter;
-        Script.utility = utility;
-        pageStack.push(mainPage, null, true);
+        //Script.utility = utility;
+        //pageStack.push(mainPage, null, true);
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

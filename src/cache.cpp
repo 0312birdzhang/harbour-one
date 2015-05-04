@@ -19,12 +19,12 @@ Cache::Cache(QString name, QObject *parent) :
     m_cacheonly = false;
 
 
-#if defined(Q_OS_SAILFISH)
-    m_path = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-#else
-    QDesktopServices dirs;
-    m_path = dirs.storageLocation(QDesktopServices::CacheLocation);
-#endif
+//#if defined(Q_OS_SAILFISH)
+m_path = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+//#else
+//    QDesktopServices dirs;
+//    m_path = dirs.storageLocation(QDesktopServices::CacheLocation);
+//#endif
     m_path += "/"+name+"/";
     //qDebug() << "Cache location: " << m_path;
 

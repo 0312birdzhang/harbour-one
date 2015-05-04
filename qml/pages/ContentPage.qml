@@ -1,188 +1,111 @@
-import QtQuick 1.1
-import com.nokia.symbian 1.1
-import QtWebKit 1.0
-import "main.js" as Script
-
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import "getOneContentInfo.js" as Script
 
 Page {
-    id: contentPage;
-
-    property bool firstStart: true
-
-    onVisibleChanged: {
-        if (visible && firstStart){
-            firstStart = false;
-            Script.contentModel = contentModel;
-            preload(0);
-            view.currentIndexChanged.connect(preload);
-        }
-    }
-
-    function preload(index){
-        if (!contentModel.hasPrev)
-            return;
-        if (index == undefined){
-            index = view.currentIndex;
-        }
-        Script.preloadContentModel(index);
-        Script.preloadContentModel(index+1);
-        Script.preloadContentModel(index+2);
-    }
-
-    function addToFavorite(){
-        if (contentModel.count > 0){
-            var data = contentModel.get(view.currentIndex).contentEntity
-            if (data){
-                var title = data.strContTitle
-                var date = contentModel.get(view.currentIndex).date
-                signalCenter.addToFavorite(date, title)
+    id: homePage;
+    //allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    onStatusChanged: {
+        if (status == PageStatus.Active) {
+            if (pageStack._currentContainer.attachedContainer == null) {
+                pageStack.pushAttached(Qt.resolvedUrl("QuestionPage.qml"))
             }
         }
     }
-
-    function share(via){
-        if (via == "email"){
-            if (contentModel.count > 0){
-                var data = contentModel.get(view.currentIndex).contentEntity
-                if (data){
-                    var title = data.strContTitle;
-                    var content = data.strContent;
-                    Qt.openUrlExternally("mailto:?subject="+encodeURIComponent(title)+"&body="+encodeURIComponent(title))
-                }
+    SilicaListView{
+            id:listview
+            anchors.fill: parent
+            header: PageHeader{
+                id:hearer
+                title:qsTr("Content")
             }
-        }
-    }
-
-    orientationLock: PageOrientation.LockPortrait
-
-    Connections {
-        target: signalCenter;
-        onHeaderClicked: {
-            if (visible){
-                view.positionViewAtBeginning();
+            Component.onCompleted: {
+                Script.load(allindex)
             }
-        }
-    }
 
-    ListModel {
-        id: contentModel;
-        property bool hasPrev: true;
-    }
+            ListModel {
+                id: contentModel;
+            }
 
-    ListView {
-        id: view;
-        anchors.fill: parent;
-        orientation: ListView.Horizontal;
-        preferredHighlightBegin: 0;
-        preferredHighlightEnd: width;
-        highlightRangeMode: ListView.StrictlyEnforceRange;
-        snapMode: ListView.SnapOneItem;
-        interactive: currentItem!=null && !currentItem.moving
-        model: contentModel;
-        delegate: contentDel;
-        cacheBuffer: width;
+            model:contentModel
+            width: parent.width
+            clip:true
+            spacing:Theme.paddingMedium
+            cacheBuffer:parent.width
+            VerticalScrollDecorator {}
+            delegate: Item{
+                width: parent.width
+                height:gw.height + conttile.height + author.height + content.height + authorinfo.height + Theme.paddingMedium * 4
+                Label{
+                    id:gw
+                    text:'" '+sGW+' "'
+                    font.pixelSize: Theme.fontSizeExtraSmall/4*3
+                    color: Theme.highlightColor
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    width:parent.width - Theme.paddingLarge
+                    anchors.horizontalCenter: parent.horizontalCenter
 
-        Component {
-            id: contentDel;
-            Item {
-                id: root;
-
-                property alias moving: flickable.moving;
-
-                width: view.width;
-                height: view.height;
-
-                BusyIndicator {
-                    anchors.centerIn: parent;
-                    platformInverted: true;
-                    width: platformStyle.graphicSizeLarge;
-                    height: platformStyle.graphicSizeLarge;
-                    running: true;
-                    visible: root.ListView.isCurrentItem && model.contentEntity == undefined;
                 }
 
-                Flickable {
-                    id: flickable;
-                    anchors.fill: parent;
-                    clip: true;
-                    contentWidth: width;
-                    contentHeight: contentCol.height;
-                    visible: model.contentEntity ? true : false;
-                    interactive: !view.moving;
-
-                    Column {
-                        id: contentCol;
-                        anchors {
-                            left: parent.left; right: parent.right;
-                            margins: platformStyle.paddingLarge;
-                        }
-                        spacing: platformStyle.paddingLarge;
-
-                        Item { width: 1; height: 1 }
-
-                        Column {
-                            width: parent.width;
-                            spacing: platformStyle.paddingSmall;
-                            Rectangle {
-                                width: parent.width;
-                                height: 2;
-                                color: platformStyle.colorNormalMid
-                            }
-                            ListItemText {
-                                platformInverted: true;
-                                text: {
-                                    var dateAry = model.date.split("-");
-                                    var date = new Date();
-                                    date.setFullYear(dateAry[0]);
-                                    date.setMonth(dateAry[1]-1);
-                                    date.setDate(dateAry[2]);
-                                    return Qt.formatDate(date, "MMMM dd, yyyy");
-                                }
-                            }
-
-                            Rectangle {
-                                width: parent.width;
-                                height: 2;
-                                color: platformStyle.colorNormalMid
-                            }
-                        }
-
-                        Label {
-                            text: model.contentEntity ? model.contentEntity.strContTitle : ""
-                            platformInverted: true;
-                            font.pixelSize: platformStyle.fontSizeLarge+4;
-                        }
-
-                        ListItemText {
-                            text: model.contentEntity ? model.contentEntity.strContAuthor : ""
-                            platformInverted: true;
-                            role: "SubTitle";
-                        }
-
-                        Loader {
-                            width: parent.width;
-                            sourceComponent: visible && root.ListView.isCurrentItem && !view.moving && model.contentEntity ? webViewComp : sourceComponent;
-                            Component {
-                                id: webViewComp
-                                WebView {
-                                    preferredWidth: parent.width;
-                                    preferredHeight: preferredWidth;
-                                    html: model.contentEntity.strContent;
-                                    settings {
-                                        defaultFontSize: platformStyle.fontSizeLarge;
-                                        defaultFixedFontSize: platformStyle.fontSizeLarge;
-                                        minimumFontSize: platformStyle.fontSizeLarge;
-                                        minimumLogicalFontSize: platformStyle.fontSizeLarge;
-                                    }
-                                }
-                            }
-                        }
+                Label{
+                    id:conttile
+                    text:strContTitle
+                    width: parent.width
+                    font.pixelSize: Theme.fontSizeLarge
+                    color: Theme.highlightColor
+                    font.bold: true
+                    horizontalAlignment: Text.AlignLeft
+                    wrapMode: Text.WordWrap
+                    truncationMode: TruncationMode.Elide
+                    anchors{
+                        left:parent.left
+                        top:gw.bottom
+                        margins: Theme.paddingMedium
                     }
                 }
-                ScrollDecorator {
-                    flickableItem: flickable;
+                Label{
+                    id:author
+                    text:qsTr("Author/")+strContAuthor
+                    font.bold: true
+                    font.pixelSize:Theme.fontSizeSmall
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignRight
+                    anchors{
+                        left:parent.left
+                        top:conttile.bottom
+                        margins: Theme.paddingMedium
+                    }
                 }
+                Label{
+                    id:content
+                    text:strContent
+                    font.pixelSize:Theme.fontSizeSmall
+                    width:parent.width
+                    wrapMode: Text.WordWrap
+                    anchors{
+                        left:parent.left
+                        right:parent.right
+                        top:author.bottom
+                        margins: Theme.paddingMedium
+                    }
+                }
+                Label{
+                    id:authorinfo
+                    text:sAuth
+                    font.pixelSize:Theme.fontSizeSmall
+                    wrapMode: Text.WordWrap
+                    font.bold: true
+                    anchors{
+                        left:parent.left
+                        right:parent.right
+                        top:content.bottom
+                        margins: Theme.paddingMedium
+                    }
+                }
+
             }
+
         }
-    }
+
 }

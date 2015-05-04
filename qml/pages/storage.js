@@ -1,7 +1,8 @@
 .pragma library
+.import QtQuick.LocalStorage 2.0 as SQL
 
 function getDatabase() {
-     return openDatabaseSync("one", "1.0", "StorageDatabase", 1000000);
+     return  SQL.LocalStorage.openDatabaseSync("one", "1.0", "StorageDatabase", 1000000);
 }
 
 function initialize(){

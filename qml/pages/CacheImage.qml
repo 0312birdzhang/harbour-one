@@ -44,9 +44,11 @@ Image {
             //if valid url - queue cache
             Api.objs.save(root).cacheCallback = cacheCallback;
             imageCache.queueObject(__sourceUncached,root.toString());
+            //console.log("load cache:"+__sourceUncached)
         } else {
             //just reset source
             source = __sourceUncached;
+            //console.log("just reset source")
         }
     }
 

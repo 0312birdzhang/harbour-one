@@ -3,9 +3,6 @@ function getBeforeDate(d,n){
     var mon = d.getMonth()+1;
     var day=d.getDate();
     var hour = d.getHours();
-    if(parseInt(hour) < 8 ){
-        day = parseInt(day) - 1
-    }
     if(day <= n){
         if(mon>1) {
             mon=mon-1;

@@ -1,6 +1,6 @@
 Qt.include("getBeforeDate.js")
 
-
+var tmp_index;
 function load(index) {
     var today = new Date();
     contentModel.clear();
@@ -32,17 +32,25 @@ function loaded(jsonObject)
 
     }
     else{
-        contentModel.append({
-                                "sGW": jsonObject.contentEntity.sGW,
-                                "strContTitle": jsonObject.contentEntity.strContTitle,
-                                "strContAuthor": jsonObject.contentEntity.strContAuthor,
-                                "strContAuthorIntroduce": jsonObject.contentEntity.strContAuthorIntroduce,
-                                "sAuth": jsonObject.contentEntity.sAuth,
-                                "strMarketTime": jsonObject.contentEntity.strMarketTime,
-                                "sWbN": jsonObject.contentEntity.sWbN,
-                                "strContent": jsonObject.contentEntity.strContent
-                            });
+        try{
+            var tmpArr = new Date(jsonObject.contentEntity.strContMarketTime).toString().split(" ");
+            var time_day = tmpArr[2];
+            time_day = (time_day.length==1) ? "0"+time_day : time_day;
+            var timeStr=tmpArr[1]+" "+time_day+","+tmpArr[4];
 
+            contentModel.append({
+                                    "sGW": jsonObject.contentEntity.sGW,
+                                    "strContTitle": jsonObject.contentEntity.strContTitle,
+                                    "strContAuthor": jsonObject.contentEntity.strContAuthor,
+                                    "strContAuthorIntroduce": jsonObject.contentEntity.strContAuthorIntroduce,
+                                    "sAuth": jsonObject.contentEntity.sAuth,
+                                    "strMarketTime": timeStr,
+                                    "sWbN": jsonObject.contentEntity.sWbN,
+                                    "strContent": jsonObject.contentEntity.strContent
+                                });
+        }catch(e){
+            load(parseInt(tmp_index) + 1);
+        }
     }
 
 }

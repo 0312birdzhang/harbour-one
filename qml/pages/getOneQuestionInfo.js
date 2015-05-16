@@ -1,6 +1,6 @@
 Qt.include("getBeforeDate.js")
 
-
+var tmp_index;
 function load(index) {
     var today = new Date();
     var xhr = new XMLHttpRequest();
@@ -28,13 +28,21 @@ function load(index) {
 function loaded(jsonObject)
 {
     if(jsonObject.result != "SUCCESS" ){
-
     }
     else{
-        strQuestionTitle = jsonObject.questionAdEntity.strQuestionTitle;
-        strQuestionContent = jsonObject.questionAdEntity.strQuestionContent;
-        strAnswerTitle = jsonObject.questionAdEntity.strAnswerTitle;
-        strAnswerContent = jsonObject.questionAdEntity.strAnswerContent;
+        try{
+            var tmpArr = new Date(jsonObject.questionAdEntity.strQuestionMarketTime).toString().split(" ");
+            var time_day = tmpArr[2];
+            time_day = (time_day.length==1) ? "0"+time_day : time_day;
+            var timeStr=tmpArr[1]+" "+time_day+","+tmpArr[4];
+            strQuestionTitle = jsonObject.questionAdEntity.strQuestionTitle;
+            strQuestionContent = jsonObject.questionAdEntity.strQuestionContent;
+            strAnswerTitle = jsonObject.questionAdEntity.strAnswerTitle;
+            strAnswerContent = jsonObject.questionAdEntity.strAnswerContent;
+            strQuestionMarketTime = timeStr;
+        }catch(e){
+            load(parseInt(tmp_index) + 1);
+        }
     }
 
 }

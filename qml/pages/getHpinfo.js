@@ -1,6 +1,6 @@
 Qt.include("getBeforeDate.js")
 
-
+var tmp_index;
 function load(index) {
     var today = new Date();
     homeModel.clear();
@@ -32,15 +32,43 @@ function loaded(jsonObject)
 
     }
     else{
-        homeModel.append({
-                             "strHpId": jsonObject.hpEntity.strHpId,
-                             "strHpTitle": jsonObject.hpEntity.strHpTitle,
-                             "strThumbnailUrl": jsonObject.hpEntity.strThumbnailUrl,
-                             "strAuthor": jsonObject.hpEntity.strAuthor,
-                             "strContent": jsonObject.hpEntity.strContent,
-                             "strMarketTime": jsonObject.hpEntity.strMarketTime
-                    });
-        //console.log("strAuthor"+jsonObject.hpEntity.strAuthor);
+        try{
+            var tmpArr = jsonObject.hpEntity.strAuthor.split("&");
+            var imgName=tmpArr[0];
+            var authorName=tmpArr[1];
+            if(jsonObject.hpEntity.strContent.indexOf("from")>0){
+                tmpArr = jsonObject.hpEntity.strContent.split("from");
+                var contentStr=tmpArr[0];
+                var contentFrom="<i>from</i> "+tmpArr[1];
+            }else if(jsonObject.hpEntity.strContent.indexOf("by")>0){
+                tmpArr = jsonObject.hpEntity.strContent.split("by");
+                var contentStr=tmpArr[0];
+                var contentFrom="<i>by</i> "+tmpArr[1];
+            }else{
+                var contentStr=tmpArr[0];
+                var contentFrom="";
+            }
+            tmpArr = new Date(jsonObject.hpEntity.strMarketTime).toString().split(" ");
+            var time_day=tmpArr[2];
+            time_day = (time_day.length==1) ? "0"+time_day : time_day;
+            var time_month_year=tmpArr[1]+" "+tmpArr[4]
+            homeModel.append({
+                                 "strHpId": jsonObject.hpEntity.strHpId,
+                                 "strHpTitle": jsonObject.hpEntity.strHpTitle,
+                                 "strThumbnailUrl": jsonObject.hpEntity.strThumbnailUrl,
+                                 //                             "strAuthor": jsonObject.hpEntity.strAuthor,
+                                 //                             "strContent": jsonObject.hpEntity.strContent,
+                                 "imgName":imgName,
+                                 "authorName":authorName,
+                                 "contentStr":contentStr,
+                                 "contentFrom":contentFrom,
+                                 "time_day":time_day,
+                                 "time_month_year":time_month_year
+                             });
+           }
+        catch(e){
+            load(parseInt(tmp_index) + 1);
+        }
     }
 
 }

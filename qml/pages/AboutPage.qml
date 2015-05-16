@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: aboutPage;
-    //allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
 
 
 
@@ -16,7 +16,7 @@ Page {
 
         clip: true;
         contentWidth: width;
-        contentHeight: contentCol.height;
+        contentHeight: contentCol.height + Theme.paddingLarge * 5
 
         Column {
             id: contentCol;
@@ -39,11 +39,10 @@ Page {
             Item { width: 1; height: 1 }
             Label{
                 id:version
-                wrapMode: Text.WordWrap
                 width:parent.width
-                anchors.margins: Theme.paddingLarge
+                horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:"Version 0.1-3"
+                text:qsTr("Version")+" 0.4-1"
 
             }
             Item { width: 1; height: 1 }
@@ -59,9 +58,11 @@ Page {
             Item { width: 1; height: 1 }
             Label{
                 id:copyright
-                text:"本软件是one一个非官网客户端版本，作者:0312birdzhang"
-                width:parent.width - Theme.paddingLarge
+                text:"本软件是one一个非官网客户端版本,作者:0312birdzhang,，API由 夜切 整理，软件桌面图标由 梦影决幻 设计,软件启动图、界面由 蝉曦 设计，然而\
+我只是打酱油的。 "
+                width:parent.width
                 wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignLeft
                 anchors.margins: Theme.paddingLarge
             }
             Item { width: 1; height: 1 }
@@ -70,10 +71,10 @@ Page {
                 wrapMode: Text.WordWrap
                 anchors.margins: Theme.paddingLarge
                 horizontalAlignment: Text.Alignleft
-                width:parent.width - Theme.paddingLarge
-                text:"由于API限制，只能查看10天的内容，感谢夜切整理的API。如果你觉得此软件你有所益处，你可以选择捐赠本人。当然，本软件是完全"
+                width:parent.width
+                text:"由于API限制，只能查看10天的内容。如果你觉得此软件你有所益处，你可以选择捐赠本人。当然，本软件是完全"
                     +"免费的，你可以尽情使用。<br/>"+
-                     "我的支付宝账号:18520399451<br/>Donations are welcome :)"
+                     "  我的支付宝账号:18520399451<br/>Donations are welcome :)"
 
             }
 

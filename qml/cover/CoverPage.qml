@@ -32,20 +32,29 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
+    CoverPlaceholder{
+        id:logo
+        icon.source:"../pages/pics/one.png"
+        //text:"一个"
+    }
+//    Image {
+//        id:logo
+//        y: Theme.paddingLarge
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        source:"../pages/pics/one.png"
+//    }
 
     Image{
-        id:logo
-        source:"cover.png"
         anchors.centerIn: parent
+        anchors.verticalCenterOffset: height/2
+        width: Math.min(parent.width/4*3,sourceSize.width);
+        height: sourceSize.height/sourceSize.width*width;
+        fillMode: Image.PreserveAspectCrop
+        source: "../pages/pics/welcome_image_2.png"
     }
-    Label{
-        text:"一个"
-        anchors.top:logo.bottom
-        anchors.topMargin: Theme.paddingMedium
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-
 }
+
+
+
 
 

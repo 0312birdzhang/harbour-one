@@ -14,12 +14,10 @@ TARGET = harbour-one
 
 CONFIG += sailfishapp
 
-SOURCES += src/harbour-one.cpp \
-    src/cache.cpp
+SOURCES += src/harbour-one.cpp
 
 OTHER_FILES += qml/harbour-one.qml \
     qml/cover/CoverPage.qml \
-    rpm/harbour-one.changes.in \
     rpm/harbour-one.spec \
     rpm/harbour-one.yaml \
     translations/*.ts \
@@ -34,12 +32,15 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/QuestionPage.qml \
     qml/pages/SignalCenter.qml \
     qml/pages/Notification.qml \
-    qml/pages/CacheImage.qml \
     qml/pages/getHpinfo.js \
     qml/pages/getOneContentInfo.js \
     qml/pages/getOneQuestionInfo.js \
     qml/cover/cover.png \
-    qml/pages/getBeforeDate.js
+    qml/pages/getBeforeDate.js \
+    rpm/harbour-one.changes \
+    qml/pages/py/main.py \
+    qml/pages/md5.js \
+    qml/pages/MainPage.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -47,6 +48,5 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-one-de.ts \
                 translations/harbour-one-zh_CN.ts
 
-HEADERS += \
-    src/cache.h
+HEADERS +=
 

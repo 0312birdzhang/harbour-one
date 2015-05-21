@@ -5,7 +5,11 @@
     <name>AboutPage</name>
     <message>
         <source>About</source>
-        <translation type="unfinished">关于</translation>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation>版本</translation>
     </message>
 </context>
 <context>
@@ -16,7 +20,7 @@
     </message>
     <message>
         <source>Author/</source>
-        <translation>作者</translation>
+        <translation type="vanished">作者</translation>
     </message>
 </context>
 <context>
@@ -57,6 +61,22 @@
     <message>
         <source>Network Time Out&gt; &lt;</source>
         <translation>网络超时&gt; &lt;</translation>
+    </message>
+    <message>
+        <source>Successed</source>
+        <translation type="vanished">保存成功</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>保存失败</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>未知问题</translation>
+    </message>
+    <message>
+        <source>Successed saved to ~/Pictures/save/One/</source>
+        <translation>成功保存到~/Pictures/save/One/ </translation>
     </message>
 </context>
 </TS>

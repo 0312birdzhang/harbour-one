@@ -1,4 +1,5 @@
 Qt.include("getBeforeDate.js")
+Qt.include("md5.js")
 
 var tmp_index;
 function load(index) {

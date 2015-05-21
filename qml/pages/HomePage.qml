@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import io.thp.pyotherside 1.4
 import "getHpinfo.js" as Script
 import "md5.js" as MD5
 Item {
@@ -93,23 +94,41 @@ Item {
                     color: "#66ffffff"
                 }
             }
-            CacheImage{
+            Image{
                 id:thumbnail
                 asynchronous: true
-                sourceUncached: strThumbnailUrl
                 fillMode: Image.PreserveAspectFit;
                 width:  parent.width - Theme.paddingMedium*2
+                Python{
+                    id:imgpy
+                     Component.onCompleted: {
+                     addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
+                     imgpy.importModule('main', function () {
+                            call('main.cacheImg',[strThumbnailUrl,MD5.hex_md5(strThumbnailUrl)],function(result){
+                                 thumbnail.source = result;
+                                console.log("local path:"+result)
+                            });
+                   })
+                  }
+                }
+                Image{
+
+                    anchors.fill: parent;
+                    source: "image://theme/icon-m-refresh";
+                    visible: parent.status==Image.Loading;
+                }
                 anchors{
                     top: vol.bottom;
                     topMargin: Theme.paddingLarge
                     horizontalCenter: parent.horizontalCenter
                 }
                 height: parent.width *3/4
-                source: strThumbnailUrl
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
-                                              {imgUrl: strThumbnailUrl} );
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
+                                              {imgUrl: thumbnail.source} );
+                           }
                     onPressAndHold: {
                         py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
 
@@ -202,7 +221,6 @@ Item {
                     color: "#1affffff"
                     Label{
                         id:content
-                        //visible: !selectDate.open
                         text:contentStr
                         width:parent.width
                         wrapMode: Text.WordWrap

@@ -34,14 +34,11 @@
 #include <QQuickView>
 #include <QGuiApplication>
 #include <sailfishapp.h>
-#include "cache.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication *app = SailfishApp::application(argc, argv);
-    Cache *imageCache = new Cache("one",app);
     QScopedPointer<QQuickView> view(SailfishApp::createView());
-    view->rootContext()->setContextProperty("imageCache", imageCache);
     view->setSource(SailfishApp::pathTo("qml/harbour-one.qml"));
     view->show();
     return app->exec();

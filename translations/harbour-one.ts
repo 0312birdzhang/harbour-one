@@ -7,15 +7,15 @@
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ContentPage</name>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Author/</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -56,6 +56,18 @@
     <name>harbour-one</name>
     <message>
         <source>Network Time Out&gt; &lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successed saved to ~/Pictures/save/One/</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

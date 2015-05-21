@@ -30,22 +30,24 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-//import com.nokia.extras 1.1
 import "pages"
 import "pages/main.js" as Script
+import io.thp.pyotherside 1.4
+
 ApplicationWindow
 {
 
     id: app;
     property int allindex: 0
     property int num:0
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
 //    property int homeindex: 0
 //    property int contentindex: 0
 //    property int questionindex: 0
+    property string homepageImg:"image://theme/icon-m-refresh"
     initialPage:Component {
-        HomePage {
-                id: homePage;
-               }
+        MainPage{id:mainPage}
+
     }
     SignalCenter { id: signalCenter; }
 
@@ -96,6 +98,48 @@ ApplicationWindow
             var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
         }
     }
+
+    Python{
+        id:py
+        Component.onCompleted: { // this action is triggered when the loading of this component is finished
+            addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
+            py.importModule('main', function () { // imports the Python module
+            });
+        }
+
+        //注册保存方法
+        function saveImg(basename,volname){
+            call('main.saveImg',[basename,volname],function(result){
+                return result
+            })
+        }
+        //注册缓存方法
+        function cacheImg(url,md5name){
+            call('main.cacheImg',[url,md5name],function(result){
+                homepageImg = result;
+                console.log("local path:"+result)
+            })
+            //return "image://theme/icon-m-refresh"
+        }
+        onError: signalCenter.showMessage(traceback)
+        onReceived: {
+            console.log('Event: ' + data);
+            var sendMsg="";
+            switch(data.toString()){
+            case "1":
+                sendMsg=qsTr("Successed saved to ~/Pictures/save/One/")
+                break;
+            case "-1":
+                sendMsg=qsTr("Error")
+                break;
+            default:
+                sendMsg=qsTr("Unknown")
+            }
+
+            signalCenter.showMessage(sendMsg)
+        }
+    }
+
     Timer {
         id: processingTimer;
         interval: 30000;

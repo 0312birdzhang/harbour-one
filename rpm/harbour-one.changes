@@ -8,32 +8,37 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Fri Mar 15 2015 BirdZhang <0312birdzhang@gmail.com> 0.4.1
+* Sun May 24 2015 BirdZhang <0312birdzhang@gmail.com> 0.4.2
+- 保存图片方式添加图标提示
+
+- 在关于页面添加清理缓存按钮
+
+* Fri May 15 2015 BirdZhang <0312birdzhang@gmail.com> 0.4.1
 - 更改页面滑动切换方式
 
 - 修复保存图片没有后缀的问题，添加保存图片属于哪一天的时间
 
-* Mon Mar 11 2015 BirdZhang <0312birdzhang@gmail.com> 0.3.1
+* Mon May 11 2015 BirdZhang <0312birdzhang@gmail.com> 0.3.1
 - 添加保存图片功能
 
-* Mon Mar 7 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.3
+* Mon May 7 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.3
 - 彻底修复晚上0点之后首页显示空白的bug
 
-* Mon Mar 5 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.2
+* Mon May 5 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.2
 - 修复日期只有两天的不过
 
 - 更改选择日期方式为上拉菜单
 
-* Mon Mar 4 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.1
+* Mon May 4 2015 BirdZhang <0312birdzhang@gmail.com> 0.2.1
 - 由蝉曦调整界面UI
 
-* Mon Mar 4 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.3
+* Mon May 4 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.3
 - 修复晚上0点之后不会显示的bug
 
-* Mon Mar 3 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.2
+* Mon May 3 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.2
 - 更改图标
 
-* Mon Mar 2 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.1
+* Mon May 2 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.1
 - init
 
 

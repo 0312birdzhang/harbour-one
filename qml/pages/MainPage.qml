@@ -83,6 +83,7 @@ Page{
             timerDisplay.start();
         }
         num+=1;
+
     }
 
 }

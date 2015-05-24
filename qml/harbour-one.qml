@@ -109,6 +109,7 @@ ApplicationWindow
 
         //注册保存方法
         function saveImg(basename,volname){
+            console.log("img:"+volname+",basename:"+basename);
             call('main.saveImg',[basename,volname],function(result){
                 return result
             })
@@ -121,6 +122,12 @@ ApplicationWindow
             })
             //return "image://theme/icon-m-refresh"
         }
+        function clearCache(){
+            call('main.clearImg',[],function(result){
+                   return result
+            })
+        }
+
         onError: signalCenter.showMessage(traceback)
         onReceived: {
             console.log('Event: ' + data);
@@ -131,6 +138,9 @@ ApplicationWindow
                 break;
             case "-1":
                 sendMsg=qsTr("Error")
+                break;
+            case "2":
+                sendMsg=qsTr("Cleared")
                 break;
             default:
                 sendMsg=qsTr("Unknown")
@@ -148,8 +158,6 @@ ApplicationWindow
 
     Component.onCompleted: {
         Script.signalCenter = signalCenter;
-        //Script.utility = utility;
-        //pageStack.push(mainPage, null, true);
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

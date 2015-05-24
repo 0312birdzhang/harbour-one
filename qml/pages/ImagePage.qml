@@ -1,10 +1,13 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "getHpinfo.js" as Script
+import "md5.js" as MD5
 Page {
-    id: root
+    id: imagePage
 
     property string imgUrl
+    property string strHpTitle: ""
+    property string strThumbnailUrl: ""
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
 
     Flickable {
@@ -12,7 +15,7 @@ Page {
         anchors.fill: parent
         contentWidth: imageContainer.width; contentHeight: imageContainer.height
         clip: true
-        onHeightChanged: if (imagePreview.status === Image.Ready) imagePreview.fitToScreen()
+        onHeightChanged: if (imagePreview.status === Image.Ready) imagePreview.fitToScreen();
 
         Item {
             id: imageContainer
@@ -119,7 +122,7 @@ Page {
 
             Item {
                 height: childrenRect.height
-                width: root.width
+                width: imagePage.width
 
                 BusyIndicator {
                     id: imageLoadingIndicator
@@ -150,4 +153,18 @@ Page {
     }
 
     VerticalScrollDecorator { flickable: imageFlickable }
+    IconButton {
+        anchors{
+            right: imagePage.right;
+            rightMargin: Theme.paddingLarge;
+            bottom: imagePage.bottom;
+            bottomMargin: Theme.paddingLarge;
+        }
+        width: Theme.iconSizeMedium+Theme.paddingMedium*2
+
+        icon.source: "image://theme/icon-m-cloud-download"
+        onClicked: {
+            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
+        }
+    }
 }

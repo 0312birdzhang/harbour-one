@@ -11,6 +11,14 @@
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>clear cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Begin clear cache...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ContentPage</name>
@@ -68,6 +76,10 @@
     </message>
     <message>
         <source>Successed saved to ~/Pictures/save/One/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cleared</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -16,6 +16,7 @@ Item {
             Component.onCompleted: {
                 Script.load(allindex)
                 Script.tmp_index=allindex;
+
             }
 
             ListModel {

@@ -106,16 +106,18 @@ Item {
                      imgpy.importModule('main', function () {
                             call('main.cacheImg',[strThumbnailUrl,MD5.hex_md5(strThumbnailUrl)],function(result){
                                  thumbnail.source = result;
+                                 waitingIcon.visible = false;
                                 console.log("local path:"+result)
                             });
                    })
                   }
                 }
                 Image{
-
-                    anchors.fill: parent;
+                    id:waitingIcon
+                    anchors.centerIn: parent
+                    fillMode: Image.PreserveAspectFit
                     source: "image://theme/icon-m-refresh";
-                    visible: parent.status==Image.Loading;
+                    //visible: parent.status==Image.Loading
                 }
                 anchors{
                     top: vol.bottom;
@@ -127,7 +129,9 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
-                                              {imgUrl: thumbnail.source} );
+                                              {"imgUrl": thumbnail.source,
+                                                "strThumbnailUrl":strThumbnailUrl,
+                                                "strHpTitle":strHpTitle} );
                            }
                     onPressAndHold: {
                         py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");

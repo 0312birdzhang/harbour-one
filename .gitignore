@@ -1,3 +1,4 @@
 *.user
 qml/pages/pics/*.db
 *.user.*
+*.db

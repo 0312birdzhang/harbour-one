@@ -11,6 +11,14 @@
         <source>Version</source>
         <translation>版本</translation>
     </message>
+    <message>
+        <source>clear cache</source>
+        <translation>清理缓存</translation>
+    </message>
+    <message>
+        <source>Begin clear cache...</source>
+        <translation>开始清理缓存</translation>
+    </message>
 </context>
 <context>
     <name>ContentPage</name>
@@ -77,6 +85,10 @@
     <message>
         <source>Successed saved to ~/Pictures/save/One/</source>
         <translation>成功保存到~/Pictures/save/One/ </translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation>缓存已清理</translation>
     </message>
 </context>
 </TS>

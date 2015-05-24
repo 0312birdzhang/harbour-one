@@ -43,3 +43,6 @@ def downloadImg(downname,downurl):
     #0则安装成功
     retval = p.wait()
 
+def clearImg():
+    shutil.rmtree(cachePath)
+    pyotherside.send("2")

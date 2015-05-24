@@ -40,7 +40,10 @@ OTHER_FILES += qml/harbour-one.qml \
     rpm/harbour-one.changes \
     qml/pages/py/main.py \
     qml/pages/md5.js \
-    qml/pages/MainPage.qml
+    qml/pages/MainPage.qml \
+    qml/pages/LabelText.qml \
+    qml/pages/py/basedir.py \
+    qml/pages/py/__init__.py
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -48,5 +51,4 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-one-de.ts \
                 translations/harbour-one-zh_CN.ts
 
-HEADERS +=
 

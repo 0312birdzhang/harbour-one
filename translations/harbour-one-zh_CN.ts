@@ -19,6 +19,18 @@
         <source>Begin clear cache...</source>
         <translation>开始清理缓存</translation>
     </message>
+    <message>
+        <source>Author</source>
+        <translation>作者</translation>
+    </message>
+    <message>
+        <source>Guide</source>
+        <translation>使用指引</translation>
+    </message>
+    <message>
+        <source>Donation</source>
+        <translation>捐助</translation>
+    </message>
 </context>
 <context>
     <name>ContentPage</name>

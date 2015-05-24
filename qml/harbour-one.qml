@@ -32,7 +32,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 import "pages/main.js" as Script
-import io.thp.pyotherside 1.4
+import io.thp.pyotherside 1.3
 
 ApplicationWindow
 {

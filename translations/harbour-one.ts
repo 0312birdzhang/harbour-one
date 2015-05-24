@@ -19,6 +19,18 @@
         <source>Begin clear cache...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Donation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ContentPage</name>

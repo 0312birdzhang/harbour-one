@@ -31,7 +31,7 @@ Page {
             Image{
                 id:logo
                 fillMode: Image.Stretch;
-                source:"pics/one_title.png"
+                source:"pics/welcome_image_2.png"
                 anchors.horizontalCenter: parent.horizontalCenter;
             }
 
@@ -44,36 +44,34 @@ Page {
                 text:qsTr("Version")+" 0.4-2"
 
             }
-            Item { width: 1; height: 1 }
-            Label{
-                id:author
-                wrapMode: Text.WordWrap
-                width:parent.width
-                anchors.margins: Theme.paddingLarge
-                horizontalAlignment: Text.AlignHCenter
-                text:"「ONE一个」每天只为你准备一张图片、一篇文字和一个问答"
+            Item{width:1;height:1}
+            LabelText {
+                anchors {
+                    left: parent.left
+                    margins: Theme.paddingLarge
+                }
+                label: qsTr("About")
+                text: "「ONE一个」每天只为你准备一张图片、一篇文字和一个问答"
 
             }
-            Item { width: 1; height: 1 }
-            Label{
-                id:copyright
-                text:"本软件是one一个非官网客户端版本,作者:0312birdzhang,，API由 夜切 整理，软件桌面图标由 梦影决幻 设计,软件启动图、界面由 蝉曦 设计，然而\
-我只是打酱油的。 "
-                width:parent.width
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-                anchors.margins: Theme.paddingLarge
+            Item{width:1;height:1}
+            LabelText {
+                label: qsTr("Author")
+                text: "本软件是one一个非官网客户端版本,作者:0312birdzhang,，API由 夜切 整理，软件桌面图标由 梦影决幻 设计,软件启动图、界面由 蝉曦 设计，我只是打酱油的^_^"
+
             }
-            Item { width: 1; height: 1 }
-            Label{
-                id:donate
-                wrapMode: Text.WordWrap
-                anchors.margins: Theme.paddingLarge
-                horizontalAlignment: Text.AlignHCenter
-                width:parent.width
+            Item{width:1;height:1}
+            LabelText {
+                label: qsTr("Donation")
                 text:"由于API限制，只能查看10天的内容。如果你觉得此软件你有所益处，你可以选择捐赠本人。当然，本软件是完全"
                     +"免费的，你可以尽情使用。<br/>"+
                      "  我的支付宝账号:18520399451 <br/> Donations are welcome :)"
+
+            }
+            Item{width:1;height:1}
+            LabelText {
+                label: qsTr("Guide")
+                text: "在首页长按图片或者查看图片大图点击右下角的下载按钮都可以将图片保存到Pictures/save/One/目录下；左右滑动切换每天为你准备的图片、文字、问答"
 
             }
             Item{width:1;height:1}

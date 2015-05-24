@@ -1,8 +1,10 @@
 import os,sys,shutil
 import pyotherside
 import subprocess
-cachePath="/home/nemo/.cache/harbour-one/harbour-one/one/"
-savePath="/home/nemo/Pictures/save/One/"
+from basedir import *
+
+cachePath=XDG_CACHE_HOME+"/harbour-one/harbour-one/one/"
+savePath=HOME+"/Pictures/save/One/"
 
 def saveImg(basename,volname):
     try:

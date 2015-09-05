@@ -2,10 +2,17 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
 import "getHpinfo.js" as Script
+import "storage.js" as Storage
 import "md5.js" as MD5
 Item {
     id: homePage;
     height: mainView.height; width: mainView.width
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: !PageStatus.Active
+        size: BusyIndicatorSize.Large
+    }
     SilicaListView{
         id:listview
         anchors.fill: parent
@@ -52,6 +59,22 @@ Item {
                 text:qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
+            MenuItem{
+                text:qsTr("Favorites")
+                onClicked: pageStack.push(Qt.resolvedUrl("FavoritePage.qml"))
+            }
+
+            MenuItem{
+                text:qsTr("Add to favorite")
+                enabled: homeModel.count>0;
+                onClicked:{
+                    if(Storage.addFavorite(homeModel.get(0).day,homeModel.get(0).strHpTitle)){
+                        addNotification(qsTr("Add to favorite success "))
+                    }else{
+                        addNotification(qsTr("Add to favorite failed"))
+                    }
+                }
+            }
         }
         Component.onCompleted: {
             Script.load(allindex)
@@ -59,6 +82,7 @@ Item {
             listview.model = homeModel;
 
         }
+
 
         ListModel {
             id: homeModel;
@@ -215,7 +239,7 @@ Item {
                 Rectangle {
                     id:input
                     //width:parent.width-datetime2.implicitWidth
-                    height: contentExt.height + content .height+Theme.paddingMedium*3
+                    height: contentExt.height + content .height+Theme.paddingMedium*4
                     anchors{
                         left: date_lab.right;
                         right: parent.right;
@@ -237,6 +261,13 @@ Item {
                             right:parent.right
                             margins: Theme.paddingMedium
                         }
+                        MouseArea{
+                            anchors.fill: parent
+                            onPressAndHold: {
+                                Clipboard.text = contentStr;
+                                addNotification("已复制到剪切板",2);
+                            }
+                        }
                     }
                     Label{
                         id:contentExt
@@ -247,7 +278,6 @@ Item {
                         horizontalAlignment: Text.AlignRight
                         anchors{
                             top:content.bottom
-                            left:parent.left
                             right:parent.right
                             margins: Theme.paddingMedium
                         }

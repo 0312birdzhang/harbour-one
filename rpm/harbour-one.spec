@@ -13,8 +13,8 @@ Name:       harbour-one
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    One by Hanhan
-Version:    0.4
-Release:    2
+Version:    0.6
+Release:    1
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
@@ -29,7 +29,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my SailfishOS Application
+「ONE一个」每天只为你准备一张图片、一篇文字和一个问答
 
 
 %prep

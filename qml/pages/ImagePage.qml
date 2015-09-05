@@ -164,7 +164,7 @@ Page {
 
         icon.source: "image://theme/icon-m-cloud-download"
         onClicked: {
-            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
+            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex)));
         }
     }
 }

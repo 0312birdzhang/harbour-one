@@ -13,6 +13,7 @@ function initialize(){
 }
 
 function addFavorite(date, title){
+    console.log(date,title);
     var db = getDatabase();
     var res = false;
     db.transaction(function(tx){

@@ -2,6 +2,7 @@ Qt.include("getBeforeDate.js")
 Qt.include("md5.js")
 
 var tmp_index;
+var retry_count=0;
 function load(index) {
     var today = new Date();
     homeModel.clear();
@@ -64,11 +65,15 @@ function loaded(jsonObject)
                                  "contentStr":contentStr,
                                  "contentFrom":contentFrom,
                                  "time_day":time_day,
-                                 "time_month_year":time_month_year
+                                 "time_month_year":time_month_year,
+                                 "day":jsonObject.hpEntity.strMarketTime
                              });
            }
         catch(e){
-            load(parseInt(tmp_index) + 1);
+            if(retry_count < 2){
+                load(parseInt(tmp_index) + 1);
+            }
+            retry_count+=1;
         }
     }
 

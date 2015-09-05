@@ -38,9 +38,20 @@
         <source>Content</source>
         <translation>文章</translation>
     </message>
+</context>
+<context>
+    <name>FavoritePage</name>
     <message>
-        <source>Author/</source>
-        <translation type="vanished">作者</translation>
+        <source>Favorites</source>
+        <translation>收藏夹</translation>
+    </message>
+    <message>
+        <source>Removing...</source>
+        <translation>删除中...</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -56,6 +67,22 @@
     <message>
         <source>About</source>
         <translation>关于</translation>
+    </message>
+    <message>
+        <source>Add to favorite</source>
+        <translation>添加到收藏夹</translation>
+    </message>
+    <message>
+        <source>Add to favorite success </source>
+        <translation>添加成功</translation>
+    </message>
+    <message>
+        <source>Add to favorite failed</source>
+        <translation>添加失败</translation>
+    </message>
+    <message>
+        <source>Favorites</source>
+        <translation>收藏夹</translation>
     </message>
 </context>
 <context>
@@ -81,10 +108,6 @@
     <message>
         <source>Network Time Out&gt; &lt;</source>
         <translation>网络超时&gt; &lt;</translation>
-    </message>
-    <message>
-        <source>Successed</source>
-        <translation type="vanished">保存成功</translation>
     </message>
     <message>
         <source>Error</source>

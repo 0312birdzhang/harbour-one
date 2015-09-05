@@ -11,6 +11,12 @@ Item {
     property var strAnswerContent:""
     property var strQuestionMarketTime:""
     height: mainView.height; width: mainView.width
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: !PageStatus.Active
+        size: BusyIndicatorSize.Large
+    }
     Component.onCompleted: {
         Script.load(allindex);
         Script.tmp_index=allindex;

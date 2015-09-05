@@ -32,6 +32,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 import "pages/main.js" as Script
+import "pages/storage.js" as Storage
 import io.thp.pyotherside 1.3
 
 ApplicationWindow
@@ -40,12 +41,11 @@ ApplicationWindow
     id: app;
     property int allindex: 0
     property int num:0
+    property var notification;
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
-//    property int homeindex: 0
-//    property int contentindex: 0
-//    property int questionindex: 0
     property string homepageImg:"image://theme/icon-m-refresh"
     initialPage:Component {
+        id:firstpage
         MainPage{id:mainPage}
 
     }
@@ -90,9 +90,25 @@ ApplicationWindow
         }
     }
 
+//    function addNotification(message) {
+//        notification.previewBody = "One";
+//        notification.previewSummary = message;
+//        notification.publish();
+//    }
+
+    function gotoHomePage(){
+        //pageStack.pop(pageStack.previousPage());
+        //pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"))
+        while(pageStack.depth>1) {
+            pageStack.pop(undefined, PageStackAction.Immediate);
+        }
+        pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"));
+    }
+
+
     function addNotification(inText, inTime) {
         var text = inText == undefined ? "" : inText
-        var time = inTime == undefined ? 4 : inTime
+        var time = inTime == undefined ? 3 : inTime
         var noti = Qt.createComponent("pages/Notification.qml")
         if (noti.status == Component.Ready) {
             var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
@@ -109,7 +125,6 @@ ApplicationWindow
 
         //注册保存方法
         function saveImg(basename,volname){
-            console.log("img:"+volname+",basename:"+basename);
             call('main.saveImg',[basename,volname],function(result){
                 return result
             })
@@ -158,6 +173,8 @@ ApplicationWindow
 
     Component.onCompleted: {
         Script.signalCenter = signalCenter;
+        notification = Qt.createQmlObject("import org.nemomobile.notifications 1.0; Notification{}", app)
+        Storage.initialize();
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

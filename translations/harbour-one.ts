@@ -40,6 +40,21 @@
     </message>
 </context>
 <context>
+    <name>FavoritePage</name>
+    <message>
+        <source>Favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HomePage</name>
     <message>
         <source>Index</source>
@@ -51,6 +66,22 @@
     </message>
     <message>
         <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorite success </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to favorite failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Favorites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

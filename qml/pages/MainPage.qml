@@ -29,6 +29,13 @@ import "getHpinfo.js" as Script
 Page{
     id: mainPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
+
+    BusyIndicator {
+        running: !PageStatus.Active
+        size: BusyIndicatorSize.Large
+        anchors.centerIn: parent
+    }
+
     SlideshowView {
         id: mainView
         //itemWidth: width
@@ -47,7 +54,7 @@ Page{
         id: splash
         visible: false
         anchors.fill: parent;
-        color: "#08202c"
+        color: "#483D8B"
         Image {
             id:wel1
             anchors.horizontalCenter: parent.horizontalCenter
@@ -72,7 +79,7 @@ Page{
     Timer {
         id: timerDisplay
         running: true; repeat: false; triggeredOnStart: false
-        interval: 2 * 1000
+        interval: 1 * 1000
         onTriggered: {
             splash.visible = false;
         }

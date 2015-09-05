@@ -8,6 +8,17 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Sat Sep 5 2015 BirdZhang <0312birdzhang@gmail.com> 0.6.1
+- 添加收藏夹功能
+- 更改启动背景颜色
+* Sat Sep 5 2015 BirdZhang <0312birdzhang@gmail.com> 0.5.2
+- 修复没有内容时频繁访问链接的bug
+
+
+* Fri Jul 24 2015 BirdZhang <0312birdzhang@gmail.com> 0.5.1
+- 添加复制首页文字功能
+- 更好下载图片方式
+
 * Sun May 24 2015 BirdZhang <0312birdzhang@gmail.com> 0.4.2
 - 保存图片方式添加图标提示
 

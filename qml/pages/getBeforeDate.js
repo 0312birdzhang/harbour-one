@@ -19,3 +19,14 @@ function getBeforeDate(d,n){
     var s = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
     return s;
 }
+
+//获取两个日期时间差多少天
+function getDiffDay(startday){
+    var a = new Date(startday).getTime();
+    var b= new Date().getTime();
+    var c = 60*60*24*1000;
+    var res = (b - a)/c;
+    return parseInt(res);
+}
+
+

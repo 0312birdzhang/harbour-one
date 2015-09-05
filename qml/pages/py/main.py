@@ -1,16 +1,19 @@
 import os,sys,shutil
 import pyotherside
 import subprocess
+import urllib
+import urllib.request
+import imghdr
 from basedir import *
 
 cachePath=os.path.join(XDG_CACHE_HOME, "harbour-one", "harbour-one","one","")
 savePath=os.path.join(HOME, "Pictures", "save","One","")
 
-def saveImg(basename,volname):
+def saveImg(md5name,savename):
     try:
-        realpath=cachePath+basename+".jpg"
+        realpath=cachePath+md5name
         isExis()
-        shutil.copy(realpath,savePath+volname)
+        shutil.copy(realpath,savePath+savename+"."+findImgType(realpath))
         pyotherside.send("1")
     except:
         pyotherside.send("-1")
@@ -25,7 +28,7 @@ def isExis():
     缓存图片
 """
 def cacheImg(url,md5name):
-    cachedFile = cachePath+md5name+".jpg"
+    cachedFile = cachePath+md5name
     if os.path.exists(cachedFile):
         pass
     else:
@@ -34,6 +37,7 @@ def cacheImg(url,md5name):
         else:
             os.makedirs(cachePath)
         downloadImg(cachedFile,url)
+    #判断图片格式
     return cachedFile
 
 """
@@ -41,12 +45,15 @@ def cacheImg(url,md5name):
 
 """
 def downloadImg(downname,downurl):
-    p = subprocess.Popen("curl -o "+downname+" "+downurl,shell=True)
-    #0则安装成功
-    retval = p.wait()
-"""
-   清理缓存
-"""
+    try:
+        urllib.request.urlretrieve(downurl,downname)
+    except urllib.error.ContentTooShortError:
+        pass
 def clearImg():
     shutil.rmtree(cachePath)
     pyotherside.send("2")
+
+#判断图片格式
+def findImgType(cachedFile):
+    imgType = imghdr.what(cachedFile)
+    return imgType

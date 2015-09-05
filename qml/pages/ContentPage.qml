@@ -6,6 +6,12 @@ Item {
     id: contenPage;
     //allowedOrientations: Orientation.Portrait | Orientation.Landscape
     height: mainView.height; width: mainView.width
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: !PageStatus.Active
+        size: BusyIndicatorSize.Large
+    }
     SilicaListView{
             id:listview
             anchors.fill: parent

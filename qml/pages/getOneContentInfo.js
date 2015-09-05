@@ -1,6 +1,7 @@
 Qt.include("getBeforeDate.js")
 
 var tmp_index;
+var retry_count=0;
 function load(index) {
     var today = new Date();
     contentModel.clear();
@@ -49,7 +50,10 @@ function loaded(jsonObject)
                                     "strContent": jsonObject.contentEntity.strContent
                                 });
         }catch(e){
-            load(parseInt(tmp_index) + 1);
+            if(retry_count < 2){
+                load(parseInt(tmp_index) + 1);
+            }
+            retry_count+=1;
         }
     }
 

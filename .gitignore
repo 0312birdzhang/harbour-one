@@ -36,3 +36,7 @@ Makefile*
 # Python
 *.pyc
 *.pyo
+
+#compile file
+*.list
+RPM/*.*

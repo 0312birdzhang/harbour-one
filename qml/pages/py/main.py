@@ -5,7 +5,7 @@ import urllib
 import urllib.request
 import imghdr
 from basedir import *
-import htmlparse
+from htmlparse import *
 
 cachePath=os.path.join(XDG_CACHE_HOME, "harbour-one", "harbour-one","one","")
 savePath=os.path.join(HOME, "Pictures", "save","One","")
@@ -60,5 +60,5 @@ def findImgType(cachedFile):
     imgType = imghdr.what(cachedFile)
     return imgType
 
-def getTodayContent():
-    return queryContent(str(vol))
+def getTodayContent(vol):
+    return queryContent(vol)

@@ -1,15 +1,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "getOneQuestionInfo.js" as Script
+
 
 Item {
     id: questionPage;
-    //allowedOrientations: Orientation.Portrait | Orientation.Landscape
-    property var strQuestionTitle:""
-    property var strQuestionContent:""
-    property var strAnswerTitle:""
-    property var strAnswerContent:""
-    property var strQuestionMarketTime:""
     height: mainView.height; width: mainView.width
     BusyIndicator {
         id: busyIndicator
@@ -17,10 +11,7 @@ Item {
         running: !PageStatus.Active
         size: BusyIndicatorSize.Large
     }
-    Component.onCompleted: {
-        Script.load(allindex);
-        Script.tmp_index=allindex;
-    }
+
 
     SilicaFlickable{
         id:listview
@@ -39,7 +30,7 @@ Item {
                 VerticalScrollDecorator {}
                 Label{
                     id:date_time
-                    text:strQuestionMarketTime
+                    text:objects.dom+","+objects.may
                     color: Theme.secondaryColor
                     font.pixelSize:Theme.fontSizeExtraSmall
                     horizontalAlignment: Text.AlignLeft
@@ -83,7 +74,7 @@ Item {
                 }
                 Label{
                     id:questionTitle
-                    text:strQuestionTitle
+                    text:objects.cuestion_title
                     wrapMode: Text.WordWrap
                     font.pixelSize: Theme.fontSizeMedium
                     font.letterSpacing: 2;
@@ -100,7 +91,7 @@ Item {
                 }
                 Label{
                     id:questionContent
-                    text:strQuestionContent
+                    text:objects.cuestion_question
                     wrapMode: Text.WordWrap
                     font.pixelSize:Theme.fontSizeSmall
                     font.letterSpacing: 2;
@@ -137,7 +128,7 @@ Item {
                 }
                 Label{
                     id:answerTitle
-                    text:strAnswerTitle
+                    text:objects.cuestion_answerer
                     wrapMode: Text.WordWrap
                     width: parent.width
                     font.pixelSize: Theme.fontSizeMedium
@@ -155,8 +146,9 @@ Item {
                 }
                 Label{
                     id:answerContent
-                    text:strAnswerContent
+                    text:objects.cuestion_contenians
                     wrapMode: Text.WordWrap
+                    textFormat: Text.RichText
                     font.pixelSize:Theme.fontSizeSmall
                     font.letterSpacing: 2;
                     //color: Theme.highlightColor

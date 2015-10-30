@@ -8,6 +8,10 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Sat Oct 31 2015 BirdZhang <0312birdzhang@gmail.com> 0.7.1
+- 改用爬虫获取每天的内容
+- 添加"东西"
+
 * Sat Sep 5 2015 BirdZhang <0312birdzhang@gmail.com> 0.6.1
 - 添加收藏夹功能
 - 更改启动背景颜色

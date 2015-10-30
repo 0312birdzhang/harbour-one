@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "getOneContentInfo.js" as Script
+
 
 Item {
     id: contenPage;
@@ -19,17 +19,7 @@ Item {
                 id:hearer
                 title:qsTr("Content")
             }
-            Component.onCompleted: {
-                Script.load(allindex)
-                Script.tmp_index=allindex;
-
-            }
-
-            ListModel {
-                id: contentModel;
-            }
-
-            model:contentModel
+            model:1
             width: parent.width
             clip:true
             spacing:Theme.paddingMedium
@@ -46,7 +36,7 @@ Item {
                                    + Theme.paddingMedium * 15
                             Label{
                                 id:date_time
-                                text:strMarketTime
+                                text:objects.dom+","+objects.may
                                 color: Theme.secondaryColor
                                 font.pixelSize:Theme.fontSizeExtraSmall
                                 horizontalAlignment: Text.AlignLeft
@@ -84,7 +74,7 @@ Item {
 
                                 Label{
                                     id:gw
-                                    text:sGW
+                                    text:objects.comilla_cerrar
                                     width: listview.width - Theme.paddingMedium*3-Theme.paddingLarge-sgwlab1.implicitWidth-sgwlab2.implicitWidth;
                                     font.pixelSize: Theme.fontSizeExtraSmall
                                     font.letterSpacing: 1;
@@ -106,7 +96,7 @@ Item {
 
                             Label{
                                 id:conttile
-                                text:strContTitle
+                                text:objects.articulo_titulo
                                 width: parent.width
                                 font.pixelSize: Theme.fontSizeMedium
                                 color: Theme.highlightColor
@@ -123,7 +113,7 @@ Item {
                             }
                             Label{
                                 id:author
-                                text:"作者/"+strContAuthor+"\n"
+                                text:objects.articulo_autor
                                 font.bold: true
                                 font.pixelSize:Theme.fontSizeExtraSmall
                                 color: Theme.secondaryColor;
@@ -140,10 +130,12 @@ Item {
                             }
                             Label{
                                 id:content
-                                text:strContent+strContAuthorIntroduce;
+                                text:objects.articulo_contenido
                                 font.pixelSize:Theme.fontSizeSmall
                                 width:parent.width
+                                textFormat: Text.RichText
                                 wrapMode: Text.WordWrap
+
                                 font.letterSpacing: 2;
                                 anchors{
                                     left:parent.left
@@ -155,7 +147,7 @@ Item {
                             }
                             Label{
                                 id:authorinfo
-                                text:sAuth
+                                text:objects.articulo_editor
                                 font.pixelSize:Theme.fontSizeExtraSmall
                                 wrapMode: Text.WordWrap
                                 color: Theme.secondaryColor

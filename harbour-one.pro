@@ -32,20 +32,18 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/QuestionPage.qml \
     qml/pages/SignalCenter.qml \
     qml/pages/Notification.qml \
-    qml/pages/getHpinfo.js \
-    qml/pages/getOneContentInfo.js \
-    qml/pages/getOneQuestionInfo.js \
     qml/cover/cover.png \
     qml/pages/getBeforeDate.js \
     rpm/harbour-one.changes \
     qml/pages/py/main.py \
+    qml/pages/py/htmlparse.py \
     qml/pages/md5.js \
     qml/pages/MainPage.qml \
     qml/pages/LabelText.qml \
     qml/pages/py/basedir.py \
     qml/pages/py/__init__.py \
-    qml/pages/FavoriteWebView.qml \
-    qml/pages/FavoritePage.qml
+    qml/pages/FavoritePage.qml \
+    qml/pages/CosasPage.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

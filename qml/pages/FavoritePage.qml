@@ -65,15 +65,17 @@ Page{
             onClicked: {
                 var day = date.toString();
                 var diffday = JS.getDiffDay(day);
-                if(diffday > 8){
-                    pageStack.push(Qt.resolvedUrl("FavoriteWebView.qml"),{
-                                   "vol":title,
-                                   "day":date
-                               })
-                }else{
-                    allindex=diffday;
-                    gotoHomePage();
-                }
+//                if(diffday > 8){
+//                    pageStack.push(Qt.resolvedUrl("FavoriteWebView.qml"),{
+//                                   "vol":title,
+//                                   "day":date
+//                               })
+//                }else{
+//                    allindex=diffday;
+//                    gotoHomePage();
+//                }
+                var volnum =JS.getDiffDay2(day)
+                py.getDatas(volnum)
             }
         }
           VerticalScrollDecorator {}

@@ -1,9 +1,10 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
-import "getHpinfo.js" as Script
 import "storage.js" as Storage
 import "md5.js" as MD5
+import "getBeforeDate.js" as GetDate
+
 Item {
     id: homePage;
     height: mainView.height; width: mainView.width
@@ -35,7 +36,7 @@ Item {
                     width: parent.width
                     valueText: {
                         var today = new Date();
-                        Script.getBeforeDate(today,Math.abs(9-value))
+                        GetDate.getBeforeDate(today,Math.abs(9-value))
                     }
 
                 }
@@ -45,8 +46,9 @@ Item {
                     anchors.top: dateslider.bottom
                     onClicked: {
                         allindex = Math.abs(dateslider.value -9);
-                        pageStack.replace(Qt.resolvedUrl("MainPage.qml"))
-
+                        console.log("date:"+dateslider.valueText)
+                        var volnum =GetDate.getDiffDay2(dateslider.valueText)
+                        py.getDatas(volnum)
                     }
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -66,9 +68,9 @@ Item {
 
             MenuItem{
                 text:qsTr("Add to favorite")
-                enabled: homeModel.count>0;
                 onClicked:{
-                    if(Storage.addFavorite(homeModel.get(0).day,homeModel.get(0).strHpTitle)){
+                    var day = GetDate.parseDate(objects.dom+" "+objects.may)
+                    if(Storage.addFavorite(day,objects.titulo)){
                         addNotification(qsTr("Add to favorite success "))
                     }else{
                         addNotification(qsTr("Add to favorite failed"))
@@ -76,19 +78,9 @@ Item {
                 }
             }
         }
-        Component.onCompleted: {
-            Script.load(allindex)
-            Script.tmp_index=allindex;
-            listview.model = homeModel;
-
-        }
 
 
-        ListModel {
-            id: homeModel;
-        }
-
-        model:homeModel
+        model:1
         width: parent.width
         clip:true
         cacheBuffer:parent.width
@@ -101,7 +93,7 @@ Item {
                     + Theme.paddingLarge *2
             Label{
                 id:vol
-                text:strHpTitle
+                text:objects.titulo
                 color: Theme.secondaryColor
                 font.pixelSize:Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignLeft
@@ -128,7 +120,7 @@ Item {
                      Component.onCompleted: {
                      addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
                      imgpy.importModule('main', function () {
-                            call('main.cacheImg',[strThumbnailUrl,MD5.hex_md5(strThumbnailUrl)],function(result){
+                            call('main.cacheImg',[objects.imagen,MD5.hex_md5(objects.imagen)],function(result){
                                  thumbnail.source = result;
                                  waitingIcon.visible = false;
                                 console.log("local path:"+result)
@@ -154,11 +146,11 @@ Item {
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
                                               {"imgUrl": thumbnail.source,
-                                                "strThumbnailUrl":strThumbnailUrl,
-                                                "strHpTitle":strHpTitle} );
+                                                "strThumbnailUrl":objects.imagen,
+                                                "strHpTitle":objects.imagen_leyenda} );
                            }
                     onPressAndHold: {
-                        py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
+                        py.saveImg(MD5.hex_md5(objects.imagen),objects.imagen_leyenda+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
 
                     }
                 }
@@ -167,7 +159,7 @@ Item {
             }
             Label{
                 id:author
-                text:imgName+"\n"+authorName
+                text:objects.imagen_leyenda
                 width: parent.width
                 wrapMode: Text.WordWrap
                 font.pixelSize:Theme.fontSizeExtraSmall
@@ -213,7 +205,7 @@ Item {
                         font.bold: true
                         color: Theme.highlightColor
                         horizontalAlignment: Text.AlignHCenter
-                        text:time_day
+                        text:objects.dom
 
                     }
                     Label{
@@ -224,7 +216,7 @@ Item {
                         font.pixelSize:Theme.fontSizeExtraSmall
                         color: Theme.secondaryColor
                         opacity: 0.8
-                        text:time_month_year
+                        text:objects.may
                     }
                 }
                 Image {
@@ -249,7 +241,7 @@ Item {
                     color: "#1affffff"
                     Label{
                         id:content
-                        text:contentStr
+                        text:objects.cita_content
                         width:parent.width
                         wrapMode: Text.WordWrap
                         font.letterSpacing: 2;
@@ -271,7 +263,7 @@ Item {
                     }
                     Label{
                         id:contentExt
-                        text:contentFrom
+                        text:objects.cita_author
                         width:parent.width
                         wrapMode: Text.WordWrap
                         font.pixelSize:Theme.fontSizeSmall

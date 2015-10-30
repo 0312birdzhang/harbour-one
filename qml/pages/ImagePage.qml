@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "getHpinfo.js" as Script
+import "getBeforeDate.js" as Script
 import "md5.js" as MD5
 Page {
     id: imagePage

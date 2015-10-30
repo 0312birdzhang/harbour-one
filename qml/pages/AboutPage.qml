@@ -41,7 +41,7 @@ Page {
                 width:parent.width
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.6.1"
+                text:qsTr("Version")+" 0.7.1"
 
             }
             Item{width:1;height:1}
@@ -59,13 +59,13 @@ Page {
             LabelText {
                 label: qsTr("Guide")
                 text: "在首页长按图片或者查看图片大图点击右下角的下载按钮都可以将图片保存到Pictures/save/One/目录下；长按首页文字可以复制,左右滑动切换每天为你准备的图片、文字、问答;"+
-                       "点击收藏夹内容可以直接打开最近10天的，10天之前的用内置浏览器打开。<br/>Tips:如果打开的不是当天的内容，可能是服务器有些许问题，稍候再试即可。"
+                       "点击收藏夹内容可以直接打开最近10天的."
 
             }
             Item{width:1;height:1}
             LabelText {
                 label: qsTr("Donation")
-                text:"由于API限制，只能查看10天的内容。如果你觉得此软件你有所益处，你可以选择捐赠我。当然，本软件是完全"
+                text:"暂时只能查看10天的内容，后续加入日期选项，理论上可以从第一期到现在的都可以查看。如果你觉得此软件你有所益处，你可以选择捐赠我。当然，本软件是完全"
                     +"免费的，你可以尽情使用。<br/>"+
                      "  我的支付宝账号:18520399451 <br/> Donations are welcome :)"
 

@@ -29,4 +29,18 @@ function getDiffDay(startday){
     return parseInt(res);
 }
 
+function getDiffDay2(today){
+    var a = new Date("2012-10-07").getTime();
+    var b= new Date(today).getTime();
+    var c = 60*60*24*1000;
+    var res = (b - a)/c;
+    return parseInt(res);
+}
 
+function parseDate(date){
+    var d = new Date(date);
+    var year = d.getFullYear();
+    var mon = d.getMonth()+1;
+    var day=d.getDate();
+    return year+"-"+mon+"-"+day
+}

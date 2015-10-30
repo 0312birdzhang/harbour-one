@@ -40,6 +40,13 @@
     </message>
 </context>
 <context>
+    <name>CosasPage</name>
+    <message>
+        <source>Object</source>
+        <translation>东西</translation>
+    </message>
+</context>
+<context>
     <name>FavoritePage</name>
     <message>
         <source>Favorites</source>

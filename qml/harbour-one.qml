@@ -31,46 +31,64 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
-import "pages/main.js" as Script
 import "pages/storage.js" as Storage
+import "pages/getBeforeDate.js" as GetDate
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
 ApplicationWindow{
-
     id: app;
     property int allindex: 0
     property int num:0
-    property int volnum
     property var objects
     property string homepageImg:"image://theme/icon-m-refresh"
     
+
+    onObjectsChanged: {
+        gotoHomePage();
+    }
+
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
     
     initialPage:Component {
-        id:firstpage
-        MainPage{id:mainPage}
-
-    }
-    SignalCenter { id: signalCenter; }
-
-    Connections {
-        target: signalCenter;
-        onLoadStarted: {
-            processingTimer.restart();
-        }
-        onLoadFinished: {
-            processingTimer.stop();
-        }
-        onLoadFailed: {
-            processingTimer.stop();
-            signalCenter.showMessage(errorString);
-        }
-        onShowMessage: {
-            if (message||false){
-                  addNotification(message,3);
+        Page{
+            id:firestpage
+            Rectangle {
+                id: splash
+                anchors.fill: parent;
+                color: "#483D8B"
+                Image {
+                    id:wel1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y:parent.height/16*7-implicitHeight/2;
+                    source: "pages/pics/welcome_image_1.png"
+                }
+                Image {
+                    id:wel2
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    y:parent.height/4*3;
+                    source: "pages/pics/welcome_image_2.png"
+                }
+                Image {
+                    id:wel3
+                    anchors.top: wel2.bottom;
+                    anchors.topMargin: Theme.paddingMedium
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    source: "pages/pics/welcome_image_name.png"
+                }
+                NumberAnimation on opacity {duration: 500}
             }
+//            Timer {
+//                id: timerDisplay
+//                running: true; repeat: false; triggeredOnStart: false
+//                interval: 1 * 1000
+//                onTriggered: {
+//                    splash.visible = false;
+//                }
+//            }
         }
+
+
     }
 
     Notification{
@@ -86,8 +104,6 @@ ApplicationWindow{
    }
 
     function gotoHomePage(){
-        //pageStack.pop(pageStack.previousPage());
-        //pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"))
         while(pageStack.depth>1) {
             pageStack.pop(undefined, PageStackAction.Immediate);
         }
@@ -100,12 +116,13 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-                    py.getDatas(volnum);
+                    py.getDatas(GetDate.getDiffDay("2012-10-07"));
               });
             
         }
 
         function getDatas(volnum){
+            console.log("volnum:"+volnum);
             call('main.getTodayContent',[volnum],function(result){
                 objects = result;
             })
@@ -130,9 +147,12 @@ ApplicationWindow{
             })
         }
 
-        onError: signalCenter.showMessage(traceback)
+        onError: {
+
+            addNotification(traceback)
+        }
         onReceived: {
-            console.log('Event: ' + data);
+            //console.log('Event: ' + data);
             var sendMsg="";
             switch(data.toString()){
             case "1":
@@ -148,7 +168,7 @@ ApplicationWindow{
                 sendMsg=qsTr("Unknown")
             }
 
-            signalCenter.showMessage(sendMsg)
+            addNotification(sendMsg)
         }
     }
 
@@ -159,7 +179,6 @@ ApplicationWindow{
     }
 
     Component.onCompleted: {
-        Script.signalCenter = signalCenter;
         Storage.initialize();
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")

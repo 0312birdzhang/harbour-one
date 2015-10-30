@@ -34,14 +34,13 @@ import "pages"
 import "pages/main.js" as Script
 import "pages/storage.js" as Storage
 import io.thp.pyotherside 1.3
+import org.nemomobile.notifications 1.0
 
-ApplicationWindow
-{
+ApplicationWindow{
 
     id: app;
     property int allindex: 0
     property int num:0
-    property var notification;
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
     property string homepageImg:"image://theme/icon-m-refresh"
     initialPage:Component {
@@ -65,36 +64,22 @@ ApplicationWindow
         }
         onShowMessage: {
             if (message||false){
-//                infoBanner.text = message;
-//                infoBanner.open();
                   addNotification(message,3);
             }
         }
     }
-    Item{
-        id:notiItem
-        width: parent.width
-        height:Screen.height/5
-        z: 20
-        Column {
-            id: notificationBar
-            anchors {
-                top:parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                margins:Theme.paddingMedium
-            }
-            spacing: Theme.paddingMedium
-            move: Transition { NumberAnimation { properties: "y" } }
-        }
+
+    Notification{
+        id:notification
+        appName: "One"
     }
 
-//    function addNotification(message) {
-//        notification.previewBody = "One";
-//        notification.previewSummary = message;
-//        notification.publish();
-//    }
+   function addNotification(message) {
+       notification.previewBody = "One";
+       notification.previewSummary = message;
+       notification.close();
+       notification.publish();
+   }
 
     function gotoHomePage(){
         //pageStack.pop(pageStack.previousPage());
@@ -106,21 +91,13 @@ ApplicationWindow
     }
 
 
-    function addNotification(inText, inTime) {
-        var text = inText == undefined ? "" : inText
-        var time = inTime == undefined ? 3 : inTime
-        var noti = Qt.createComponent("pages/Notification.qml")
-        if (noti.status == Component.Ready) {
-            var notiItem = noti.createObject(notificationBar, { "text": text, "time": time })
-        }
-    }
-
     Python{
         id:py
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-            });
+              });
+
         }
 
         //注册保存方法
@@ -173,10 +150,7 @@ ApplicationWindow
 
     Component.onCompleted: {
         Script.signalCenter = signalCenter;
-        notification = Qt.createQmlObject("import org.nemomobile.notifications 1.0; Notification{}", app)
         Storage.initialize();
     }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }
-
-

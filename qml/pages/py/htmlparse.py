@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import urllib2
 
-def queryStatus(url):
-    response = urllib2.urlopen(url)
+def queryContent(url):
+    response = urllib2.urlopen('http://wufazhuce.com/one/vol.'+url)
     allhtml = response.read()
     soup = BeautifulSoup(allhtml)
     title = soup.title.string

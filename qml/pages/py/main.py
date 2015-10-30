@@ -60,5 +60,5 @@ def findImgType(cachedFile):
     imgType = imghdr.what(cachedFile)
     return imgType
 
-def getTodayContent(vol):
-    queryContent(vol)
+def getTodayContent():
+    return queryContent(str(vol))

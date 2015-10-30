@@ -41,8 +41,12 @@ ApplicationWindow{
     id: app;
     property int allindex: 0
     property int num:0
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    property int volnum
+    property var objects
     property string homepageImg:"image://theme/icon-m-refresh"
+    
+    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    
     initialPage:Component {
         id:firstpage
         MainPage{id:mainPage}
@@ -96,10 +100,16 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
+                    py.getDatas(volnum);
               });
-
+            
         }
 
+        function getDatas(volnum){
+            call('main.getTodayContent',[volnum],function(result){
+                objects = result;
+            })
+        }
         //注册保存方法
         function saveImg(basename,volname){
             call('main.saveImg',[basename,volname],function(result){

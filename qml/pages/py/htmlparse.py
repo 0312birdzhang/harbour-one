@@ -2,17 +2,18 @@ from bs4 import BeautifulSoup
 import urllib2
 
 def queryContent(url):
+
     response = urllib2.urlopen('http://wufazhuce.com/one/vol.'+url)
     allhtml = response.read()
     soup = BeautifulSoup(allhtml)
     title = soup.title.string
     #print allhtml
     titulo = soup.find_all("div", "one-titulo")[0].contents[0].strip() #VOL号
-    imagen = soup.find_all("div", "one-imagen")[0].find("img")['src'].strip()#首页图片链接
-    imagen_leyenda = soup.find_all("div", "one-imagen-leyenda")[0].contents[0].strip()#图片标题
-    cita = soup.find_all("div", "one-cita")[0].contents[0].strip()#文章内容
-    dom = soup.find_all("p", "dom")[0].contents[0].strip()#day
-    may = soup.find_all("p", "may")[0].contents[0].strip()#month
+    imagen = soup.find_all("div", "one-imagen")[0].find("img")['src'].strip() #首页图片链接
+    imagen_leyenda = soup.find_all("div", "one-imagen-leyenda")[0].contents[0].strip() #图片标题
+    cita = soup.find_all("div", "one-cita")[0].contents[0].strip() #文章内容
+    dom = soup.find_all("p", "dom")[0].contents[0].strip() #day
+    may = soup.find_all("p", "may")[0].contents[0].strip() #month
 
     comilla_cerrar = soup.find_all("div","comilla-cerrar")[0].contents[0].strip() #文章最上面的文字
     articulo_titulo = soup.find_all("h2","articulo-titulo")[0].contents[0].strip() #文章标题
@@ -20,7 +21,7 @@ def queryContent(url):
     articulo_contenido = soup.find_all("div","articulo-contenido")[0].contents[0] #文章内容
 
     cuestion_title = soup.find_all("h4")[0].contents[0].strip() #问题-标题
-    cuestion_contenido = soup.find_all("div","cuestion-contenido")#问题-问
+    cuestion_contenido = soup.find_all("div","cuestion-contenido") #问题-问
     cuestion_question = cuestion_contenido[0].contents[0].strip() #问题-问
     cuestion_answerer = soup.find_all("h4")[1].contents[0].strip() #问题-回答者
     cuestion_contenians = cuestion_contenido[1].contents #问题-答
@@ -31,6 +32,27 @@ def queryContent(url):
     cosas_imagen = soup.find_all("div", "cosas-imagen")[0].find("img")['src'].strip() #东西里面的图片链接
     cosas_titulo = soup.find_all("h2","cosas-titulo")[0].contents[0].strip() #东西名
     cosas_contenido = soup.find_all("div","cosas-contenido")[0].contents[0].strip() #东西说明
-
-if __name__ == "__main__":
-    queryStatus('http://wufazhuce.com/one/vol.1118')
+    
+    return {
+        "titulo":titulo,
+        "imagen":imagen,
+        "imagen_leyenda":imagen_leyenda,
+        "cita":cita,
+        "dom":dom,
+        "may":may,
+        
+        "comilla_cerrar":comilla_cerrar,
+        "articulo_titulo":articulo_titulo,
+        "articulo_autor":articulo_autor,
+        "articulo_contenido":articulo_contenido,
+        
+        "cuestion_title":cuestion_title,
+        "cuestion_contenido":cuestion_contenido,
+        "cuestion_question":cuestion_question,
+        "cuestion_answerer":cuestion_answerer,
+        "cuestion_contenians":cuestion_contenians,
+        
+        "cosas_imagen":cosas_imagen,
+        "cosas_titulo":cosas_titulo,
+        "cosas_contenido":cosas_contenido
+    }

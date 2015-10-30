@@ -1,10 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-'''
-Created on 2015年6月17日
-
-@author: zhangdebo
-'''
 from bs4 import BeautifulSoup
 import urllib2
 

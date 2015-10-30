@@ -49,6 +49,7 @@ def downloadImg(downname,downurl):
         urllib.request.urlretrieve(downurl,downname)
     except urllib.error.ContentTooShortError:
         pass
+
 def clearImg():
     shutil.rmtree(cachePath)
     pyotherside.send("2")

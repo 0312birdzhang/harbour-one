@@ -40,18 +40,42 @@ Item {
                     }
 
                 }
-                Button{
-                    id:gobutton
-                    text:qsTr("GO")
+                Row{
                     anchors.top: dateslider.bottom
-                    onClicked: {
-                        allindex = Math.abs(dateslider.value -9);
-                        console.log("date:"+dateslider.valueText)
-                        var volnum =GetDate.getDiffDay2(dateslider.valueText)
-                        py.getDatas(volnum)
-                    }
                     anchors.horizontalCenter: parent.horizontalCenter
-                }
+                    spacing: Theme.paddingLarge
+                    Button{
+                        id:selectMore
+                        text:qsTr("See More")
+
+                        function openDateDialog() {
+                            var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
+                                            date: GetDate.getBeforeDate(new Date(),10)
+                                         })
+
+                            dialog.accepted.connect(function() {
+                                var date = dialog.dateText;
+                                var volnum =GetDate.getDiffDay2(date)
+                                console.log("volnum:"+volnum)
+                                py.getDatas(volnum)
+                            })
+                        }
+                        onClicked: openDateDialog()
+                    }
+
+                    Button{
+                        id:gobutton
+                        text:qsTr("GO")
+                         //anchors.top: parent.top
+                        onClicked: {
+                            allindex = Math.abs(dateslider.value -9);
+                            //console.log("date:"+dateslider.valueText)
+                            var volnum =GetDate.getDiffDay2(dateslider.valueText)
+                            py.getDatas(volnum)
+                        }
+                       //anchors.horizontalCenter: parent.horizontalCenter
+                    }
+              }
             }
         }
 
@@ -256,8 +280,8 @@ Item {
                         MouseArea{
                             anchors.fill: parent
                             onPressAndHold: {
-                                Clipboard.text = contentStr;
-                                addNotification("已复制到剪切板",2);
+                                Clipboard.text = objects.cita_content;
+                                addNotification(qsTr("Copyed to clipboard"));
                             }
                         }
                     }

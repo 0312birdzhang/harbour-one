@@ -48,6 +48,7 @@ ApplicationWindow{
         gotoHomePage();
     }
 
+
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
     
     initialPage:Component {
@@ -116,15 +117,20 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-                    py.getDatas(GetDate.getDiffDay("2012-10-07"));
+                    py.getDatas(GetDate.getDiffDay("2012-10-07 00:00:00"));
               });
             
         }
 
         function getDatas(volnum){
-            console.log("volnum:"+volnum);
+            //console.log("volnum:"+volnum);
             call('main.getTodayContent',[volnum],function(result){
-                objects = result;
+                var obj  = result;
+                if(obj.toString() == "Error"){
+                    addNotification(qsTr("Error load data"))
+                }else{
+                    objects = obj;
+                }
             })
         }
         //注册保存方法
@@ -137,7 +143,7 @@ ApplicationWindow{
         function cacheImg(url,md5name){
             call('main.cacheImg',[url,md5name],function(result){
                 homepageImg = result;
-                console.log("local path:"+result)
+                //console.log("local path:"+result)
             })
             //return "image://theme/icon-m-refresh"
         }

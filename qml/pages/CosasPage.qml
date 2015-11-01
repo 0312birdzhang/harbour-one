@@ -116,7 +116,7 @@ Item {
                     id:questionContent
                     text:objects.cosas_contenido
                     wrapMode: Text.WordWrap
-                    width: parent.width
+                    width: parent.width - Theme.paddingSmall
                     font.pixelSize:Theme.fontSizeSmall
                     font.letterSpacing: 2;
                     anchors{

@@ -91,6 +91,14 @@
         <source>Favorites</source>
         <translation>收藏夹</translation>
     </message>
+    <message>
+        <source>Copyed to clipboard</source>
+        <translation>已复制到剪切板</translation>
+    </message>
+    <message>
+        <source>See More</source>
+        <translation>查看更早</translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -119,6 +127,10 @@
     <message>
         <source>Error</source>
         <translation>保存失败</translation>
+    </message>
+    <message>
+        <source>Error load data</source>
+        <translation>加载数据失败</translation>
     </message>
     <message>
         <source>Unknown</source>

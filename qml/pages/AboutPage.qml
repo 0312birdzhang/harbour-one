@@ -41,7 +41,7 @@ Page {
                 width:parent.width
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.7.1"
+                text:qsTr("Version")+" 0.7.3"
 
             }
             Item{width:1;height:1}
@@ -52,7 +52,7 @@ Page {
             Item{width:1;height:1}
             LabelText {
                 label: qsTr("Author")
-                text: "本软件是one一个非官网客户端版本,作者:0312birdzhang,，API由 夜切 整理，软件桌面图标由 梦影决幻 设计,软件启动图、部分UI由 蝉曦 设计"
+                text: "本软件是one一个非官网客户端版本,作者:0312birdzhang,，旧版API由 夜切 整理(现在已不用API方式获取)，软件桌面图标由 梦影决幻 设计,软件启动图、部分UI由 蝉曦 设计"
 
             }
             Item{width:1;height:1}
@@ -65,7 +65,7 @@ Page {
             Item{width:1;height:1}
             LabelText {
                 label: qsTr("Donation")
-                text:"暂时只能查看10天的内容，后续加入日期选项，理论上可以从第一期到现在的都可以查看。如果你觉得此软件你有所益处，你可以选择捐赠我。当然，本软件是完全"
+                text:"通过‘查看更多’可以从第一期到现在的都可以查看。如果你觉得此软件你有所益处，你可以选择捐赠我。当然，本软件是完全"
                     +"免费的，你可以尽情使用。<br/>"+
                      "  我的支付宝账号:18520399451 <br/> Donations are welcome :)"
 

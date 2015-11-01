@@ -9,9 +9,10 @@ import Sailfish.Silica 1.0
 Page{
     id: mainPage
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
-
+    signal busy
 
     BusyIndicator {
+        id:busyindicator
         running: !PageStatus.Active
         size: BusyIndicatorSize.Large
         anchors.centerIn: parent

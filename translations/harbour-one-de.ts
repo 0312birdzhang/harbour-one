@@ -91,6 +91,14 @@
         <source>Favorites</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copyed to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See More</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -130,6 +138,10 @@
     </message>
     <message>
         <source>Cleared</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error load data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

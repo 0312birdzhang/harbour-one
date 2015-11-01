@@ -1,10 +1,11 @@
 import traceback
 from bs4 import BeautifulSoup
 import urllib.request,urllib.error,urllib.parse
+import sys
 
 def queryContent(url):
-    url = str(url).split(".")[0]
-    i_headers = {"User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5",\
+    url = str(int(url))
+    i_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",\
                  "Referer": 'http://www.baidu.com'}
     req = urllib.request.Request('http://wufazhuce.com/one/vol.'+url, headers=i_headers)
     try:
@@ -17,8 +18,14 @@ def queryContent(url):
         imagen = soup.find_all("div", "one-imagen")[0].find("img")['src'].strip() #首页图片链接
         imagen_leyenda = soup.find_all("div", "one-imagen-leyenda")[0].contents[0].strip() #图片标题
         cita = soup.find_all("div", "one-cita")[0].contents[0].strip() #文章内容
-        cita_content = cita.split("by")[0]
-        cita_author = "by "+cita.split("by")[1]
+        cita_content=""
+        cita_author=""
+        if "by" in cita:
+            cita_content = cita.split("by")[0]
+            cita_author = "by "+cita.split("by")[1]
+        else:
+            cita_content = cita.split("from")[0]
+            cita_author = "from "+cita.split("from")[1]
         dom = soup.find_all("p", "dom")[0].contents[0].strip() #day
         may = soup.find_all("p", "may")[0].contents[0].strip() #month
 
@@ -69,9 +76,13 @@ def queryContent(url):
             "cosas_titulo":cosas_titulo,
             "cosas_contenido":cosas_contenido
         }
+        #print(one_map)
         return one_map
     except Exception as e:
-        return traceback.format_exc()
+        #return traceback.format_exc()
+        #print(traceback.format_exc())
+        return "Error"
 
-def parseCont():
-    u''.join(str(item) for item in cuestion_contenians)
+if __name__ == "__main__":
+    pass
+    #queryContent(sys.argv[1])

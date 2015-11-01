@@ -13,6 +13,13 @@ Page{
         id:listmodel
     }
 
+    BusyIndicator {
+        id:busyindicator
+        running: !PageStatus.Active
+        size: BusyIndicatorSize.Large
+        anchors.centerIn: parent
+    }
+
     SilicaListView{
         id:listview
         header: PageHeader{
@@ -63,19 +70,12 @@ Page{
                 }
             }
             onClicked: {
-                var day = date.toString();
-                var diffday = JS.getDiffDay(day);
-//                if(diffday > 8){
-//                    pageStack.push(Qt.resolvedUrl("FavoriteWebView.qml"),{
-//                                   "vol":title,
-//                                   "day":date
-//                               })
-//                }else{
-//                    allindex=diffday;
-//                    gotoHomePage();
-//                }
-                var volnum =JS.getDiffDay2(day)
+                //var day = date.toString();
+                //var diffday = JS.getDiffDay(day);
+                var volnum =title.split(".")[1]
+                busyindicator.running =  true;
                 py.getDatas(volnum)
+                busyindicator.running =  false;
             }
         }
           VerticalScrollDecorator {}

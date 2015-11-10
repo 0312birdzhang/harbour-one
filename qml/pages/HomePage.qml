@@ -7,6 +7,7 @@ import "getBeforeDate.js" as GetDate
 
 Item {
     id: homePage;
+
     height: mainView.height; width: mainView.width
     BusyIndicator {
         id: busyIndicator
@@ -55,8 +56,9 @@ Item {
 
                             dialog.accepted.connect(function() {
                                 var date = dialog.date;
+                                currentDay = date;
                                 var volnum =GetDate.getDiffDay2(date)
-                                console.log("volnum:"+volnum)
+                                //console.log("volnum:"+volnum)
                                 py.getDatas(volnum)
                             })
                         }
@@ -69,8 +71,8 @@ Item {
                          //anchors.top: parent.top
                         onClicked: {
                             allindex = Math.abs(dateslider.value -9);
-                            //console.log("date:"+dateslider.valueText)
-                            var volnum =GetDate.getDiffDay2(dateslider.valueText)
+                            currentDay = new Date(dateslider.valueText)
+                            var volnum =GetDate.getDiffDay3(dateslider.valueText)
                             py.getDatas(volnum)
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter
@@ -93,7 +95,7 @@ Item {
             MenuItem{
                 text:qsTr("Add to favorite")
                 onClicked:{
-                    var day = GetDate.parseDate(objects.dom+" "+objects.may)
+                    var day = GetDate.parseDate(currentDay)
                     if(Storage.addFavorite(day,objects.titulo)){
                         addNotification(qsTr("Add to favorite success "))
                     }else{

@@ -41,6 +41,7 @@ ApplicationWindow{
     property int allindex: 0
     property int num:0
     property var objects
+    property date currentDay:new Date()
     property string homepageImg:"image://theme/icon-m-refresh"
 
 

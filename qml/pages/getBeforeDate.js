@@ -41,6 +41,18 @@ function getDiffDay2(today){
     return parseInt(res);
 }
 
+function getDiffDay3(today){
+    var a = new Date("2012-10-07 00:00:00").getTime();
+    var b= new Date(today).getTime();
+    var c = 60*60*24*1000;
+    var d = new Date().getTime();
+    if(b > d){
+        b = d;
+    }
+    var res = (b - a)/c;
+    return parseInt(res);
+}
+
 function parseDate(date){
     //console.log(date)
     var d = new Date(date);

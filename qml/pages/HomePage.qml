@@ -54,7 +54,7 @@ Item {
                                          })
 
                             dialog.accepted.connect(function() {
-                                var date = dialog.dateText;
+                                var date = dialog.date;
                                 var volnum =GetDate.getDiffDay2(date)
                                 console.log("volnum:"+volnum)
                                 py.getDatas(volnum)

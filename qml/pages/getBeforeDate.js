@@ -31,7 +31,7 @@ function getDiffDay(startday){
 
 function getDiffDay2(today){
     var a = new Date("2012-10-07 00:00:00").getTime();
-    var b= new Date(today).getTime();
+    var b= today.getTime();
     var c = 60*60*24*1000;
     var d = new Date().getTime();
     if(b > d){

@@ -42,7 +42,7 @@ ApplicationWindow{
     property int num:0
     property var objects
     property string homepageImg:"image://theme/icon-m-refresh"
-    
+
 
     onObjectsChanged: {
         gotoHomePage();
@@ -50,7 +50,7 @@ ApplicationWindow{
 
 
     allowedOrientations: Orientation.Portrait | Orientation.Landscape
-    
+
     initialPage:Component {
         Page{
             id:firestpage
@@ -119,7 +119,7 @@ ApplicationWindow{
             py.importModule('main', function () { // imports the Python module
                     py.getDatas(GetDate.getDiffDay("2012-10-07 00:00:00"));
               });
-            
+
         }
 
         function getDatas(volnum){
@@ -187,5 +187,9 @@ ApplicationWindow{
     Component.onCompleted: {
         Storage.initialize();
     }
+    Component.onDestruction: {
+        py.clearCache();
+    }
+
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

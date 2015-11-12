@@ -8,7 +8,7 @@ Page {
     property string imgUrl
     property string strHpTitle: ""
     property string strThumbnailUrl: ""
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+
 
     Flickable {
         id: imageFlickable

@@ -76,7 +76,7 @@ def queryContent(url):
             "cosas_titulo":cosas_titulo,
             "cosas_contenido":cosas_contenido
         }
-        print(one_map)
+        #print(one_map)
         return one_map
     except Exception as e:
         #return traceback.format_exc()

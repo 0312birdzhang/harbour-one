@@ -50,7 +50,8 @@ ApplicationWindow{
     }
 
 
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    allowedOrientations: Orientation.All
+    _defaultPageOrientations: Orientation.All
 
     initialPage:Component {
         Page{
@@ -189,7 +190,7 @@ ApplicationWindow{
         Storage.initialize();
     }
     Component.onDestruction: {
-        py.clearCache();
+        //py.clearCache();
     }
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")

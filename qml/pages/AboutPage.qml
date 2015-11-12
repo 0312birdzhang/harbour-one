@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 
 Page {
     id: aboutPage;
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
     SilicaFlickable {
         anchors.fill: parent
         PageHeader{
@@ -59,7 +58,7 @@ Page {
             LabelText {
                 label: qsTr("Guide")
                 text: "在首页长按图片或者查看图片大图点击右下角的下载按钮都可以将图片保存到Pictures/save/One/目录下；长按首页文字可以复制,左右滑动切换每天为你准备的图片、文字、问答;"+
-                       "点击收藏夹内容可以直接打开最近10天的."
+                       "点击收藏夹内容可以查看已经收藏过的."
 
             }
             Item{width:1;height:1}

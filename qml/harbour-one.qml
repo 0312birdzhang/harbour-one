@@ -47,6 +47,17 @@ ApplicationWindow{
 
     onObjectsChanged: {
         gotoHomePage();
+        busyIndicator.runningBusyIndicator = false
+    }
+    BusyIndicator {
+        id:busyIndicator
+        property bool runningBusyIndicator: false
+        parent: app.currentPage
+        anchors.centerIn: parent
+        z: 10
+        size: BusyIndicatorSize.Large
+        running: runningBusyIndicator
+        opacity: busyIndicator.running ? 1: 0
     }
 
 
@@ -156,8 +167,8 @@ ApplicationWindow{
         }
 
         onError: {
-
             addNotification(traceback)
+            busyIndicator.runningBusyIndicator = false
         }
         onReceived: {
             //console.log('Event: ' + data);

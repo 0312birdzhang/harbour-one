@@ -58,7 +58,7 @@ Item {
                                 var date = dialog.date;
                                 currentDay = date;
                                 var volnum =GetDate.getDiffDay2(date)
-                                //console.log("volnum:"+volnum)
+                                busyIndicator.runningBusyIndicator = true
                                 py.getDatas(volnum)
                             })
                         }
@@ -73,6 +73,7 @@ Item {
                             allindex = Math.abs(dateslider.value -9);
                             currentDay = new Date(dateslider.valueText)
                             var volnum =GetDate.getDiffDay3(dateslider.valueText)
+                            busyIndicator.runningBusyIndicator = true
                             py.getDatas(volnum)
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter

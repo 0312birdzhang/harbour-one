@@ -81,7 +81,7 @@ def queryContent(url):
     except Exception as e:
         #return traceback.format_exc()
         #print(traceback.format_exc())
-        return "Error"
+        return None
 
 if __name__ == "__main__":
     queryContent(sys.argv[1])

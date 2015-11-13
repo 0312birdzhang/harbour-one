@@ -161,6 +161,7 @@ ApplicationWindow{
             //return "image://theme/icon-m-refresh"
         }
         function clearCache(){
+            Storage.removeDatas()
             call('main.clearImg',[],function(result){
                    return result
             })

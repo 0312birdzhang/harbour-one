@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
+import "getBeforeDate.js" as GetDate
 import "md5.js" as MD5
 Item {
     id: cosasPage;
@@ -88,7 +89,7 @@ Item {
                                                     "strHpTitle":objects.cosas_titulo} );
                                }
                         onPressAndHold: {
-                            py.saveImg(MD5.hex_md5(objects.cosas_imagen),objects.cosas_titulo+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
+                            py.saveImg(MD5.hex_md5(objects.cosas_imagen),objects.cosas_titulo+"."+GetDate.parseDate(currentDay));
 
                         }
                     }

@@ -8,6 +8,11 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+
+* Fri Nov 13 2015 BirdZhang <0312birdzhang@gmail.com> 0.8-1
+- 添加离线缓存请求内容
+- 优化界面提示
+
 * Sat Oct 31 2015 BirdZhang <0312birdzhang@gmail.com> 0.7.1
 - 改用爬虫获取每天的内容
 - 添加"东西"

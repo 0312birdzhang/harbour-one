@@ -67,7 +67,7 @@ Page{
                 //var day = date.toString();
                 //var diffday = JS.getDiffDay(day);
                 var volnum =title.split(".")[1]
-                busyIndicator.runningBusyIndicator = true
+                busyIndicator.running = true
                 py.getDatas(volnum)
             }
         }

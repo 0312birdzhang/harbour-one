@@ -44,7 +44,9 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/py/__init__.py \
     qml/pages/FavoritePage.qml \
     qml/pages/CosasPage.qml \
-    qml/pages/py/*.py
+    qml/pages/py/*.py \
+    qml/pages/py/builder/*.py \
+    qml/pages/py/tests/*.py
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 

@@ -10,6 +10,9 @@ function initialize(){
     db.transaction(function(tx){
                        tx.executeSql('CREATE TABLE IF NOT EXISTS favorite(date TEXT UNIQUE, title TEXT)')
                    })
+    db.transaction(function(tx){
+                      tx.executeSql('CREATE TABLE IF NOT EXISTS datas(vol int UNIQUE, json TEXT)')
+                  })
 }
 
 function addFavorite(date, title){

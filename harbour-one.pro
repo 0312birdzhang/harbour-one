@@ -43,7 +43,7 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/py/basedir.py \
     qml/pages/py/__init__.py \
     qml/pages/FavoritePage.qml \
-    qml/pages/CosasPage.qml
+    qml/pages/CosasPage.qml \
 
 # to disable building translations every time, comment out the
 # following CONFIG line

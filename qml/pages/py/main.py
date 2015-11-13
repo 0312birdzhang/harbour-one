@@ -76,6 +76,8 @@ def getTodayContent(vol):
     try:
         conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
+        cur.execute('''CREATE TABLE IF NOT EXISTS datas
+                 (vol int, data text) ''')
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
         result= cur.fetchone()
         if result:

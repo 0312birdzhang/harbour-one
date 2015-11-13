@@ -44,3 +44,10 @@ function removeFavorite(date){
                        tx.executeSql('DELETE FROM favorite WHERE date=?;',[date])
                    })
 }
+
+function removeDatas(){
+    var db = getDatabase();
+    db.transaction(function(tx){
+                       tx.executeSql('DELETE FROM datas ;')
+                   })
+}

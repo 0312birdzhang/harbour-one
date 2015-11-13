@@ -8,7 +8,7 @@ Page {
     property string imgUrl
     property string strHpTitle: ""
     property string strThumbnailUrl: ""
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+
 
     Flickable {
         id: imageFlickable
@@ -164,7 +164,7 @@ Page {
 
         icon.source: "image://theme/icon-m-cloud-download"
         onClicked: {
-            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.getBeforeDate(new Date(),Math.abs(allindex)));
+            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.parseDate(currentDay));
         }
     }
 }

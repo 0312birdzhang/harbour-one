@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os,sys,shutil
 import pyotherside
 import subprocess
@@ -8,19 +9,32 @@ import hashlib
 from basedir import *
 from htmlparse import *
 import json
+<<<<<<< HEAD
 
+=======
+import logging
+import sqlite3
+import hashlib
+
+
+>>>>>>> harbour
 __appname__ = "harbour-one"
 cachePath=os.path.join(XDG_CACHE_HOME, __appname__, __appname__,"one","")
 dbPath=os.path.join(XDG_DATA_HOME, __appname__,__appname__, "QML","OfflineStorage","Databases")
 savePath=os.path.join(HOME, "Pictures", "save","One","")
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 def saveImg(md5name,savename):
     try:
         realpath=cachePath+md5name
+        tmppath = savePath+savename+"."+findImgType(realpath)
         isExis()
-        shutil.copy(realpath,savePath+savename+"."+findImgType(realpath))
+        #logging.debug(tmppath)
+        shutil.copy(realpath,tmppath.encode("utf-8"))
+        logging.debug(tmppath)
         pyotherside.send("1")
-    except:
+    except Exception as e:
+        #logging.debug(e)
         pyotherside.send("-1")
 
 def isExis():
@@ -69,28 +83,49 @@ def getDbname():
     h = hashlib.md5()
     h.update("one".encode(encoding='utf_8', errors='strict'))
     dbname=h.hexdigest()
+<<<<<<< HEAD
     return dbPath+"/"+dbname+".sqlite"
 
 
+=======
+    logging.debug(dbPath+"/"+dbname+".sqlite")
+    return dbPath+"/"+dbname+".sqlite"
+
+>>>>>>> harbour
 def getTodayContent(vol):
     try:
         conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS datas
+<<<<<<< HEAD
                  (vol int, data text) ''')
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
         result= cur.fetchone()
+=======
+                 (vol int, json text) ''')
+        cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
+        result= cur.fetchone()
+        #logging.debug(result)
+>>>>>>> harbour
         if result:
             return json.loads(result[0])
         else:
             data=queryContent(vol)
             #插入
+<<<<<<< HEAD
             if not data:
+=======
+            if data:
+>>>>>>> harbour
                 insertDatas(vol,data)
                 return data
             else:
                 return 'Error'
     except Exception as e:
+<<<<<<< HEAD
+=======
+        logging.debug(e)
+>>>>>>> harbour
         return 'Error'
     conn.close()
 
@@ -102,8 +137,17 @@ def insertDatas(vol,data):
         cur.execute("INSERT INTO datas VALUES (%d,'%s')" % (vol,json.dumps(data) ) )
         conn.commit()
     except Exception as e:
+<<<<<<< HEAD
         pass
     conn.close()
 
 # def getTodayContent(vol):
 #     return queryContent(vol)
+=======
+        #pass
+        logging.debug(e)
+    conn.close()
+
+#def getTodayContent(vol):
+#    return queryContent(vol)
+>>>>>>> harbour

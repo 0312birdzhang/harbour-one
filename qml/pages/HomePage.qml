@@ -58,7 +58,7 @@ Item {
                                 var date = dialog.date;
                                 currentDay = date;
                                 var volnum =GetDate.getDiffDay2(date)
-                                //console.log("volnum:"+volnum)
+                                busyIndicator.running = true
                                 py.getDatas(volnum)
                             })
                         }
@@ -73,6 +73,7 @@ Item {
                             allindex = Math.abs(dateslider.value -9);
                             currentDay = new Date(dateslider.valueText)
                             var volnum =GetDate.getDiffDay3(dateslider.valueText)
+                            busyIndicator.running = true
                             py.getDatas(volnum)
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter
@@ -176,7 +177,7 @@ Item {
                                                 "strHpTitle":objects.imagen_leyenda} );
                            }
                     onPressAndHold: {
-                        py.saveImg(MD5.hex_md5(objects.imagen),objects.imagen_leyenda+"."+Script.getBeforeDate(new Date(),Math.abs(allindex))+".jpg");
+                        py.saveImg(MD5.hex_md5(objects.imagen),objects.imagen_leyenda+"."+GetDate.parseDate(currentDay));
 
                     }
                 }

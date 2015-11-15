@@ -146,15 +146,27 @@ Item {
                 }
                 Label{
                     id:answerContent
+//                    text:objects.cuestion_contenians
+//                    wrapMode: Text.WordWrap
+//                    textFormat: Text.RichText
+//                    font.pixelSize:Theme.fontSizeSmall
+//                    font.letterSpacing: 2;
+//                    //color: Theme.highlightColor
+//                    anchors{
+//                        left:parent.left
+//                        right:parent.right
+//                        top:answerTitle.bottom
+//                        margins: Theme.paddingMedium
+//                    }
+
                     text:objects.cuestion_contenians
                     wrapMode: Text.WordWrap
-                    textFormat: Text.RichText
                     font.pixelSize:Theme.fontSizeSmall
                     font.letterSpacing: 2;
-                    //color: Theme.highlightColor
                     anchors{
-                        left:parent.left
-                        right:parent.right
+                        left:parent.left;
+                        leftMargin: Theme.paddingMedium
+                        right: parent.right;
                         top:answerTitle.bottom
                         margins: Theme.paddingMedium
                     }

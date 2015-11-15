@@ -44,10 +44,7 @@ function removeFavorite(date){
                        tx.executeSql('DELETE FROM favorite WHERE date=?;',[date])
                    })
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> harbour
 function removeDatas(){
     var db = getDatabase();
     db.transaction(function(tx){

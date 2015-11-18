@@ -41,9 +41,15 @@ ApplicationWindow{
     property int allindex: 0
     property int num:0
     property var objects
+    property Page currentPage: pageStack.currentPage
     property date currentDay:new Date()
+    property int currentVolnum
     property string homepageImg:"image://theme/icon-m-refresh"
 
+
+    onCurrentVolnumChanged: {
+        busyIndicator.runningBusyIndicator = true
+    }
 
     onObjectsChanged: {
         busyIndicator.runningBusyIndicator = false
@@ -54,7 +60,7 @@ ApplicationWindow{
         property bool runningBusyIndicator: false
         parent: app.currentPage
         anchors.centerIn: parent
-        z: 10
+        //z: 10
         size: BusyIndicatorSize.Large
         running: runningBusyIndicator
         //opacity: busyIndicator.running ? 1: 0
@@ -128,21 +134,24 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-                    py.getDatas(GetDate.getDiffDay("2012-10-07 00:00:00"));
+                    currentVolnum = GetDate.getDiffDay("2012-10-07 00:00:00")
+                    py.getDatas(currentVolnum);
               });
 
         }
 
         function getDatas(volnum){
-            //console.log("volnum:"+volnum);
+            currentVolnum = volnum
             call('main.getTodayContent',[volnum],function(result){
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))
+                    busyIndicator.runningBusyIndicator = false
                     gotoErrorPage(volnum)
                 }else{
                     objects = obj;
                 }
+
             })
         }
         //注册保存方法
@@ -167,8 +176,8 @@ ApplicationWindow{
         }
 
         onError: {
-            addNotification(traceback)
             busyIndicator.runningBusyIndicator = false
+            addNotification(traceback)
         }
         onReceived: {
             //console.log('Event: ' + data);
@@ -187,6 +196,7 @@ ApplicationWindow{
                 sendMsg=qsTr("Unknown")
             }
 
+            busyIndicator.runningBusyIndicator = false
             addNotification(sendMsg)
         }
     }

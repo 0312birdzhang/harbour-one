@@ -111,7 +111,7 @@ def insertDatas(vol,data):
     try:
         conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES (%d,'%s')" % (vol,json.dumps(data) ) )
+        cur.execute("INSERT INTO datas VALUES (%s,'%s')" % (vol,json.dumps(data) ) )
         conn.commit()
     except Exception as e:
         #pass

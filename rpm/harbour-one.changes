@@ -8,6 +8,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
+* Thu Nov 18 2015 BirdZhang <0312birdzhang@gmail.com> 0.8-2
+- 加入超时提醒
 
 * Fri Nov 13 2015 BirdZhang <0312birdzhang@gmail.com> 0.8-1
 - 添加离线缓存请求内容

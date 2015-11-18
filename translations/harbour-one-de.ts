@@ -47,6 +47,17 @@
     </message>
 </context>
 <context>
+    <name>ErrorTipPage</name>
+    <message>
+        <source>Something error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FavoritePage</name>
     <message>
         <source>Favorites</source>
@@ -120,10 +131,6 @@
 </context>
 <context>
     <name>harbour-one</name>
-    <message>
-        <source>Network Time Out&gt; &lt;</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Error</source>
         <translation type="unfinished"></translation>

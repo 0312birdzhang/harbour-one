@@ -47,6 +47,17 @@
     </message>
 </context>
 <context>
+    <name>ErrorTipPage</name>
+    <message>
+        <source>Something error</source>
+        <translation>发生了一些故障，o(╯□╰)o</translation>
+    </message>
+    <message>
+        <source>Click to reload</source>
+        <translation>点击重试</translation>
+    </message>
+</context>
+<context>
     <name>FavoritePage</name>
     <message>
         <source>Favorites</source>
@@ -120,10 +131,6 @@
 </context>
 <context>
     <name>harbour-one</name>
-    <message>
-        <source>Network Time Out&gt; &lt;</source>
-        <translation>网络超时&gt; &lt;</translation>
-    </message>
     <message>
         <source>Error</source>
         <translation>保存失败</translation>

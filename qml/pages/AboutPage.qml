@@ -40,7 +40,7 @@ Page {
                 width:parent.width
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.8-1"
+                text:qsTr("Version")+" 0.8-2"
 
             }
             Item{width:1;height:1}

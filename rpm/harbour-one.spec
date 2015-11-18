@@ -14,7 +14,7 @@ Name:       harbour-one
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    One by Hanhan
 Version:    0.8
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/

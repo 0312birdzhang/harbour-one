@@ -32,6 +32,7 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/QuestionPage.qml \
     qml/pages/SignalCenter.qml \
     qml/pages/Notification.qml \
+    qml/pages/ErrorTipPage.qml \
     qml/cover/cover.png \
     qml/pages/getBeforeDate.js \
     rpm/harbour-one.changes \
@@ -55,5 +56,7 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-one-de.ts \
                 translations/harbour-one-zh_CN.ts
+
+DISTFILES +=
 
 

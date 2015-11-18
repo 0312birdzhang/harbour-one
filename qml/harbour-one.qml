@@ -57,7 +57,7 @@ ApplicationWindow{
         z: 10
         size: BusyIndicatorSize.Large
         running: runningBusyIndicator
-        opacity: busyIndicator.running ? 1: 0
+        //opacity: busyIndicator.running ? 1: 0
     }
 
 
@@ -66,7 +66,7 @@ ApplicationWindow{
 
     initialPage:Component {
         Page{
-            id:firestpage
+            id:firstpage
             Rectangle {
                 id: splash
                 anchors.fill: parent;
@@ -92,18 +92,10 @@ ApplicationWindow{
                 }
                 NumberAnimation on opacity {duration: 500}
             }
-//            Timer {
-//                id: timerDisplay
-//                running: true; repeat: false; triggeredOnStart: false
-//                interval: 1 * 1000
-//                onTriggered: {
-//                    splash.visible = false;
-//                }
-//            }
         }
 
 
-    }
+     }
 
     Notification{
         id:notification
@@ -124,6 +116,12 @@ ApplicationWindow{
         pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"));
     }
 
+    function gotoErrorPage(volnum){
+        while(pageStack.depth>1) {
+            pageStack.pop(undefined, PageStackAction.Immediate);
+        }
+        pageStack.replace(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"volnum":volnum});
+    }
 
     Python{
         id:py
@@ -141,6 +139,7 @@ ApplicationWindow{
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))
+                    gotoErrorPage(volnum)
                 }else{
                     objects = obj;
                 }
@@ -190,12 +189,6 @@ ApplicationWindow{
 
             addNotification(sendMsg)
         }
-    }
-
-    Timer {
-        id: processingTimer;
-        interval: 30000;
-        onTriggered: signalCenter.loadFailed(qsTr("Network Time Out> <"));
     }
 
     Component.onCompleted: {

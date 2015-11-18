@@ -1,6 +1,3 @@
-/*
-    GPL V2
-*/
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
@@ -8,16 +5,6 @@ import Sailfish.Silica 1.0
 
 Page{
     id: mainPage
-
-    signal busy
-
-    BusyIndicator {
-        id:busyindicator
-        running: !PageStatus.Active
-        size: BusyIndicatorSize.Large
-        anchors.centerIn: parent
-    }
-
     SlideshowView {
         id: mainView
         //itemWidth: width
@@ -33,5 +20,4 @@ Page{
             CosasPage{}
         }
     }
-
 }

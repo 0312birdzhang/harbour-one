@@ -9,7 +9,7 @@ def queryContent(url):
                  "Referer": 'http://www.baidu.com'}
     req = urllib.request.Request('http://wufazhuce.com/one/vol.'+url, headers=i_headers)
     try:
-        response = urllib.request.urlopen(req)
+        response = urllib.request.urlopen(req,timeout=30)
         allhtml = response.read()
         soup = BeautifulSoup(allhtml,"html.parser")
         #title = soup.title.string
@@ -78,6 +78,9 @@ def queryContent(url):
         }
         #print(one_map)
         return one_map
+    except timeout:
+        #logging.error('socket timed out - URL %s', url)
+        return "Timeout"
     except Exception as e:
         #return traceback.format_exc()
         #print(traceback.format_exc())

@@ -96,7 +96,7 @@ def getTodayContent(vol):
         else:
             data=queryContent(vol)
             #插入
-            if data:
+            if data and data != "Timeout":
                 insertDatas(vol,data)
                 return data
             else:

@@ -46,8 +46,8 @@ ApplicationWindow{
 
 
     onObjectsChanged: {
-        gotoHomePage();
         busyIndicator.runningBusyIndicator = false
+        gotoHomePage();
     }
     BusyIndicator {
         id:busyIndicator

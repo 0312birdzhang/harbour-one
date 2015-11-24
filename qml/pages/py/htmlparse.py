@@ -16,7 +16,8 @@ def queryContent(url):
         #print allhtml
         titulo = soup.find_all("div", "one-titulo")[0].contents[0].strip() #VOL号
         imagen = soup.find_all("div", "one-imagen")[0].find("img")['src'].strip() #首页图片链接
-        imagen_leyenda = soup.find_all("div", "one-imagen-leyenda")[0].contents[0].strip() #图片标题
+        imagen_leyenda = u"".join(str(item) for item in soup.find_all("div", "one-imagen-leyenda")[0].contents).strip() #图片标题
+        print(imagen_leyenda)
         cita = soup.find_all("div", "one-cita")[0].contents[0].strip() #文章内容
         cita_content=""
         cita_author=""

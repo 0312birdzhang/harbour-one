@@ -43,7 +43,7 @@ ApplicationWindow{
     property var objects
     property Page currentPage: pageStack.currentPage
     property date currentDay:new Date()
-    property int currentVolnum
+    property int currentVolnum:GetDate.getDiffDay("2012-10-07 00:00:00")
     property string homepageImg:"image://theme/icon-m-refresh"
 
 

@@ -37,6 +37,9 @@ function getDiffDay2(today){
     if(b > d){
         b = d;
     }
+    if(b < a){
+        return 1;
+    }
     var res = (b - a)/c;
     return parseInt(res);
 }
@@ -48,6 +51,9 @@ function getDiffDay3(today){
     var d = new Date().getTime();
     if(b > d){
         b = d;
+    }
+    if(b < a){
+        return 1;
     }
     var res = (b - a)/c;
     return parseInt(res);

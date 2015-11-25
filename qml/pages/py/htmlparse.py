@@ -53,7 +53,7 @@ def queryContent(url):
         cosas_titulo = u''.join(str(item) for item in soup.find_all("h2","cosas-titulo")[0].stripped_strings) #东西名
         cosas_contenido = soup.find_all("div","cosas-contenido")[0].stripped_strings #东西说明
         cosas_contenido = u''.join(str(item) for item in cosas_contenido)
-        
+
         one_map= {
             "titulo":titulo,
             "imagen":imagen,

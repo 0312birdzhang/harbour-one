@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import "./storage.js" as JS
 Page {
     id: aboutPage;
     SilicaFlickable {
@@ -77,6 +77,7 @@ Page {
                 onClicked: {
                     remorse.execute(qsTr("Begin clear cache..."),function(){
                         py.clearCache();
+			JS.removeDatas();
                     },3000);
                 }
             }

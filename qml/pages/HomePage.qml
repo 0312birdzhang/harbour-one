@@ -232,7 +232,7 @@ Item {
                         font.bold: true
                         color: Theme.highlightColor
                         horizontalAlignment: Text.AlignHCenter
-                        text:objects.dom
+                        text:GetDate.translateNumber(objects.dom)
 
                     }
                     Label{

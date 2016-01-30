@@ -33,6 +33,17 @@
     </message>
 </context>
 <context>
+    <name>Api</name>
+    <message>
+        <source>error connection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading erro...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ContentPage</name>
     <message>
         <source>Content</source>
@@ -132,24 +143,28 @@
 <context>
     <name>harbour-one</name>
     <message>
-        <source>Error</source>
-        <translation>保存失败</translation>
+        <source>error</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error load data</source>
-        <translation>加载数据失败</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>未知问题</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Successed saved to ~/Pictures/save/One/</source>
-        <translation>成功保存到~/Pictures/save/One/ </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation>缓存已清理</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

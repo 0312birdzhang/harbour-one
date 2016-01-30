@@ -33,6 +33,7 @@ import Sailfish.Silica 1.0
 import "pages"
 import "pages/storage.js" as Storage
 import "pages/getBeforeDate.js" as GetDate
+import "pages/Api.js" as API
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -41,29 +42,32 @@ ApplicationWindow{
     property int allindex: 0
     property int num:0
     property var objects
+    property bool loading:false;
     property Page currentPage: pageStack.currentPage
     property date currentDay:new Date()
     property int currentVolnum:GetDate.getDiffDay("2012-10-07 00:00:00")
     property string homepageImg:"image://theme/icon-m-refresh"
-
-
-    onCurrentVolnumChanged: {
-        busyIndicator.runningBusyIndicator = true
-    }
+    property string cday; //当前日期的字符串类型
 
     onObjectsChanged: {
-        busyIndicator.runningBusyIndicator = false
-        gotoHomePage();
+        //判断每一个里面是否有内容
+        if(objects.titulo && objects.articulo_editor && objects.cuestion_title /*&& objects.cosas_titulo*/){
+            gotoHomePage();
+        }
     }
+
+    function getOne(today){
+        API.getHpinfo(today);
+        API.getContentInfo(today);
+        API.getQuestionInfo(today);
+        //API.getThingInfo(today);
+    }
+
     BusyIndicator {
-        id:busyIndicator
-        property bool runningBusyIndicator: false
-        parent: app.currentPage
+        id: busyIndicator
         anchors.centerIn: parent
-        //z: 10
+        running: loading
         size: BusyIndicatorSize.Large
-        running: runningBusyIndicator
-        //opacity: busyIndicator.running ? 1: 0
     }
 
 
@@ -102,6 +106,32 @@ ApplicationWindow{
 
 
      }
+    Connections{
+            target: signalCenter;
+            onLoadStarted:{
+                app.loading=true;
+                processingtimer.restart();
+            }
+            onLoadFinished:{
+                app.loading=false;
+                processingtimer.stop();
+            }
+            onLoadFailed:{
+                app.loading=false;
+                processingtimer.stop();
+                signalCenter.showMessage(errorstring);
+            }
+        }
+
+    Timer{
+        id:processingtimer;
+        interval: 60000;
+        onTriggered: signalCenter.loadFailed(qsTr("error"));
+    }
+
+    SignalCenter{
+           id: signalCenter;
+    }
 
     Notification{
         id:notification
@@ -135,7 +165,7 @@ ApplicationWindow{
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
                     currentVolnum = GetDate.getDiffDay("2012-10-07 00:00:00")
-                    py.getDatas(currentVolnum);
+                    //py.getDatas(currentVolnum);
               });
 
         }
@@ -203,10 +233,10 @@ ApplicationWindow{
 
     Component.onCompleted: {
         Storage.initialize();
+        API.app = app;
+        API.signalcenter = signalCenter;
+        var today = GetDate.getCurrentDay();
+        getOne(today);
     }
-    Component.onDestruction: {
-        //py.clearCache();
-    }
-
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

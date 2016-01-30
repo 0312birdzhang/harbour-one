@@ -56,10 +56,12 @@ Item {
 
                             dialog.accepted.connect(function() {
                                 var date = dialog.date;
-                                currentDay = date;
-                                var volnum =GetDate.getDiffDay2(date)
+                                //currentDay = date;
+                                //var volnum =GetDate.getDiffDay2(date)
                                 //busyIndicator.running = true
-                                py.getDatas(volnum)
+                                //py.getDatas(volnum)
+                                cday = GetDate.parseDate(date)
+                                getOne(cday);
                             })
                         }
                         onClicked: openDateDialog()
@@ -72,9 +74,11 @@ Item {
                         onClicked: {
                             allindex = Math.abs(dateslider.value -9);
                             currentDay = new Date(dateslider.valueText)
-                            var volnum =GetDate.getDiffDay3(dateslider.valueText)
+                            cday = dateslider.valueText;
+                            //var volnum =GetDate.getDiffDay3(dateslider.valueText)
                             //busyIndicator.running = true
-                            py.getDatas(volnum)
+                            //py.getDatas(volnum)
+                            getOne(cday);
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter
                     }
@@ -232,7 +236,7 @@ Item {
                         font.bold: true
                         color: Theme.highlightColor
                         horizontalAlignment: Text.AlignHCenter
-                        text:GetDate.translateNumber(objects.dom)
+                        text:objects.dom
 
                     }
                     Label{

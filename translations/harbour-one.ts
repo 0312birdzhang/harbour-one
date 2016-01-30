@@ -33,6 +33,17 @@
     </message>
 </context>
 <context>
+    <name>Api</name>
+    <message>
+        <source>error connection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loading erro...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ContentPage</name>
     <message>
         <source>Content</source>
@@ -132,11 +143,11 @@
 <context>
     <name>harbour-one</name>
     <message>
-        <source>Error</source>
+        <source>error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown</source>
+        <source>Error load data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -144,11 +155,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Cleared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error load data</source>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -23,7 +23,7 @@ function getBeforeDate(d,n){
 //获取两个日期时间差多少天
 function getDiffDay(startday){
     var a = new Date(startday).getTime();
-    var b= new Date().getTime();
+    var b = new Date().getTime();
     var c = 60*60*24*1000;
     var res = (b - a)/c;
     return parseInt(res);
@@ -65,66 +65,17 @@ function parseDate(date){
     var year = d.getFullYear();
     var mon = d.getMonth()+1;
     var day=d.getDate();
-    return year+"-"+mon+"-"+day
+    return year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day)
 }
 
 
-function translateNumber(numberText) {
-    var CHINESE_NEGATIVE = "负";
-    var CHINESE_ZERO = "零";
-    var CHINESE_DIGITS = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
-    var CHINESE_UNITS = ["", "十", "百", "千"];
-    var CHINESE_GROUP_UNITS = ["", "万", "亿", "兆", "京", "垓", "杼", "穰", "溝", "澗", "正", "載", "極"];
-    if (numberText === "") {
-        return "";
-    }
-    numberText = numberText.replace(/^0+/g, "");
-    numberText = numberText.replace(/^-0+/g, "-");
-    if (numberText === "" || numberText === "-") {
-        return CHINESE_ZERO;
-    }
-    var result = "";
-    if (numberText[0] === "-") {
-        result += CHINESE_NEGATIVE;
-        numberText = numberText.substring(1);
-    }
 
-    var groupIsZero = true;
-    var needZero = false;
-    for (var i = 0; i < numberText.length; ++i) {
-        var position = numberText.length - 1 - i;
-        var digit = parseInt(numberText[i]);
-        var unit = position % CHINESE_UNITS.length;
-        var group = (position - unit) / CHINESE_UNITS.length;
 
-        if (digit !== 0) {
-            if (needZero) {
-                result += CHINESE_ZERO;
-            }
-
-            if (digit !== 1 || unit !== 1 || !groupIsZero || (group === 0 && needZero)) {
-                result += CHINESE_DIGITS[digit];
-            }
-
-            result += CHINESE_UNITS[unit];
-        }
-
-        groupIsZero = groupIsZero && (digit === 0);
-
-        if (unit === 0 && !groupIsZero) {
-            result += CHINESE_GROUP_UNITS[group];
-        }
-
-        needZero = (digit === 0 && (unit !== 0 || groupIsZero));
-
-        if (unit === 0) {
-            groupIsZero = true;
-        }
-    }
-    return result;
-}
-function doNumberTranslation() {
-    numberText = document.getElementById('number-input').value;
-    chinese = translateNumber(numberText);
-    document.getElementById('chinese-output').value = chinese;
+function getCurrentDay(){
+    var d = new Date().toLocaleDateString("yyyy-MM-dd");
+    return d;
+//    var year = d.getFullYear();
+//    var mon = d.getMonth()+1;
+//    var day=d.getDate();
+//    return year+"-"+mon+"-"+day
 }

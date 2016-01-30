@@ -33,6 +33,7 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/SignalCenter.qml \
     qml/pages/Notification.qml \
     qml/pages/ErrorTipPage.qml \
+    qml/pages/SignalCenter.qml \
     qml/cover/cover.png \
     qml/pages/getBeforeDate.js \
     rpm/harbour-one.changes \
@@ -57,6 +58,7 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/harbour-one-de.ts \
                 translations/harbour-one-zh_CN.ts
 
-DISTFILES +=
+DISTFILES += \
+    qml/pages/Api.js
 
 

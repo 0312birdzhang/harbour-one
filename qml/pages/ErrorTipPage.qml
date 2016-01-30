@@ -13,7 +13,7 @@ Page{
                hintText: qsTr("Click to reload")
                MouseArea{
                    anchors.fill: parent
-                   onClicked: py.getDatas(volnum);
+                   onClicked:getOne(cday);
                }
            }
        }

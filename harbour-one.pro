@@ -38,7 +38,6 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/getBeforeDate.js \
     rpm/harbour-one.changes \
     qml/pages/py/main.py \
-    qml/pages/py/htmlparse.py \
     qml/pages/md5.js \
     qml/pages/MainPage.qml \
     qml/pages/LabelText.qml \
@@ -46,7 +45,6 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/py/__init__.py \
     qml/pages/FavoritePage.qml \
     qml/pages/CosasPage.qml \
-    qml/pages/py/*.py \
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
 

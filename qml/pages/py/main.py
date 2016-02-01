@@ -74,7 +74,7 @@ def findImgType(cachedFile):
     imgType = imghdr.what(cachedFile)
     return imgType
 
-#CREATE TABLE IF NOT EXISTS datas(vol int UNIQUE, json TEXT)
+#CREATE TABLE IF NOT EXISTS datas(day text UNIQUE, json TEXT)
 def getDbname():
     h = hashlib.md5()
     h.update("one".encode(encoding='utf_8', errors='strict'))
@@ -82,22 +82,22 @@ def getDbname():
     logging.debug(dbPath+"/"+dbname+".sqlite")
     return dbPath+"/"+dbname+".sqlite"
 
-def getTodayContent(vol):
+def getTodayContent(day):
     try:
         conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS datas
-                 (vol int, json text) ''')
-        cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
+                 (day text, json text) ''')
+        cur.execute('SELECT json FROM datas WHERE day= %s ' % day)
         result= cur.fetchone()
         #logging.debug(result)
         if result:
             return json.loads(result[0])
         else:
-            data=queryContent(vol)
+            data=queryContent(day)
             #插入
             if data and data != "Timeout":
-                insertDatas(vol,data)
+                insertDatas(day,data)
                 return data
             else:
                 return 'Error'
@@ -107,16 +107,16 @@ def getTodayContent(vol):
     conn.close()
 
 #插入数据
-def insertDatas(vol,data):
+def insertDatas(day,data):
     try:
         conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES (%s,'%s')" % (vol,json.dumps(data) ) )
+        cur.execute("INSERT INTO datas VALUES ('%s','%s')" % (day,json.dumps(data) ) )
         conn.commit()
     except Exception as e:
         #pass
         logging.debug(e)
     conn.close()
 
-#def getTodayContent(vol):
-#    return queryContent(vol)
+#def getTodayContent(day):
+#    return queryContent(day)

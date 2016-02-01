@@ -134,15 +134,14 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-                    currentVolnum = GetDate.getDiffDay("2012-10-07 00:00:00")
-                    py.getDatas(currentVolnum);
+                    //currentVolnum = GetDate.getDiffDay("2012-10-07 00:00:00")
+                    py.getDatas(getTodayStr());
               });
 
         }
 
-        function getDatas(volnum){
-            currentVolnum = volnum
-            call('main.getTodayContent',[volnum],function(result){
+        function getDatas(day){
+            call('main.getTodayContent',[day],function(result){
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))

@@ -65,5 +65,13 @@ function parseDate(date){
     var year = d.getFullYear();
     var mon = d.getMonth()+1;
     var day=d.getDate();
-    return year+"-"+mon+"-"+day
+    return year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
+}
+
+function getTodayStr(){
+  var year = d.getFullYear();
+  var mon = d.getMonth()+1;
+  var day=d.getDate();
+  var s = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
+  return s;
 }

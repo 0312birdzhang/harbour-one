@@ -7,7 +7,7 @@ import urllib.request
 import imghdr
 import hashlib
 from basedir import *
-from htmlparse import *
+import htmlparse
 import json
 import logging
 import sqlite3
@@ -57,7 +57,6 @@ def cacheImg(url,md5name):
 
 """
     下载文件
-
 """
 def downloadImg(downname,downurl):
     try:
@@ -74,27 +73,30 @@ def findImgType(cachedFile):
     imgType = imghdr.what(cachedFile)
     return imgType
 
-#CREATE TABLE IF NOT EXISTS datas(vol int UNIQUE, json TEXT)
+#CREATE TABLE IF NOT EXISTS datas(vol text UNIQUE, json TEXT)
 def getDbname():
     h = hashlib.md5()
     h.update("one".encode(encoding='utf_8', errors='strict'))
     dbname=h.hexdigest()
-    logging.debug(dbPath+"/"+dbname+".sqlite")
     return dbPath+"/"+dbname+".sqlite"
 
-def getTodayContent(vol):
+
+def getTodayContent(day,vol):
+    conn = sqlite3.connect(getDbname())
     try:
-        conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS datas
                  (vol int, json text) ''')
+        conn.commit()
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
         result= cur.fetchone()
-        #logging.debug(result)
+        logging.debug(result)
         if result:
             return json.loads(result[0])
         else:
-            data=queryContent(vol)
+            logging.debug("query data")
+            data=getHtml(day)
+            logging.debug("query end")
             #插入
             if data and data != "Timeout":
                 insertDatas(vol,data)
@@ -102,21 +104,33 @@ def getTodayContent(vol):
             else:
                 return 'Error'
     except Exception as e:
-        logging.debug(e)
+        logging.debug("error")
+        #logging.ERROR(e)
         return 'Error'
-    conn.close()
+    finally:
+        conn.close()
 
 #插入数据
 def insertDatas(vol,data):
+    conn = sqlite3.connect(getDbname())
     try:
-        conn = sqlite3.connect(getDbname())
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES (%s,'%s')" % (vol,json.dumps(data) ) )
+        cur.execute("INSERT INTO datas VALUES (%s,'%s')" % (str(vol),json.dumps(data) ) )
         conn.commit()
     except Exception as e:
-        #pass
+        logging.debug("Insert error")
         logging.debug(e)
-    conn.close()
+    finally:
+        conn.close()
 
-#def getTodayContent(vol):
-#    return queryContent(vol)
+def getHtml(date):
+    i_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",\
+                 "Referer": 'http://www.baidu.com'}
+    req = urllib.request.Request('http://one.birdzhang.xyz/query?day='+date, headers=i_headers)
+    try:
+        response = urllib.request.urlopen(req,timeout=30)
+        allhtml = response.read()
+        return json.loads(allhtml)
+    except Exception as e:
+        print(e)
+        return ''

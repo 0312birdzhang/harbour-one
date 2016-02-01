@@ -65,6 +65,7 @@ function parseDate(date){
     var year = d.getFullYear();
     var mon = d.getMonth()+1;
     var day=d.getDate();
+
     return year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day)
 }
 
@@ -74,8 +75,5 @@ function parseDate(date){
 function getCurrentDay(){
     var d = new Date().toLocaleDateString("yyyy-MM-dd");
     return d;
-//    var year = d.getFullYear();
-//    var mon = d.getMonth()+1;
-//    var day=d.getDate();
-//    return year+"-"+mon+"-"+day
 }
+

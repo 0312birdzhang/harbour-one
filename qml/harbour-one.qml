@@ -33,7 +33,6 @@ import Sailfish.Silica 1.0
 import "pages"
 import "pages/storage.js" as Storage
 import "pages/getBeforeDate.js" as GetDate
-import "pages/Api.js" as API
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -56,17 +55,12 @@ ApplicationWindow{
         }
     }
 
-    function getOne(today){
-        API.getHpinfo(today);
-        API.getContentInfo(today);
-        API.getQuestionInfo(today);
-        //API.getThingInfo(today);
-    }
 
     BusyIndicator {
         id: busyIndicator
+        property bool runningBusyIndicator: false
         anchors.centerIn: parent
-        running: loading
+        running:runningBusyIndicator
         size: BusyIndicatorSize.Large
     }
 
@@ -152,11 +146,11 @@ ApplicationWindow{
         pageStack.replace(Qt.resolvedUrl("pages/MainPage.qml"));
     }
 
-    function gotoErrorPage(volnum){
+    function gotoErrorPage(day){
         while(pageStack.depth>1) {
             pageStack.pop(undefined, PageStackAction.Immediate);
         }
-        pageStack.replace(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"volnum":volnum});
+        pageStack.replace(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"day":day});
     }
 
     Python{
@@ -164,24 +158,23 @@ ApplicationWindow{
         Component.onCompleted: { // this action is triggered when the loading of this component is finished
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
-                    currentVolnum = GetDate.getDiffDay("2012-10-07 00:00:00")
-                    //py.getDatas(currentVolnum);
+                    Storage.initialize()
+                    py.getDatas(GetDate.getCurrentDay());
               });
 
         }
 
-        function getDatas(volnum){
-            currentVolnum = volnum
-            call('main.getTodayContent',[volnum],function(result){
+        function getDatas(day){
+            var vol = GetDate.getDiffDay3(day);
+            call('main.getTodayContent',[day,vol],function(result){
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))
                     busyIndicator.runningBusyIndicator = false
-                    gotoErrorPage(volnum)
+                    gotoErrorPage(day)
                 }else{
                     objects = obj;
                 }
-
             })
         }
         //注册保存方法
@@ -207,7 +200,9 @@ ApplicationWindow{
 
         onError: {
             busyIndicator.runningBusyIndicator = false
+            console.log(traceback)
             addNotification(traceback)
+            gotoErrorPage(currentDay.toLocaleDateString("yyyy-MM-dd"))
         }
         onReceived: {
             //console.log('Event: ' + data);
@@ -231,12 +226,5 @@ ApplicationWindow{
         }
     }
 
-    Component.onCompleted: {
-        Storage.initialize();
-        API.app = app;
-        API.signalcenter = signalCenter;
-        var today = GetDate.getCurrentDay();
-        getOne(today);
-    }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
 }

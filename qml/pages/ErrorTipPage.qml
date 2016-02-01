@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 Page{
     id:tipPage
-    property int volnum
+    property string day
        SilicaListView {
            id: view
            anchors.fill: parent
@@ -13,7 +13,7 @@ Page{
                hintText: qsTr("Click to reload")
                MouseArea{
                    anchors.fill: parent
-                   onClicked:getOne(cday);
+                   onClicked:py.getDatas(day);
                }
            }
        }

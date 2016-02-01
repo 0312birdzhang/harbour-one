@@ -56,12 +56,11 @@ Item {
 
                             dialog.accepted.connect(function() {
                                 var date = dialog.date;
-                                //currentDay = date;
-                                //var volnum =GetDate.getDiffDay2(date)
-                                //busyIndicator.running = true
-                                //py.getDatas(volnum)
-                                cday = GetDate.parseDate(date)
-                                getOne(cday);
+
+                                currentDay = date;
+                                var day =GetDate.parseDate(date)
+                                py.getDatas(day)
+
                             })
                         }
                         onClicked: openDateDialog()
@@ -74,11 +73,11 @@ Item {
                         onClicked: {
                             allindex = Math.abs(dateslider.value -9);
                             currentDay = new Date(dateslider.valueText)
-                            cday = dateslider.valueText;
+
                             //var volnum =GetDate.getDiffDay3(dateslider.valueText)
                             //busyIndicator.running = true
-                            //py.getDatas(volnum)
-                            getOne(cday);
+                            py.getDatas(dateslider.valueText)
+
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter
                     }

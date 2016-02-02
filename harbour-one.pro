@@ -24,7 +24,6 @@ OTHER_FILES += qml/harbour-one.qml \
     harbour-one.desktop \
     qml/pages/main.js \
     qml/pages/storage.js \
-    qml/pages/qmlprovate.js \
     qml/pages/AboutPage.qml \
     qml/pages/ContentPage.qml \
     qml/pages/HomePage.qml \

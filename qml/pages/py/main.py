@@ -2,17 +2,15 @@
 import os,sys,shutil
 import pyotherside
 import subprocess
-import urllib
-import urllib.request
+import urllib.request,urllib.error,urllib.parse
 import imghdr
 import hashlib
 from basedir import *
-import htmlparse
 import json
 import logging
 import sqlite3
-import hashlib
-
+import traceback
+from socket import timeout
 
 __appname__ = "harbour-one"
 cachePath=os.path.join(XDG_CACHE_HOME, __appname__, __appname__,"one","")
@@ -90,13 +88,10 @@ def getTodayContent(day,vol):
         conn.commit()
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % vol)
         result= cur.fetchone()
-        logging.debug(result)
         if result:
             return json.loads(result[0])
         else:
-            logging.debug("query data")
             data=getHtml(day)
-            logging.debug("query end")
             #插入
             if data and data != "Timeout":
                 insertDatas(vol,data)
@@ -105,7 +100,7 @@ def getTodayContent(day,vol):
                 return 'Error'
     except Exception as e:
         logging.debug("error")
-        #logging.ERROR(e)
+        logging.debug(traceback.format_exc())
         return 'Error'
     finally:
         conn.close()
@@ -119,18 +114,22 @@ def insertDatas(vol,data):
         conn.commit()
     except Exception as e:
         logging.debug("Insert error")
-        logging.debug(e)
+        #logging.debug(traceback.format_exc())
     finally:
         conn.close()
 
 def getHtml(date):
+    #logging.debug(date)
+    url = 'http://one.birdzhang.xyz/query?day='+date
+    #logging.DEBUG(url)
     i_headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36",\
                  "Referer": 'http://www.baidu.com'}
-    req = urllib.request.Request('http://one.birdzhang.xyz/query?day='+date, headers=i_headers)
+    req = urllib.request.Request(url,headers=i_headers)
     try:
         response = urllib.request.urlopen(req,timeout=30)
         allhtml = response.read()
-        return json.loads(allhtml)
+        return json.loads(allhtml.decode("utf-8"))
     except Exception as e:
-        print(e)
+        logging.debug("error")
+        #logging.debug(traceback.format_exc())
         return ''

@@ -64,10 +64,7 @@ Page{
                 }
             }
             onClicked: {
-                //var day = date.toString();
-                //var diffday = JS.getDiffDay(day);
-                var volnum =title.split(".")[1]
-                py.getDatas(volnum)
+                py.getDatas(date)
             }
         }
           VerticalScrollDecorator {}

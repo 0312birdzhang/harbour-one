@@ -7,6 +7,10 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+
+* Tue Feb 2 2016 BirdZhang <0312birdzhang@gmail.com>  0.9-1
+- 新的one一个
+
 * Wed Nov 25 2015 BirdZhang <0312birdzhang@gmail.com> 0.8-3
 - 修复旧的vol
 
@@ -64,8 +68,3 @@
 
 * Mon May 2 2015 BirdZhang <0312birdzhang@gmail.com> 0.1.1
 - init
-
-
-
-
-

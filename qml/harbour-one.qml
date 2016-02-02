@@ -165,6 +165,7 @@ ApplicationWindow{
         }
 
         function getDatas(day){
+            busyIndicator.runningBusyIndicator = true
             var vol = GetDate.getDiffDay3(day);
             call('main.getTodayContent',[day,vol],function(result){
                 var obj  = result;
@@ -173,8 +174,10 @@ ApplicationWindow{
                     busyIndicator.runningBusyIndicator = false
                     gotoErrorPage(day)
                 }else{
+                    busyIndicator.runningBusyIndicator = false
                     objects = obj;
                 }
+
             })
         }
         //注册保存方法
@@ -200,7 +203,6 @@ ApplicationWindow{
 
         onError: {
             busyIndicator.runningBusyIndicator = false
-            console.log(traceback)
             addNotification(traceback)
             gotoErrorPage(currentDay.toLocaleDateString("yyyy-MM-dd"))
         }

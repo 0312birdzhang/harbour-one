@@ -11,7 +11,7 @@ import logging
 import sqlite3
 import traceback
 from socket import timeout
-
+import time
 __appname__ = "harbour-one"
 cachePath=os.path.join(XDG_CACHE_HOME, __appname__, __appname__,"one","")
 dbPath=os.path.join(XDG_DATA_HOME, __appname__,__appname__, "QML","OfflineStorage","Databases")
@@ -80,6 +80,7 @@ def getDbname():
 
 
 def getTodayContent(day,vol):
+    today = time.strftime("%Y-%m-%d", time.localtime())
     conn = sqlite3.connect(getDbname())
     try:
         cur = conn.cursor()
@@ -94,7 +95,8 @@ def getTodayContent(day,vol):
             data=getHtml(day)
             #插入
             if data and data != "Timeout":
-                insertDatas(vol,data)
+                if day <= today:
+                    insertDatas(vol,data)
                 return data
             else:
                 return 'Error'

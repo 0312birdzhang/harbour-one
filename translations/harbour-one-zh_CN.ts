@@ -33,17 +33,6 @@
     </message>
 </context>
 <context>
-    <name>Api</name>
-    <message>
-        <source>error connection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>loading erro...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ContentPage</name>
     <message>
         <source>Content</source>
@@ -98,28 +87,8 @@
         <translation>关于</translation>
     </message>
     <message>
-        <source>Add to favorite</source>
-        <translation>添加到收藏夹</translation>
-    </message>
-    <message>
-        <source>Add to favorite success </source>
-        <translation>添加成功</translation>
-    </message>
-    <message>
-        <source>Add to favorite failed</source>
-        <translation>添加失败</translation>
-    </message>
-    <message>
-        <source>Favorites</source>
-        <translation>收藏夹</translation>
-    </message>
-    <message>
         <source>Copyed to clipboard</source>
         <translation>已复制到剪切板</translation>
-    </message>
-    <message>
-        <source>See More</source>
-        <translation>查看更早</translation>
     </message>
 </context>
 <context>
@@ -144,27 +113,27 @@
     <name>harbour-one</name>
     <message>
         <source>error</source>
-        <translation type="unfinished"></translation>
+        <translation>发生错误</translation>
     </message>
     <message>
         <source>Error load data</source>
-        <translation type="unfinished"></translation>
+        <translation>发生错误</translation>
     </message>
     <message>
         <source>Successed saved to ~/Pictures/save/One/</source>
-        <translation type="unfinished"></translation>
+        <translation>成功保存到~/Pictures/save/One/</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>发生错误</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>已清理</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>未知问题</translation>
     </message>
 </context>
 </TS>

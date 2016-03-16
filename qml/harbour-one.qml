@@ -166,8 +166,9 @@ ApplicationWindow{
 
         function getDatas(day){
             busyIndicator.runningBusyIndicator = true
-            var vol = GetDate.getDiffDay3(day);
-            call('main.getTodayContent',[day,vol],function(result){
+            //var vol = GetDate.getDiffDay3(day);
+            var vindex = GetDate.getDiffDay(day);
+            call('main.getTodayContent',[vindex],function(result){
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))

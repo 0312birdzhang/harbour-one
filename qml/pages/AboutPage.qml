@@ -40,7 +40,7 @@ Page {
                 width:parent.width
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.9-1"
+                text:qsTr("Version")+" 0.9-2"
 
             }
             Item{width:1;height:1}
@@ -64,9 +64,10 @@ Page {
             Item{width:1;height:1}
             LabelText {
                 label: qsTr("Donation")
-                text:"通过‘查看更多’可以从第一期到现在的都可以查看。如果你觉得此软件你有所益处，你可以选择捐赠我。你的捐助可以让本软件更好的发展！"
+                text:"如果你觉得此软件你有所益处，你可以选择捐赠我。你的捐助可以让本软件更好的发展！"
                     +"<br/>"+
                      "我的支付宝账号:18520399451 <br/> Donations are welcome :)"
+                +"<br/>由于官网频繁改动以及个人时间问题，本软件未来可能不会继续跟进了."
 
             }
             Item{width:1;height:1}

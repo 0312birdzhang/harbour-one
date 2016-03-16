@@ -45,26 +45,24 @@ Item {
                     anchors.top: dateslider.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     spacing: Theme.paddingLarge
-                    Button{
-                        id:selectMore
-                        text:qsTr("See More")
+//                    Button{
+//                        id:selectMore
+//                        text:qsTr("See More")
 
-                        function openDateDialog() {
-                            var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
-                                            date: GetDate.getBeforeDate(new Date(),10)
-                                         })
+//                        function openDateDialog() {
+//                            var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
+//                                            date: GetDate.getBeforeDate(new Date(),10)
+//                                         })
 
-                            dialog.accepted.connect(function() {
-                                var date = dialog.date;
-
-                                currentDay = date;
-                                var day =GetDate.parseDate(date)
-                                py.getDatas(day)
-
-                            })
-                        }
-                        onClicked: openDateDialog()
-                    }
+//                            dialog.accepted.connect(function() {
+//                                var date = dialog.date;
+//                                currentDay = date;
+//                                var day =GetDate.parseDate(date)
+//                                py.getDatas(day)
+//                            })
+//                        }
+//                        onClicked: openDateDialog()
+//                    }
 
                     Button{
                         id:gobutton
@@ -91,22 +89,22 @@ Item {
                 text:qsTr("About")
                 onClicked: pageStack.push(Qt.resolvedUrl("AboutPage.qml"))
             }
-            MenuItem{
-                text:qsTr("Favorites")
-                onClicked: pageStack.push(Qt.resolvedUrl("FavoritePage.qml"))
-            }
+//            MenuItem{
+//                text:qsTr("Favorites")
+//                onClicked: pageStack.push(Qt.resolvedUrl("FavoritePage.qml"))
+//            }
 
-            MenuItem{
-                text:qsTr("Add to favorite")
-                onClicked:{
-                    var day = GetDate.parseDate(currentDay)
-                    if(Storage.addFavorite(day,objects.titulo)){
-                        addNotification(qsTr("Add to favorite success "))
-                    }else{
-                        addNotification(qsTr("Add to favorite failed"))
-                    }
-                }
-            }
+//            MenuItem{
+//                text:qsTr("Add to favorite")
+//                onClicked:{
+//                    var day = GetDate.parseDate(currentDay)
+//                    if(Storage.addFavorite(day,objects.titulo)){
+//                        addNotification(qsTr("Add to favorite success "))
+//                    }else{
+//                        addNotification(qsTr("Add to favorite failed"))
+//                    }
+//                }
+//            }
         }
 
 

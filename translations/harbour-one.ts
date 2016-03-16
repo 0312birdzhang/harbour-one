@@ -33,17 +33,6 @@
     </message>
 </context>
 <context>
-    <name>Api</name>
-    <message>
-        <source>error connection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>loading erro...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ContentPage</name>
     <message>
         <source>Content</source>
@@ -98,27 +87,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add to favorite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to favorite success </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add to favorite failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copyed to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>See More</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

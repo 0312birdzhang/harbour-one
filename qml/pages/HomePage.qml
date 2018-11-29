@@ -17,32 +17,32 @@ Item {
     }
 
     function getHomeImage(){
-        return getImagen(objects.entries[0].summary);
+        return getImagen(objects["entries"][0].summary);
     }
 
     function getLeyenda(){
-        str = fmtHtml(objects.entries[0].summary);
+        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<div class=\"one-imagen-leyenda\">(.*?)<\/div>/g;
         var vol = regex.exec(str)[1];
         return vol;
     }
 
     function getdom(){
-        str = fmtHtml(objects.entries[0].summary);
+        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<p class=\"dom\">(.*?)<\/p>/g;
         var vol = regex.exec(str)[1];
         return vol;
     }
 
     function getmay(){
-        str = fmtHtml(objects.entries[0].summary);
+        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<p class=\"may\">(.*?)<\/p>/g;
         var vol = regex.exec(str)[1];
         return vol;
     }
 
     function getcita(){
-        str = fmtHtml(objects.entries[0].summary);
+        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<div class=\"one-cita\">(.*?)<\/div>/g;
         var vol = regex.exec(str)[1];
         return vol;
@@ -132,7 +132,7 @@ Item {
                     + Theme.paddingLarge *2
             Label{
                 id: vol
-                text: getVOL(objects.entries[0].summary)
+                text: getVOL(objects["entries"][0].summary)
                 color: Theme.secondaryColor
                 font.pixelSize:Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignLeft

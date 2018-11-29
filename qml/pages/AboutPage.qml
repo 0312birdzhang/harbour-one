@@ -66,7 +66,7 @@ Page {
                 label: qsTr("Donation")
                 text:"如果你觉得此软件你有所益处，你可以选择捐赠我。你的捐助可以让本软件更好的发展！"
                     +"<br/>"+
-                     "我的支付宝账号:18520399451 <br/> Donations are welcome :)"
+                     "https://donate.qiyuos.cn <br/> Donations are welcome :)"
                 +"<br/>由于官网频繁改动以及个人时间问题，本软件未来可能不会继续跟进了."
 
             }

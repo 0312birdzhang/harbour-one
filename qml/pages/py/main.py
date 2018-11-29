@@ -21,6 +21,7 @@ from socket import timeout
 import time
 import datetime
 import feedparser
+import base64
 
 __appname__ = "harbour-one"
 cachePath = os.path.join(XDG_CACHE_HOME, __appname__, __appname__, "one", "")
@@ -35,7 +36,7 @@ one_api_url = "https://rsshub.app/one"
 
 def sumMd5(str):
     h = hashlib.md5()
-    h.update(url)
+    h.update(str.encode("utf-8"))
     md5name = h.hexdigest()
     return md5name
 
@@ -45,12 +46,11 @@ def saveImg(imgurl, savename):
         realpath = cachePath+md5name
         tmppath = savePath+savename+"."+findImgType(realpath)
         isExis()
-        # logging.debug(tmppath)
         shutil.copy(realpath, tmppath.encode("utf-8"))
         logging.debug(tmppath)
         pyotherside.send("1")
     except Exception as e:
-        # logging.debug(e)
+        logging.debug(str(e))
         pyotherside.send("-1")
 
 
@@ -108,7 +108,7 @@ def findImgType(cachedFile):
 
 
 def getDbname():
-    dbname = sumMd5("one".encode(encoding='utf_8', errors='strict'))
+    dbname = sumMd5("one")
     return dbPath+"/"+dbname+".sqlite"
 
 
@@ -123,13 +123,13 @@ def getTodayContent(daystr):
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % daystr)
         result = cur.fetchone()
         if result:
-            return json.dumps(result[0])
+            return json.dumps(base64.b64decode(result[0]))
         else:
             if today == daystr:
                 data = getHtml()
                 if data:
-                    insertDatas(daystr, json.loads(data))
-                    return data
+                    insertDatas(daystr, data)
+                    return json.loads(data)
             else:
                 return 'Error'
     except Exception as e:
@@ -142,16 +142,16 @@ def getTodayContent(daystr):
 # 插入数据
 
 
-def insertDatas(vol, data):
+def insertDatas(daystr, data):
+    data = base64.b64encode(data.encode("utf-8"))
     conn = sqlite3.connect(getDbname())
     try:
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES (%s,'%s')" %
-                    (str(vol), json.dumps(data)))
+        cur.execute("INSERT INTO datas VALUES ({0}, {1})".format(int(daystr),data.replace('"', '""')))
         conn.commit()
     except Exception as e:
         logging.debug("Insert error")
-        # logging.debug(traceback.format_exc())
+        logging.debug(str(e))
     finally:
         conn.close()
 

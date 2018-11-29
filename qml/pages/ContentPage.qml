@@ -28,73 +28,6 @@ Item {
             delegate: Item{
                             width: parent.width
                             height: conttile.height + content.height + Theme.paddingLarge * 2
-                            // height:date_time.implicitHeight
-                            //        +gwrow.height
-                            //        + conttile.height
-                            //        + author.height
-                            //        + content.height
-                            //        + authorinfo.height
-                            //        + Theme.paddingMedium * 15
-                            // Label{
-                            //     id:date_time
-                            //     text:objects.dom+","+objects.may
-                            //     color: Theme.secondaryColor
-                            //     font.pixelSize:Theme.fontSizeExtraSmall
-                            //     horizontalAlignment: Text.AlignLeft
-                            //     truncationMode: TruncationMode.Elide
-                            //     anchors{
-                            //         left:parent.left
-                            //         right:parent.right
-                            //         margins: Theme.paddingMedium
-                            //     }
-
-                            //     Rectangle{
-                            //         width: parent.width;
-                            //         height: 1;
-                            //         anchors.top: parent.bottom;
-                            //         color: "#66ffffff"
-                            //     }
-                            // }
-                            // Row{
-                            //     id:gwrow
-                            //     height: gw.implicitHeight;
-                            //     anchors{
-                            //         top:date_time.bottom;
-                            //         topMargin: Theme.paddingLarge
-                            //         left:parent.left;
-                            //         leftMargin: Theme.paddingMedium
-                            //     }
-
-                            //     Image {
-                            //         id:sgwlab1
-                            //         anchors.top:parent.top;
-                            //         source:"pics/x_left.png"
-                            //     }
-
-                            //     Item{height: 5;width: Theme.paddingLarge;}
-
-                            //     Label{
-                            //         id:gw
-                            //         text:objects.comilla_cerrar
-                            //         width: listview.width - Theme.paddingMedium*3-Theme.paddingLarge-sgwlab1.implicitWidth-sgwlab2.implicitWidth;
-                            //         font.pixelSize: Theme.fontSizeExtraSmall
-                            //         font.letterSpacing: 1;
-                            //         color: Theme.secondaryColor
-                            //         wrapMode: Text.WordWrap
-                            //         elide: Text.ElideMiddle
-                            //     }
-
-                            //     Item{height: 5;width: Theme.paddingMedium;}
-
-                            //     Image {
-                            //         id:sgwlab2
-                            //         anchors.bottom:parent.bottom;
-                            //         source:"pics/x_right.png"
-                            //     }
-                            // }
-
-
-
                             Label{
                                 id:conttile
                                 text:objects.entries[1].title
@@ -107,7 +40,7 @@ Item {
                                 truncationMode: TruncationMode.Elide
                                 anchors{
                                     left:parent.left
-                                    top:gwrow.bottom
+                                    top:parent.top
                                     margins: Theme.paddingMedium
                                     topMargin: Theme.paddingMedium*2
                                 }

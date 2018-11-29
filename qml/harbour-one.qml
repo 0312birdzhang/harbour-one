@@ -34,7 +34,7 @@ import "pages"
 import "pages/storage.js" as Storage
 import "pages/getBeforeDate.js" as GetDate
 import io.thp.pyotherside 1.5
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 
 ApplicationWindow{
     id: app;
@@ -49,14 +49,6 @@ ApplicationWindow{
     property string cday //当前日期的字符串类型
     property string newapiurl :"https://rsshub.app/one"
     property bool runningBusyIndicator: false
-
-    onObjectsChanged: {
-        //判断每一个里面是否有内容
-        if(objects.feed && objects.feed.title){
-            gotoHomePage();
-        }
-    }
-
 
     BusyIndicator {
         id: busyIndicator
@@ -148,21 +140,24 @@ ApplicationWindow{
     }
 
     function gotoErrorPage(day){
-        while(pageStack.depth>1) {
-            pageStack.pop(undefined, PageStackAction.Immediate);
-        }
-        pageStack.push(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"day":day});
+//        while(pageStack.depth>1) {
+//            pageStack.pop(undefined, PageStackAction.Immediate);
+//        }
+        console.log(new Date())
+        pageStack.replace(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"day":day});
     }
 
     function fmtHtml(str){
         // 去掉里面的js内容
         str = str.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,"");
+        str = str.replace(/<img src=\"([^<>"]*)\".*?>/g,"<img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/>");
         return str;
     }
 
     function getImagen(str){
         str = fmtHtml(str);
-        var regex = /<img.*?src='(.*?)'/;
+        console.log(str)
+        var regex = /<img.*?src=\"(.*?)\"/;
         var src = regex.exec(str)[1];
         return src;
     }
@@ -182,7 +177,7 @@ ApplicationWindow{
             addImportPath(Qt.resolvedUrl('./pages/py')); // adds import path to the directory of the Python script
             py.importModule('main', function () { // imports the Python module
                     Storage.initialize()
-                    py.getDatas(GetDate.getCurrentDay());
+                    py.getDatas(GetDate.getCurrentDay().replace(/-/g,''));
               });
 
         }
@@ -191,13 +186,15 @@ ApplicationWindow{
             runningBusyIndicator = true
             call('main.getTodayContent',[day],function(result){
                 var obj  = result;
+//                console.log(result);
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))
                     runningBusyIndicator = false
                     gotoErrorPage(day)
                 }else{
                     runningBusyIndicator = false
-                    objects = obj;
+                    objects = JSON.parse(obj);
+                    gotoHomePage();
                 }
 
             })

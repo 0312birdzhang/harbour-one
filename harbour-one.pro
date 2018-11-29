@@ -41,6 +41,7 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/MainPage.qml \
     qml/pages/LabelText.qml \
     qml/pages/py/basedir.py \
+    qml/pages/py/feedparser/ \
     qml/pages/py/__init__.py \
     qml/pages/FavoritePage.qml \
     qml/pages/CosasPage.qml \

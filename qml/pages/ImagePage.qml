@@ -162,7 +162,7 @@ Page {
         }
         width: Theme.iconSizeMedium+Theme.paddingMedium*2
 
-        icon.source: "image://theme/icon-m-cloud-download"
+        icon: "image://theme/icon-m-cloud-download"
         onClicked: {
             py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.parseDate(currentDay));
         }

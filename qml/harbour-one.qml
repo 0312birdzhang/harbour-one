@@ -33,7 +33,7 @@ import Sailfish.Silica 1.0
 import "pages"
 import "pages/storage.js" as Storage
 import "pages/getBeforeDate.js" as GetDate
-import io.thp.pyotherside 1.3
+import io.thp.pyotherside 1.5
 import org.nemomobile.notifications 1.0
 
 ApplicationWindow{
@@ -46,11 +46,13 @@ ApplicationWindow{
     property date currentDay:new Date()
     property int currentVolnum:GetDate.getDiffDay("2012-10-07 00:00:00")
     property string homepageImg:"image://theme/icon-m-refresh"
-    property string cday; //当前日期的字符串类型
+    property string cday //当前日期的字符串类型
+    property string newapiurl :"https://rsshub.app/one"
+    property bool runningBusyIndicator: false
 
     onObjectsChanged: {
         //判断每一个里面是否有内容
-        if(objects.titulo && objects.articulo_editor && objects.cuestion_title /*&& objects.cosas_titulo*/){
+        if(objects.feed && objects.feed.title){
             gotoHomePage();
         }
     }
@@ -58,7 +60,6 @@ ApplicationWindow{
 
     BusyIndicator {
         id: busyIndicator
-        property bool runningBusyIndicator: false
         anchors.centerIn: parent
         running:runningBusyIndicator
         size: BusyIndicatorSize.Large
@@ -150,7 +151,7 @@ ApplicationWindow{
         while(pageStack.depth>1) {
             pageStack.pop(undefined, PageStackAction.Immediate);
         }
-        pageStack.replace(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"day":day});
+        pageStack.push(Qt.resolvedUrl("pages/ErrorTipPage.qml"),{"day":day});
     }
 
     Python{
@@ -165,17 +166,15 @@ ApplicationWindow{
         }
 
         function getDatas(day){
-            busyIndicator.runningBusyIndicator = true
-            //var vol = GetDate.getDiffDay3(day);
-            var vindex = GetDate.getDiffDay(day);
-            call('main.getTodayContent',[vindex],function(result){
+            runningBusyIndicator = true
+            call('main.getTodayContent',[day],function(result){
                 var obj  = result;
                 if(obj.toString() == "Error"){
                     addNotification(qsTr("Error load data"))
-                    busyIndicator.runningBusyIndicator = false
+                    runningBusyIndicator = false
                     gotoErrorPage(day)
                 }else{
-                    busyIndicator.runningBusyIndicator = false
+                    runningBusyIndicator = false
                     objects = obj;
                 }
 
@@ -203,9 +202,9 @@ ApplicationWindow{
         }
 
         onError: {
-            busyIndicator.runningBusyIndicator = false
+            runningBusyIndicator = false
             addNotification(traceback)
-            gotoErrorPage(currentDay.toLocaleDateString("yyyy-MM-dd"))
+            gotoErrorPage(currentDay.toLocaleDateString("yyyyMMdd"))
         }
         onReceived: {
             //console.log('Event: ' + data);
@@ -224,7 +223,7 @@ ApplicationWindow{
                 sendMsg=qsTr("Unknown")
             }
 
-            busyIndicator.runningBusyIndicator = false
+            runningBusyIndicator = false
             addNotification(sendMsg)
         }
     }

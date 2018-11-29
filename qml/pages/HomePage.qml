@@ -30,14 +30,14 @@ Item {
                 height: Theme.itemSizeExtraLarge +gobutton.height
                 Slider{
                     id:dateslider
-                    value: 9-allindex
+                    value: 7-allindex
                     minimumValue:0
-                    maximumValue:9
+                    maximumValue:7
                     stepSize: 1
                     width: parent.width
                     valueText: {
                         var today = new Date();
-                        GetDate.getBeforeDate(today,Math.abs(9-value))
+                        GetDate.getBeforeDate(today,Math.abs(7-value))
                     }
 
                 }
@@ -45,36 +45,14 @@ Item {
                     anchors.top: dateslider.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     spacing: Theme.paddingLarge
-//                    Button{
-//                        id:selectMore
-//                        text:qsTr("See More")
-
-//                        function openDateDialog() {
-//                            var dialog = pageStack.push("Sailfish.Silica.DatePickerDialog", {
-//                                            date: GetDate.getBeforeDate(new Date(),10)
-//                                         })
-
-//                            dialog.accepted.connect(function() {
-//                                var date = dialog.date;
-//                                currentDay = date;
-//                                var day =GetDate.parseDate(date)
-//                                py.getDatas(day)
-//                            })
-//                        }
-//                        onClicked: openDateDialog()
-//                    }
-
                     Button{
                         id:gobutton
                         text:qsTr("GO")
                          //anchors.top: parent.top
                         onClicked: {
-                            allindex = Math.abs(dateslider.value -9);
+                            allindex = Math.abs(dateslider.value -7);
                             currentDay = new Date(dateslider.valueText)
-
-                            //var volnum =GetDate.getDiffDay3(dateslider.valueText)
-                            //busyIndicator.running = true
-                            py.getDatas(dateslider.valueText)
+                            py.getDatas((dateslider.valueText).replace(/-/g,''))
 
                         }
                        //anchors.horizontalCenter: parent.horizontalCenter
@@ -120,8 +98,8 @@ Item {
                     + author.height + dateAndcontent.height + Theme.paddingMedium * 10
                     + Theme.paddingLarge *2
             Label{
-                id:vol
-                text:objects.titulo
+                id: vol
+                text: objects.titulo
                 color: Theme.secondaryColor
                 font.pixelSize:Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignLeft
@@ -139,7 +117,7 @@ Item {
                 }
             }
             Image{
-                id:thumbnail
+                id: thumbnail
                 asynchronous: true
                 fillMode: Image.PreserveAspectFit;
                 width:  parent.width - Theme.paddingMedium*2

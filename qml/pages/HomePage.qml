@@ -15,6 +15,39 @@ Item {
         running: !PageStatus.Active
         size: BusyIndicatorSize.Large
     }
+
+    function getHomeImage(){
+        return getImagen(objects.entries[0].summary);
+    }
+
+    function getLeyenda(){
+        str = fmtHtml(objects.entries[0].summary);
+        var regex = /<div class=\"one-imagen-leyenda\">(.*?)<\/div>/g;
+        var vol = regex.exec(str)[1];
+        return vol;
+    }
+
+    function getdom(){
+        str = fmtHtml(objects.entries[0].summary);
+        var regex = /<p class=\"dom\">(.*?)<\/p>/g;
+        var vol = regex.exec(str)[1];
+        return vol;
+    }
+
+    function getmay(){
+        str = fmtHtml(objects.entries[0].summary);
+        var regex = /<p class=\"may\">(.*?)<\/p>/g;
+        var vol = regex.exec(str)[1];
+        return vol;
+    }
+
+    function getcita(){
+        str = fmtHtml(objects.entries[0].summary);
+        var regex = /<div class=\"one-cita\">(.*?)<\/div>/g;
+        var vol = regex.exec(str)[1];
+        return vol;
+    }
+
     SilicaListView{
         id:listview
         anchors.fill: parent
@@ -99,7 +132,7 @@ Item {
                     + Theme.paddingLarge *2
             Label{
                 id: vol
-                text: objects.titulo
+                text: getVOL(objects.entries[0].summary)
                 color: Theme.secondaryColor
                 font.pixelSize:Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignLeft
@@ -124,15 +157,14 @@ Item {
                 Python{
                     id:imgpy
                      Component.onCompleted: {
-                     addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
-                     imgpy.importModule('main', function () {
-                            call('main.cacheImg',[objects.imagen,MD5.hex_md5(objects.imagen)],function(result){
-                                 thumbnail.source = result;
-                                 waitingIcon.visible = false;
-                                //console.log("local path:"+result)
+                        addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
+                        imgpy.importModule('main', function () {
+                            call('main.cacheImg',[getHomeImage()],function(result){
+                                thumbnail.source = result;
+                                waitingIcon.visible = false;
                             });
-                   })
-                  }
+                        })
+                    }
                 }
                 Image{
                     id:waitingIcon
@@ -152,11 +184,11 @@ Item {
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
                                               {"imgUrl": thumbnail.source,
-                                                "strThumbnailUrl":objects.imagen,
-                                                "strHpTitle":objects.imagen_leyenda} );
+                                                "strThumbnailUrl":getHomeImage(),
+                                                "strHpTitle":getLeyenda()} );
                            }
                     onPressAndHold: {
-                        py.saveImg(MD5.hex_md5(objects.imagen),objects.imagen_leyenda+"."+GetDate.parseDate(currentDay));
+                        py.saveImg(getHomeImage(), GetDate.parseDate(currentDay));
 
                     }
                 }
@@ -165,7 +197,7 @@ Item {
             }
             Label{
                 id:author
-                text:objects.imagen_leyenda
+                text: getLeyenda()
                 width: parent.width
                 wrapMode: Text.WordWrap
                 font.pixelSize:Theme.fontSizeExtraSmall
@@ -211,7 +243,7 @@ Item {
                         font.bold: true
                         color: Theme.highlightColor
                         horizontalAlignment: Text.AlignHCenter
-                        text:objects.dom
+                        text: getdom()
 
                     }
                     Label{
@@ -222,7 +254,7 @@ Item {
                         font.pixelSize:Theme.fontSizeExtraSmall
                         color: Theme.secondaryColor
                         opacity: 0.8
-                        text:objects.may
+                        text: getmay()
                     }
                 }
                 Image {
@@ -237,7 +269,7 @@ Item {
                 Rectangle {
                     id:input
                     //width:parent.width-datetime2.implicitWidth
-                    height: contentExt.height + content .height+Theme.paddingMedium*4
+                    height: content.height + Theme.paddingMedium*4
                     anchors{
                         left: date_lab.right;
                         right: parent.right;
@@ -247,7 +279,7 @@ Item {
                     color: "#1affffff"
                     Label{
                         id:content
-                        text:objects.cita_content
+                        text:getcita()
                         width:parent.width
                         wrapMode: Text.WordWrap
                         font.letterSpacing: 2;
@@ -262,24 +294,24 @@ Item {
                         MouseArea{
                             anchors.fill: parent
                             onPressAndHold: {
-                                Clipboard.text = objects.cita_content;
+                                Clipboard.text = content.text;
                                 addNotification(qsTr("Copyed to clipboard"));
                             }
                         }
                     }
-                    Label{
-                        id:contentExt
-                        text:objects.cita_author
-                        width:parent.width
-                        wrapMode: Text.WordWrap
-                        font.pixelSize:Theme.fontSizeSmall
-                        horizontalAlignment: Text.AlignRight
-                        anchors{
-                            top:content.bottom
-                            right:parent.right
-                            margins: Theme.paddingMedium
-                        }
-                    }
+                    // Label{
+                    //     id:contentExt
+                    //     text:objects.cita_author
+                    //     width:parent.width
+                    //     wrapMode: Text.WordWrap
+                    //     font.pixelSize:Theme.fontSizeSmall
+                    //     horizontalAlignment: Text.AlignRight
+                    //     anchors{
+                    //         top:content.bottom
+                    //         right:parent.right
+                    //         margins: Theme.paddingMedium
+                    //     }
+                    // }
 
                 }
             }

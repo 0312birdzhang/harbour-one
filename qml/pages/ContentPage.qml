@@ -27,76 +27,77 @@ Item {
             VerticalScrollDecorator {}
             delegate: Item{
                             width: parent.width
-                            height:date_time.implicitHeight
-                                   +gwrow.height
-                                   + conttile.height
-                                   + author.height
-                                   + content.height
-                                   + authorinfo.height
-                                   + Theme.paddingMedium * 15
-                            Label{
-                                id:date_time
-                                text:objects.dom+","+objects.may
-                                color: Theme.secondaryColor
-                                font.pixelSize:Theme.fontSizeExtraSmall
-                                horizontalAlignment: Text.AlignLeft
-                                truncationMode: TruncationMode.Elide
-                                anchors{
-                                    left:parent.left
-                                    right:parent.right
-                                    margins: Theme.paddingMedium
-                                }
+                            height: conttile.height + content.height + Theme.paddingLarge * 2
+                            // height:date_time.implicitHeight
+                            //        +gwrow.height
+                            //        + conttile.height
+                            //        + author.height
+                            //        + content.height
+                            //        + authorinfo.height
+                            //        + Theme.paddingMedium * 15
+                            // Label{
+                            //     id:date_time
+                            //     text:objects.dom+","+objects.may
+                            //     color: Theme.secondaryColor
+                            //     font.pixelSize:Theme.fontSizeExtraSmall
+                            //     horizontalAlignment: Text.AlignLeft
+                            //     truncationMode: TruncationMode.Elide
+                            //     anchors{
+                            //         left:parent.left
+                            //         right:parent.right
+                            //         margins: Theme.paddingMedium
+                            //     }
 
-                                Rectangle{
-                                    width: parent.width;
-                                    height: 1;
-                                    anchors.top: parent.bottom;
-                                    color: "#66ffffff"
-                                }
-                            }
-                            Row{
-                                id:gwrow
-                                height: gw.implicitHeight;
-                                anchors{
-                                    top:date_time.bottom;
-                                    topMargin: Theme.paddingLarge
-                                    left:parent.left;
-                                    leftMargin: Theme.paddingMedium
-                                }
+                            //     Rectangle{
+                            //         width: parent.width;
+                            //         height: 1;
+                            //         anchors.top: parent.bottom;
+                            //         color: "#66ffffff"
+                            //     }
+                            // }
+                            // Row{
+                            //     id:gwrow
+                            //     height: gw.implicitHeight;
+                            //     anchors{
+                            //         top:date_time.bottom;
+                            //         topMargin: Theme.paddingLarge
+                            //         left:parent.left;
+                            //         leftMargin: Theme.paddingMedium
+                            //     }
 
-                                Image {
-                                    id:sgwlab1
-                                    anchors.top:parent.top;
-                                    source:"pics/x_left.png"
-                                }
+                            //     Image {
+                            //         id:sgwlab1
+                            //         anchors.top:parent.top;
+                            //         source:"pics/x_left.png"
+                            //     }
 
-                                Item{height: 5;width: Theme.paddingLarge;}
+                            //     Item{height: 5;width: Theme.paddingLarge;}
 
-                                Label{
-                                    id:gw
-                                    text:objects.comilla_cerrar
-                                    width: listview.width - Theme.paddingMedium*3-Theme.paddingLarge-sgwlab1.implicitWidth-sgwlab2.implicitWidth;
-                                    font.pixelSize: Theme.fontSizeExtraSmall
-                                    font.letterSpacing: 1;
-                                    color: Theme.secondaryColor
-                                    wrapMode: Text.WordWrap
-                                    elide: Text.ElideMiddle
-                                }
+                            //     Label{
+                            //         id:gw
+                            //         text:objects.comilla_cerrar
+                            //         width: listview.width - Theme.paddingMedium*3-Theme.paddingLarge-sgwlab1.implicitWidth-sgwlab2.implicitWidth;
+                            //         font.pixelSize: Theme.fontSizeExtraSmall
+                            //         font.letterSpacing: 1;
+                            //         color: Theme.secondaryColor
+                            //         wrapMode: Text.WordWrap
+                            //         elide: Text.ElideMiddle
+                            //     }
 
-                                Item{height: 5;width: Theme.paddingMedium;}
+                            //     Item{height: 5;width: Theme.paddingMedium;}
 
-                                Image {
-                                    id:sgwlab2
-                                    anchors.bottom:parent.bottom;
-                                    source:"pics/x_right.png"
-                                }
-                            }
+                            //     Image {
+                            //         id:sgwlab2
+                            //         anchors.bottom:parent.bottom;
+                            //         source:"pics/x_right.png"
+                            //     }
+                            // }
 
 
 
                             Label{
                                 id:conttile
-                                text:objects.articulo_titulo
+                                text:objects.entries[1].title
                                 width: parent.width
                                 font.pixelSize: Theme.fontSizeMedium
                                 color: Theme.highlightColor
@@ -111,26 +112,26 @@ Item {
                                     topMargin: Theme.paddingMedium*2
                                 }
                             }
-                            Label{
-                                id:author
-                                text:objects.articulo_autor
-                                font.bold: true
-                                font.pixelSize:Theme.fontSizeExtraSmall
-                                color: Theme.secondaryColor;
-                                wrapMode: Text.WordWrap
-                                horizontalAlignment: Text.AlignRight
-                                anchors{
-                                    left:parent.left
-                                    leftMargin: Theme.paddingMedium
-                                    top:conttile.bottom
-                                    rightMargin: Theme.paddingMedium
-                                    topMargin: Theme.paddingMedium
-                                }
-                                opacity: 0.6
-                            }
+                            // Label{
+                            //     id:author
+                            //     text:objects.articulo_autor
+                            //     font.bold: true
+                            //     font.pixelSize:Theme.fontSizeExtraSmall
+                            //     color: Theme.secondaryColor;
+                            //     wrapMode: Text.WordWrap
+                            //     horizontalAlignment: Text.AlignRight
+                            //     anchors{
+                            //         left:parent.left
+                            //         leftMargin: Theme.paddingMedium
+                            //         top:conttile.bottom
+                            //         rightMargin: Theme.paddingMedium
+                            //         topMargin: Theme.paddingMedium
+                            //     }
+                            //     opacity: 0.6
+                            // }
                             Label{
                                 id:content
-                                text:objects.articulo_contenido
+                                text: fmtHtml(objects.entries[1].summary)
                                 font.pixelSize:Theme.fontSizeSmall
                                 width:parent.width
                                 textFormat: Text.RichText
@@ -140,25 +141,25 @@ Item {
                                 anchors{
                                     left:parent.left
                                     right:parent.right
-                                    top:author.bottom
+                                    top:conttile.bottom
                                     margins: Theme.paddingMedium
                                     topMargin: Theme.paddingMedium*2
                                 }
                             }
-                            Label{
-                                id:authorinfo
-                                text:objects.articulo_editor
-                                font.pixelSize:Theme.fontSizeExtraSmall
-                                wrapMode: Text.WordWrap
-                                color: Theme.secondaryColor
-                                anchors{
-                                    left:parent.left
-                                    right:parent.right
-                                    top:content.bottom
-                                    topMargin: Theme.paddingLarge * 3
-                                    margins: Theme.paddingMedium
-                                }
-                            }
+                            // Label{
+                            //     id:authorinfo
+                            //     text:objects.articulo_editor
+                            //     font.pixelSize:Theme.fontSizeExtraSmall
+                            //     wrapMode: Text.WordWrap
+                            //     color: Theme.secondaryColor
+                            //     anchors{
+                            //         left:parent.left
+                            //         right:parent.right
+                            //         top:content.bottom
+                            //         topMargin: Theme.paddingLarge * 3
+                            //         margins: Theme.paddingMedium
+                            //     }
+                            // }
 
                         }
 

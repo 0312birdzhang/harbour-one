@@ -33,7 +33,14 @@ url = 'http://v3.wufazhuce.com:8000/api/'
 one_api_url = "https://rsshub.app/one"
 
 
-def saveImg(md5name, savename):
+def sumMd5(str):
+    h = hashlib.md5()
+    h.update(url)
+    md5name = h.hexdigest()
+    return md5name
+
+def saveImg(imgurl, savename):
+    md5name = sumMd5(imgurl)
     try:
         realpath = cachePath+md5name
         tmppath = savePath+savename+"."+findImgType(realpath)
@@ -59,7 +66,8 @@ def isExis():
 """
 
 
-def cacheImg(url, md5name):
+def cacheImg(url):
+    md5name = sumMd5(url)
     cachedFile = cachePath+md5name
     if os.path.exists(cachedFile):
         pass
@@ -100,9 +108,7 @@ def findImgType(cachedFile):
 
 
 def getDbname():
-    h = hashlib.md5()
-    h.update("one".encode(encoding='utf_8', errors='strict'))
-    dbname = h.hexdigest()
+    dbname = sumMd5("one".encode(encoding='utf_8', errors='strict'))
     return dbPath+"/"+dbname+".sqlite"
 
 

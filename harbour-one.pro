@@ -37,6 +37,7 @@ OTHER_FILES += qml/harbour-one.qml \
     qml/pages/getBeforeDate.js \
     rpm/harbour-one.changes \
     qml/pages/py/main.py \
+    qml/pages/py/sgmllib.py \
     qml/pages/MainPage.qml \
     qml/pages/LabelText.qml \
     qml/pages/py/basedir.py \

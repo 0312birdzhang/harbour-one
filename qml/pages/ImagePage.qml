@@ -163,7 +163,7 @@ Page {
 
         icon.source: "image://theme/icon-m-cloud-download"
         onClicked: {
-            py.saveImg(strThumbnailUrl, GetDate.parseDate(currentDay));
+            py.saveImg(strThumbnailUrl, Script.parseDate(currentDay));
         }
     }
 }

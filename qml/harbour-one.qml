@@ -58,8 +58,8 @@ ApplicationWindow{
     }
 
 
-    allowedOrientations: Orientation.All
-    _defaultPageOrientations: Orientation.All
+    allowedOrientations: Orientation.Portrait
+    _defaultPageOrientations: Orientation.Portrait
 
     initialPage:Component {
         Page{

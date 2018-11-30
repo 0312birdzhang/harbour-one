@@ -40,13 +40,6 @@
     </message>
 </context>
 <context>
-    <name>CosasPage</name>
-    <message>
-        <source>Object</source>
-        <translation>东西</translation>
-    </message>
-</context>
-<context>
     <name>ErrorTipPage</name>
     <message>
         <source>Something error</source>

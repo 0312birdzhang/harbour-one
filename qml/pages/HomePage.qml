@@ -2,13 +2,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
 import "storage.js" as Storage
-import "md5.js" as MD5
 import "getBeforeDate.js" as GetDate
 
 Item {
     id: homePage;
 
-    height: mainView.height; width: mainView.width
+    height: mainView.height; 
+    width: mainView.width;
+    property string home_summary = fmtHtml(objects["entries"][0].summary);
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
@@ -17,35 +18,28 @@ Item {
     }
 
     function getHomeImage(){
-        return getImagen(objects["entries"][0].summary);
+        return getImagen(home_summary);
     }
 
     function getLeyenda(){
-        var str = fmtHtml(objects["entries"][0].summary);
-        var regex = /<div class=\"one-imagen-leyenda\">(.*?)<\/div>/g;
-        var vol = regex.exec(str)[1];
-        return vol;
+        var regex = /<div class=\"one-imagen-leyenda\">(.*?)<br/g;
+        return regex.exec(home_summary)[1];
     }
 
     function getdom(){
-        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<p class=\"dom\">(.*?)<\/p>/g;
-        var vol = regex.exec(str)[1];
-        return vol;
+        var dom = regex.exec(home_summary)[1];
+        return dom;
     }
 
     function getmay(){
-        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<p class=\"may\">(.*?)<\/p>/g;
-        var vol = regex.exec(str)[1];
-        return vol;
+        return regex.exec(home_summary)[1];
     }
 
     function getcita(){
-        var str = fmtHtml(objects["entries"][0].summary);
         var regex = /<div class=\"one-cita\">(.*?)<\/div>/g;
-        var vol = regex.exec(str)[1];
-        return vol;
+        return regex.exec(home_summary)[1];
     }
 
     SilicaListView{
@@ -58,6 +52,7 @@ Item {
 
         PushUpMenu {
             id:menu
+            visible: false
             Item{
                 width:  parent.width
                 height: Theme.itemSizeExtraLarge +gobutton.height
@@ -154,12 +149,13 @@ Item {
                 asynchronous: true
                 fillMode: Image.PreserveAspectFit;
                 width:  parent.width - Theme.paddingMedium*2
+                property string originurl: getHomeImage();
                 Python{
                     id:imgpy
                      Component.onCompleted: {
                         addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
                         imgpy.importModule('main', function () {
-                            call('main.cacheImg',[getHomeImage()],function(result){
+                            call('main.cacheImg',[thumbnail.originurl],function(result){
                                 thumbnail.source = result;
                                 waitingIcon.visible = false;
                             });
@@ -184,12 +180,11 @@ Item {
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ImagePage.qml"),
                                               {"imgUrl": thumbnail.source,
-                                                "strThumbnailUrl":getHomeImage(),
-                                                "strHpTitle":getLeyenda()} );
+                                                "strThumbnailUrl":thumbnail.originurl,
+                                                "strHpTitle":author.text} );
                            }
                     onPressAndHold: {
-                        py.saveImg(getHomeImage(), GetDate.parseDate(currentDay));
-
+                        py.saveImg(thumbnail.originurl, GetDate.parseDate(currentDay));
                     }
                 }
 

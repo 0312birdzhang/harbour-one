@@ -1,7 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "getBeforeDate.js" as Script
-import "md5.js" as MD5
 Page {
     id: imagePage
 
@@ -164,7 +163,7 @@ Page {
 
         icon: "image://theme/icon-m-cloud-download"
         onClicked: {
-            py.saveImg(MD5.hex_md5(strThumbnailUrl),strHpTitle+"."+Script.parseDate(currentDay));
+            py.saveImg(strThumbnailUrl, GetDate.parseDate(currentDay));
         }
     }
 }

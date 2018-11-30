@@ -156,7 +156,7 @@ ApplicationWindow{
 
     function getImagen(str){
         str = fmtHtml(str);
-        console.log(str)
+        // console.log(str)
         var regex = /<img.*?src=\"(.*?)\"/;
         var src = regex.exec(str)[1];
         return src;

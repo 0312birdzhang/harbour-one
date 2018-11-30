@@ -51,7 +51,7 @@ Page {
             Item{width:1;height:1}
             LabelText {
                 label: qsTr("Author")
-                text: "本软件是one一个非官网客户端版本,作者:0312birdzhang,，旧版API由 夜切 整理(现在已不用API方式获取)，软件桌面图标由 梦影决幻 设计,软件启动图、部分UI由 蝉曦 设计"
+                text: "本软件是one一个非官网客户端版本,作者:0312birdzhang,，旧版API由 夜切 整理,现在使用rsshub.app的，软件桌面图标由 梦影决幻 设计,软件启动图、部分UI由 蝉曦 设计"
 
             }
             Item{width:1;height:1}
@@ -78,7 +78,7 @@ Page {
                 onClicked: {
                     remorse.execute(qsTr("Begin clear cache..."),function(){
                         py.clearCache();
-			JS.removeDatas();
+			            JS.removeDatas();
                     },3000);
                 }
             }

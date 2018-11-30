@@ -17,7 +17,6 @@ Page{
             HomePage {}
             ContentPage{}
             QuestionPage{}
-            //CosasPage{}
         }
     }
 }

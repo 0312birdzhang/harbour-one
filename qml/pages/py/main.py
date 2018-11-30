@@ -123,13 +123,13 @@ def getTodayContent(daystr):
         cur.execute('SELECT json FROM datas WHERE vol= %s ' % daystr)
         result = cur.fetchone()
         if result:
-            return json.dumps(base64.b64decode(result[0]))
+            return base64.b64decode(result[0])
         else:
             if today == daystr:
                 data = getHtml()
                 if data:
                     insertDatas(daystr, data)
-                    return json.loads(data)
+                    return data
             else:
                 return 'Error'
     except Exception as e:
@@ -139,15 +139,14 @@ def getTodayContent(daystr):
     finally:
         conn.close()
 
-# 插入数据
 
 
 def insertDatas(daystr, data):
-    data = base64.b64encode(data.encode("utf-8"))
+    data_encoded = base64.b64encode(data.encode("utf-8"))
     conn = sqlite3.connect(getDbname())
     try:
         cur = conn.cursor()
-        cur.execute("INSERT INTO datas VALUES ({0}, {1})".format(int(daystr),data.replace('"', '""')))
+        cur.execute("INSERT INTO datas(vol,json) VALUES (?, ?)",(int(daystr),data_encoded))
         conn.commit()
     except Exception as e:
         logging.debug("Insert error")

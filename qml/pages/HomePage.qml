@@ -9,7 +9,7 @@ Item {
 
     height: mainView.height; 
     width: mainView.width;
-    property string home_summary = fmtHtml(objects["entries"][0].summary);
+    property string home_summary: fmtHtml(objects["entries"][0].summary);
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
@@ -52,7 +52,7 @@ Item {
 
         PushUpMenu {
             id:menu
-            visible: false
+            enabled: false
             Item{
                 width:  parent.width
                 height: Theme.itemSizeExtraLarge +gobutton.height

@@ -161,7 +161,7 @@ Page {
         }
         width: Theme.iconSizeMedium+Theme.paddingMedium*2
 
-        icon: "image://theme/icon-m-cloud-download"
+        icon.source: "image://theme/icon-m-cloud-download"
         onClicked: {
             py.saveImg(strThumbnailUrl, GetDate.parseDate(currentDay));
         }

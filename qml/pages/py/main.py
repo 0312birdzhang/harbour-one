@@ -31,7 +31,8 @@ savePath = os.path.join(HOME, "Pictures", "save", "One", "")
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 url = 'http://v3.wufazhuce.com:8000/api/'
-one_api_url = "https://rsshub.app/one"
+#one_api_url = "https://rsshub.app/one"
+one_api_url = "https://one.qiyuos.cn/one"
 
 
 def sumMd5(str):

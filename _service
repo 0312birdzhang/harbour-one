@@ -1,6 +1,0 @@
-<services>
-   <service name="webhook">
-     <param name="repourl">https://github.com/0312birdzhang/harbour-one.git</param>
-     <param name="branch">master</param>
-   </service>
- </services>

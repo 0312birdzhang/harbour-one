@@ -9,7 +9,7 @@ Item {
 
     height: mainView.height; 
     width: mainView.width;
-    property string home_summary: fmtHtml(objects["entries"][0].summary);
+    property string home_summary: fmtHtml(objects["entries"][0].summary).replace(/\n/g,"");
     BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
@@ -17,8 +17,17 @@ Item {
         size: BusyIndicatorSize.Large
     }
 
+
+    function getVOL(){
+        var regex = /<div class=\"one-titulo\">(.*?)<\/div>/g;
+        var vol = regex.exec(home_summary)[1];
+        return vol;
+    }
+
     function getHomeImage(){
-        return getImagen(home_summary);
+        var regex = /<img.*?src=\"(.*?)\"/;
+        var src = regex.exec(home_summary)[1];
+        return src;
     }
 
     function getLeyenda(){
@@ -127,7 +136,7 @@ Item {
                     + Theme.paddingLarge *2
             Label{
                 id: vol
-                text: getVOL(objects["entries"][0].summary)
+                text: getVOL()
                 color: Theme.secondaryColor
                 font.pixelSize:Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignLeft

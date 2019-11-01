@@ -154,20 +154,7 @@ ApplicationWindow{
         return str;
     }
 
-    function getImagen(str){
-        str = fmtHtml(str);
-        // console.log(str)
-        var regex = /<img.*?src=\"(.*?)\"/;
-        var src = regex.exec(str)[1];
-        return src;
-    }
 
-    function getVOL(str){
-        str = fmtHtml(str);
-        var regex = /<div class=\"one-titulo\">(.*?)<\/div>/g;
-        var vol = regex.exec(str)[1];
-        return vol;
-    }
     
     
 
